@@ -140,7 +140,7 @@ Review outputs: the `Headgear`, `Costumes` and `Props` stills and the `CostumeTu
 
 Review outputs: the `Cast` still and the `CrowdDemo` video, rendered to `out/char/`.
 
-## Motion (step 3e, awaiting review)
+## Motion (step 3e, approved)
 
 Code is in `src/kit/actions/`: `core.ts` (types, easing, keyframes, pose maths), `library.ts` (the actions), `Performer.tsx`.
 
@@ -222,8 +222,8 @@ The most relevant ones are `remotion-best-practices`, `remotion-render`, `remoti
 - [x] 3b. Faces approved (`out/char/expressions.png`, `face-parts.png`, `face-talk-test.mp4`)
 - [x] 3c. Costumes approved (`out/char/costumes.png`, `headgear.png`, `props.png`, `costume-turntable.mp4`)
 - [x] 3d. Presets + crowd approved (`out/char/cast.png`, `crowd-demo.mp4`)
-- [ ] 3e. Motion library: built, awaiting review (`out/motion/showreel.mp4`, `actions-grid.mp4`)
-- [ ] 4. Sets and globe
+- [x] 3e. Motion library approved (`out/motion/showreel.mp4`, `actions-grid.mp4`)
+- [ ] 4. Sets and globe  ← NEXT
 - [ ] 5. Effects
 - [ ] 6. Captions
 - [ ] 7. Audio pipeline
