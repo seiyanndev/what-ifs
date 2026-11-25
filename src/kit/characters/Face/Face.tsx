@@ -1,7 +1,7 @@
 import { useLayoutEffect, useMemo } from "react";
 import { random, useCurrentFrame } from "remotion";
 import * as THREE from "three";
-import { useLook } from "../../look";
+import { useLook, useQuality } from "../../look";
 import { drawFace } from "./draw";
 import { resolveExpression, type Expression, type ExpressionName, type FacialHair } from "./params";
 import { applyTalk, type TalkState } from "./talk";
@@ -69,12 +69,13 @@ export const Face: React.FC<FaceProps & { r: number; id: string; headScale?: [nu
 }) => {
   const frame = useCurrentFrame();
   const lookCtx = useLook();
+  const res = useQuality().faceRes ?? CANVAS;
   const canvas = useMemo(() => {
     const c = document.createElement("canvas");
-    c.width = CANVAS;
-    c.height = CANVAS;
+    c.width = res;
+    c.height = res;
     return c;
-  }, []);
+  }, [res]);
   const texture = useMemo(() => {
     const t = new THREE.CanvasTexture(canvas);
     t.colorSpace = THREE.SRGBColorSpace;
@@ -91,7 +92,7 @@ export const Face: React.FC<FaceProps & { r: number; id: string; headScale?: [nu
   useLayoutEffect(() => {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    drawFace(ctx, CANVAS, { expression: expr, look: gaze, blink: b, frame, browColor, facialHair, seed: id });
+    drawFace(ctx, res, { expression: expr, look: gaze, blink: b, frame, browColor, facialHair, seed: id });
     texture.needsUpdate = true;
   });
 

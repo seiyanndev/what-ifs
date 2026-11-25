@@ -101,6 +101,8 @@ export type EpisodeProps = {
   voice: string | null;
   /** Render as a thumbnail (adds the WHAT IF…? overlay). */
   thumbnail?: boolean;
+  /** "final" (default) or "preview" (faster: no grain, smaller shadows/faces, no MSAA) or explicit knobs. */
+  quality?: "final" | "preview" | Partial<import("../look").Quality>;
 };
 
 // ---------------------------------------------------------------------------

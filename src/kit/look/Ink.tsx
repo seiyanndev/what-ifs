@@ -3,6 +3,7 @@ import { useLayoutEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { TIME_OF_DAY } from "./lighting";
 import { useLook } from "./LookContext";
+import { useQuality } from "./quality";
 
 /** Outline settings. Thickness is in pixels at 1080px width (auto-scaled for previews). */
 export const INK = {
@@ -66,7 +67,9 @@ type Props = {
  *   <mesh><sphereGeometry /><ToonMaterial /><Ink weight="character" /></mesh>
  * Works best on meshes with smooth normals (spheres, capsules, rounded boxes, lathes).
  */
-export const Ink: React.FC<Props> = ({ weight = "prop", color }) => {
+export const Ink: React.FC<Props> = (props) => (useQuality().ink ? <InkHull {...props} /> : null);
+
+const InkHull: React.FC<Props> = ({ weight = "prop", color }) => {
   const look = useLook();
   const { width, height } = useThree((s) => s.size);
   const px = typeof weight === "number" ? weight : INK[weight];

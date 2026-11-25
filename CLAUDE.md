@@ -329,12 +329,31 @@ npm run episode -- <name> --thumb     # thumbnail        → out/<name>-thumb.pn
 ```
 Options: `--no-voice` (estimated timings and silent narration, for layout checks), `--voice bm_lewis`, `--redo-voice`, `--concurrency N`. Set `REMOTION_BROWSER_EXECUTABLE` if Remotion can't download its browser.
 
+### Speed: scene cache + preview quality
+- **Scene-by-scene rendering with a cache** (`out/.chunks/<name>/<quality>/`): each scene renders as its own silent clip, keyed on everything that can change its pixels (its spec, timing, captions in its range, the previous scene for ripple transitions, quality and size, and a hash of `src/`). **Edit one scene and only that scene re-renders.** The clips are joined without re-encoding (FFmpeg concat, stream copy).
+- **Soundtrack** is rendered once as WAV (about 60 s) and cached on the voice, captions and music or SFX cues, so video-only edits skip it.
+- **Bundle** is made once per code version (`out/.bundle/<hash>`). Per-scene renders then start in about 2.5 s.
+- **Preview quality** (`--preview` and `--scene`) switches off MSAA antialiasing and film grain, halves the shadow map and face texture resolution, and renders at half size. Measured on 60 battle frames in this CPU-only container:
+
+  | knob | time | saving |
+  |---|---|---|
+  | final (all on) | 35.3 s | – |
+  | **antialias off** | 23.2 s | **−34%** (software GL makes MSAA very expensive; nearly free on a GPU) |
+  | ink off | 29.7 s | −16% (kept: it's the look) |
+  | shadows 1024 | 31.9 s | −10% |
+  | faces 300 px | 33.5 s | −5% |
+  | grain off | 34.2 s | −3% |
+  | **preview preset** | 19.8 s | **−44%** |
+- **What did not help here:** more `--concurrency` (4 cores are already saturated by WebGL), and `--gl=swangle` or `egl`.
+- **On your machine:** a real GPU makes WebGL far faster. Keep `Config.setChromiumOpenGlRenderer("angle")` (Mac and Windows use the GPU through ANGLE). On Linux with a GPU, try `--gl=angle-egl` or `--gl=vulkan`.
+- Quality knobs live in `src/kit/look/quality.ts` (`QUALITY.final` / `QUALITY.preview`). `Episode` props take `quality: "final" | "preview" | {…}`.
+
 ### What `npm run episode` does
 1. Joins each scene's `narration` into `public/voice/<name>/script.txt`, one paragraph per scene, which gives natural pauses between scenes.
 2. **Voice:** if you recorded `raw.*` yourself, it uses that (mic chain). Otherwise the Kokoro narrator (`spec.voice`, default `bm_george`) reads the script. The result is cached on a hash of the script and voice, so re-renders skip it.
 3. `scripts/audio.mjs --script`: cleanup, Whisper word timestamps, and alignment to the script.
 4. **Timing:** each scene runs from its first word to the next scene's first word, starting 4 frames early. The last scene adds `tail` (default 1.4 s). It writes `episodes/<name>/timeline.json` (the `Episode` props) and prints the scene table, warning outside 45–75 s.
-5. **Render:** the `Episode` composition. `calculateMetadata` validates `scenes.json` with friendly errors (for example "unknown preset 'magelan'. Did you mean 'magellan'?" or "set BEACH has no mark 'dock' (marks: …)").
+5. **Render:** the `Episode` composition, scene by scene with the cache above. `calculateMetadata` validates `scenes.json` with friendly errors (for example "unknown preset 'magelan'. Did you mean 'magellan'?" or "set BEACH has no mark 'dock' (marks: …)").
 6. **Master:** two-pass FFmpeg `loudnorm` to −14 LUFS / −1 dBTP, AAC 320k, video stream copied, faststart.
 7. **Thumbnail:** the frame from the scene with `"thumb": true`, otherwise 1.2 s into the split, otherwise scene 1. It adds a big gold "WHAT IF…?" and the question on a purple banner, and hides the REAL / WHAT IF labels.
 

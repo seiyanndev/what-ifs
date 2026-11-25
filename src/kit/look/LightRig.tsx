@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { LookContext, lookFromTime } from "./LookContext";
+import { useQuality } from "./quality";
 import { dirFromAngles, TIME_OF_DAY, type TimeOfDay } from "./lighting";
 
 type Props = {
@@ -27,6 +28,7 @@ export const LightRig: React.FC<Props> = ({
   fog = true,
   children,
 }) => {
+  const q = useQuality();
   const p = TIME_OF_DAY[timeOfDay];
   const look = useMemo(() => lookFromTime(timeOfDay), [timeOfDay]);
   const keyDir = dirFromAngles([p.key.dir[0] + keyAzimuthOffset, p.key.dir[1]]);
@@ -47,7 +49,7 @@ export const LightRig: React.FC<Props> = ({
         color={p.key.color}
         intensity={p.key.intensity}
         castShadow
-        shadow-mapSize={[2048, 2048]}
+        shadow-mapSize={[q.shadowMap, q.shadowMap]}
         shadow-bias={-0.0008}
         shadow-normalBias={0.06}
         shadow-radius={4}

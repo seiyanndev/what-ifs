@@ -145,7 +145,26 @@ const outDir = path.join(ROOT, "out");
 mkdirSync(outDir, { recursive: true });
 const browser = process.env.REMOTION_BROWSER_EXECUTABLE ? ["--browser-executable", process.env.REMOTION_BROWSER_EXECUTABLE] : [];
 const conc = opt("concurrency") ? ["--concurrency", opt("concurrency")] : [];
-const remotion = (a) => run("npx", ["remotion", ...a, ...browser, ...conc], { cwd: ROOT });
+
+// Bundle once per code version (re-used by every scene / audio / still render below).
+const listFiles = (dir) =>
+  readdirSync(dir, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? listFiles(path.join(dir, e.name)) : [path.join(dir, e.name)]));
+const codeHash = createHash("sha1")
+  .update(
+    [...listFiles(path.join(ROOT, "src")), path.join(ROOT, "remotion.config.ts"), path.join(ROOT, "package-lock.json")]
+      .sort()
+      .map((f) => f + readFileSync(f, "utf8"))
+      .join(""),
+  )
+  .digest("hex")
+  .slice(0, 12);
+const bundleDir = path.join(outDir, ".bundle", codeHash);
+if (!existsSync(path.join(bundleDir, "index.html"))) {
+  step("Bundling the kit (once per code change)");
+  execFileSync("rm", ["-rf", path.join(outDir, ".bundle")]);
+  run("npx", ["remotion", "bundle", "--out-dir", bundleDir], { cwd: ROOT });
+}
+const render = (comp, out, a) => run("npx", ["remotion", "render", bundleDir, comp, out, ...a, ...browser, ...conc], { cwd: ROOT });
 
 const thumbFrame = () => {
   const pick = scenes.find((s) => s.thumb) ?? (splitIndex >= 0 ? scenes[splitIndex] : scenes[0]);
@@ -158,37 +177,104 @@ if (has("thumb")) {
   const thumbProps = path.join(epDir, ".thumb-props.json");
   writeFileSync(thumbProps, JSON.stringify({ ...timeline, thumbnail: true }));
   const png = path.join(outDir, `${name}-thumb.png`);
-  remotion(["still", "Episode", png, `--props=${thumbProps}`, `--frame=${thumbFrame()}`]);
+  run("npx", ["remotion", "still", bundleDir, "Episode", png, `--props=${thumbProps}`, `--frame=${thumbFrame()}`, ...browser], { cwd: ROOT });
   execFileSync("ffmpeg", ["-v", "error", "-y", "-i", png, "-q:v", "2", path.join(outDir, `${name}-thumb.jpg`)]);
   console.log(`\n✔ ${path.relative(ROOT, png)} (+ .jpg)`);
   process.exit(0);
 }
 
+// ---------------------------------------------------------------------------
+// Scene-by-scene rendering with a cache: a scene is only re-rendered when something that can change
+// its pixels changed (its spec, timing, captions in its range, the previous scene for ripples,
+// quality, size, or the kit code). Editing one scene re-renders one scene.
+// ---------------------------------------------------------------------------
+const preview = has("preview") || Boolean(opt("scene"));
+const quality = preview ? "preview" : "final";
+const scale = preview ? 0.5 : 1;
+const crf = preview ? 26 : 18;
+const tlQuality = { ...timeline, quality };
+const qualityPath = path.join(epDir, `.timeline-${quality}.json`);
+writeFileSync(qualityPath, JSON.stringify(tlQuality));
+const chunkDir = path.join(outDir, ".chunks", name, quality);
+mkdirSync(chunkDir, { recursive: true });
+
+const sceneKey = (s) => {
+  const startMs = (s.from / FPS) * 1000;
+  const endMs = ((s.from + s.durationInFrames) / FPS) * 1000;
+  const caps = captions.filter((c) => c.endMs > startMs - 1000 && c.startMs < endMs + 1000);
+  const prev = s.transition === "ripple" ? scenes[s.index - 1] : null;
+  const strip = (x) => x && { ...x, index: undefined };
+  return createHash("sha1")
+    .update(JSON.stringify([strip(s), strip(prev), caps, spec.title, spec.names, quality, scale, crf, codeHash, splitIndex]))
+    .digest("hex")
+    .slice(0, 12);
+};
+
+const renderScenes = (list) => {
+  const files = [];
+  let rendered = 0;
+  const t0 = Date.now();
+  for (const s of list) {
+    const file = path.join(chunkDir, `${String(s.index + 1).padStart(2, "0")}-${sceneKey(s)}.mp4`);
+    files.push(file);
+    if (existsSync(file)) continue;
+    rendered++;
+    console.log(`  scene ${s.index + 1}/${scenes.length} ${s.id ?? s.set} (${s.durationInFrames} frames)…`);
+    const tmp = file.replace(/\.mp4$/, ".part.mp4");
+    render("Episode", tmp, [`--props=${qualityPath}`, `--frames=${s.from}-${s.from + s.durationInFrames - 1}`, `--scale=${scale}`, `--crf=${crf}`, "--muted", "--log=error"]);
+    execFileSync("mv", [tmp, file]);
+  }
+  const reused = list.length - rendered;
+  console.log(`  ${rendered} scene(s) rendered, ${reused} reused from cache  (${((Date.now() - t0) / 1000).toFixed(0)} s)`);
+  // drop stale chunks of this episode/quality
+  const keep = new Set(files.map((f) => path.basename(f)));
+  if (list.length === scenes.length) for (const f of readdirSync(chunkDir)) if (!keep.has(f)) execFileSync("rm", ["-f", path.join(chunkDir, f)]);
+  return files;
+};
+
+const concat = (files, out) => {
+  const listFile = path.join(chunkDir, "concat.txt");
+  writeFileSync(listFile, files.map((f) => `file '${f}'`).join("\n"));
+  run("ffmpeg", ["-hide_banner", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", listFile, "-c", "copy", out]);
+};
+
 const sceneArg = opt("scene");
 if (sceneArg) {
   const s = scenes[Number(sceneArg) - 1];
   if (!s) die(`No scene ${sceneArg} (episode has ${scenes.length}).`);
-  step(`Rendering scene ${sceneArg} only (half size)`);
+  step(`Scene ${sceneArg} only (preview size)`);
+  const [file] = renderScenes([s]);
   const out = path.join(outDir, `${name}-scene${sceneArg}.mp4`);
-  remotion(["render", "Episode", out, `--props=${timelinePath}`, `--frames=${s.from}-${s.from + s.durationInFrames - 1}`, "--scale=0.5"]);
-  console.log(`\n✔ ${path.relative(ROOT, out)}`);
+  execFileSync("cp", [file, out]);
+  console.log(`\n✔ ${path.relative(ROOT, out)}  (silent; scene preview)`);
   process.exit(0);
 }
 
-const preview = has("preview");
-const raw = path.join(outDir, `.${name}${preview ? "-preview" : ""}.raw.mp4`);
-step(preview ? "Rendering preview (540×960)" : "Rendering (1080×1920)");
-remotion(["render", "Episode", raw, `--props=${timelinePath}`, "--audio-bitrate=320k", ...(preview ? ["--scale=0.5", "--crf=26"] : ["--crf=18"])]);
+step(preview ? "Rendering preview scenes (540×960, preview quality)" : "Rendering scenes (1080×1920, final quality)");
+const files = renderScenes(scenes);
+const video = path.join(chunkDir, "video.mp4");
+concat(files, video);
+
+// Audio: rendered once per (voice + timing + music/SFX cues); cached across video-only edits.
+const audioKey = createHash("sha1")
+  .update(JSON.stringify([voiceRel && readFileSync(path.join(ROOT, "public", voiceRel)).length, captions, scenes.map((s) => [s.from, s.durationInFrames, s.music, s.sfx, s.effects, s.transition, s.set]), codeHash]))
+  .digest("hex")
+  .slice(0, 12);
+const audio = path.join(outDir, ".chunks", name, `audio-${audioKey}.wav`);
+if (!existsSync(audio)) {
+  step("Rendering the soundtrack (narration + music + SFX)");
+  for (const f of readdirSync(path.dirname(audio))) if (/^audio-.*\.wav$/.test(f)) execFileSync("rm", ["-f", path.join(path.dirname(audio), f)]);
+  render("Episode", audio, [`--props=${qualityPath}`, "--codec=wav", "--log=error"]);
+} else step("Soundtrack unchanged (cached)");
 
 // ---------------------------------------------------------------------------
-// 6. Master: two-pass loudnorm → -14 LUFS, -1 dBTP (video stream copied untouched)
+// 6. Master: two-pass loudnorm → -14 LUFS, -1 dBTP; mux with the concatenated video (stream copy)
 // ---------------------------------------------------------------------------
-step("Mastering audio to -14 LUFS");
+step("Mastering audio to -14 LUFS + muxing");
 const final = path.join(outDir, `${name}${preview ? "-preview" : ""}.mp4`);
-const measure = spawnSync("ffmpeg", ["-hide_banner", "-i", raw, "-af", "loudnorm=I=-14:TP=-1:LRA=11:print_format=json", "-f", "null", "-"], { encoding: "utf8" });
+const measure = spawnSync("ffmpeg", ["-hide_banner", "-i", audio, "-af", "loudnorm=I=-14:TP=-1:LRA=11:print_format=json", "-f", "null", "-"], { encoding: "utf8" });
 const m = JSON.parse(measure.stderr.slice(measure.stderr.lastIndexOf("{")));
 const ln = `loudnorm=I=-14:TP=-1:LRA=11:measured_I=${m.input_i}:measured_TP=${m.input_tp}:measured_LRA=${m.input_lra}:measured_thresh=${m.input_thresh}:offset=${m.target_offset}:linear=true`;
-run("ffmpeg", ["-hide_banner", "-v", "error", "-y", "-i", raw, "-c:v", "copy", "-af", ln, "-ar", "48000", "-c:a", "aac", "-b:a", "320k", "-movflags", "+faststart", final]);
-execFileSync("rm", ["-f", raw]);
+run("ffmpeg", ["-hide_banner", "-v", "error", "-y", "-i", video, "-i", audio, "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-af", ln, "-ar", "48000", "-c:a", "aac", "-b:a", "320k", "-shortest", "-movflags", "+faststart", final]);
 console.log(`\n✔ ${path.relative(ROOT, final)}  (${(total / FPS).toFixed(1)} s)`);
 if (!preview) console.log("  Thumbnail: npm run episode -- " + name + " --thumb");

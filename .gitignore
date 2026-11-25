@@ -21,3 +21,4 @@ tts-models/
 # Generated per episode by `npm run episode`
 episodes/*/timeline.json
 episodes/*/.thumb-props.json
+episodes/*/.timeline-*.json

@@ -4,6 +4,7 @@ import { Grade } from "./Grade";
 import { LightRig } from "./LightRig";
 import type { TimeOfDay } from "./lighting";
 import { Sky } from "./Sky";
+import { QualityContext, useQuality } from "./quality";
 
 type Props = {
   timeOfDay: TimeOfDay;
@@ -43,8 +44,9 @@ export const Stage: React.FC<Props> = ({
   children,
 }) => {
   const { width, height } = useVideoConfig();
+  const q = useQuality();
   return (
-    <Grade whatIf={whatIf}>
+    <Grade whatIf={whatIf} grain={q.grain ? 0.06 : 0}>
       {background ? (
         <AbsoluteFill style={{ background }} />
       ) : (
@@ -56,12 +58,23 @@ export const Stage: React.FC<Props> = ({
         height={height}
         shadows="soft"
         flat
-        gl={{ antialias: true, alpha: true, preserveDrawingBuffer: true }}
+        gl={{
+          antialias: q.antialias,
+          alpha: true,
+          preserveDrawingBuffer: true,
+        }}
         dpr={1}
       >
-        <LightRig timeOfDay={timeOfDay} shadowSize={shadowSize} target={shadowTarget} fog={fog && !background}>
-          {children}
-        </LightRig>
+        <QualityContext.Provider value={q}>
+          <LightRig
+            timeOfDay={timeOfDay}
+            shadowSize={shadowSize}
+            target={shadowTarget}
+            fog={fog && !background}
+          >
+            {children}
+          </LightRig>
+        </QualityContext.Provider>
       </ThreeCanvas>
       {overlay ? <AbsoluteFill>{overlay}</AbsoluteFill> : null}
     </Grade>
