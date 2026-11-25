@@ -242,7 +242,7 @@ Bundled in `public/fonts`, with their licenses, so every machine renders the sam
 
 Review outputs: `EffectsDemo` (all 8 demos, 20 s) in `out/effects/effects-demo.mp4`, and `EffectDemo` with `props: { effect }` for one demo.
 
-## Captions (step 6, awaiting review)
+## Captions (step 6, approved)
 
 Code is in `src/kit/captions/`: `timing.ts`, `highlight.ts`, `Captions.tsx`, `TitleCard.tsx`.
 
@@ -261,6 +261,38 @@ Code is in `src/kit/captions/`: `timing.ts`, `highlight.ts`, `Captions.tsx`, `Ti
 
 Review output: `CaptionsDemo` (10 s) in `out/captions/captions-demo.mp4`.
 
+## Audio (step 7, awaiting review)
+
+Scripts are in `scripts/` (`gen-sounds.mjs`, `audio.mjs`, `whisper-setup.mjs`). The in-video mixer is in `src/kit/audio/` (`library.ts`, `Soundtrack.tsx`).
+
+### Voice: `npm run audio -- <episode> [--script file.txt] [--skip-clean] [--model base.en]`
+Put the recording at `public/voice/<episode>/raw.wav` (.mp3, .m4a, .flac and .ogg also work).
+1. **Clean** with FFmpeg: high-pass at 80 Hz, light denoise, de-ess, 3:1 compression, leading and trailing silence trimmed, internal pauses capped at about 0.6 s, then `loudnorm` to −14 LUFS / −1 dB true peak. The result is `voice.wav` (48 kHz mono).
+2. **Word timestamps** come from **whisper.cpp running locally** (free and offline, through `@remotion/install-whisper-cpp`) with token-level timestamps. The result is `captions.json` (Remotion `Caption[]`) plus `voice.json` (duration and word count).
+3. **`--script`** aligns the transcript to the script text (Needleman–Wunsch on words). Captions then use the script's exact spelling, so "1519" stays "1519" even when spoken as "fifteen nineteen", `*emphasis*` marks survive, and names are fixed (whisper heard "Zenhira, Miptan, Lapilapu"). Script words that weren't heard get time borrowed from their neighbors, so every word stays visible and in order. **Always pass the script.**
+
+**One-time setup:** `npm run audio:setup` builds whisper.cpp 1.5.5 into `whisper.cpp/` (git-ignored) and downloads `ggml-base.en.bin`. Use `-- small.en` for better accuracy. If the model download fails behind a proxy, use `curl -L -o whisper.cpp/ggml-base.en.bin https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-base.en.bin`.
+
+**Voice source:** a TTS service that allows commercial use, or your own recording. The demo voice (`public/voice/demo`) is FFmpeg's built-in flite robot voice and is only for testing.
+
+### Sound library: `npm run sounds` (synthesized in code, no samples or licenses; deterministic; runs automatically after `npm install`, and the WAVs are git-ignored)
+- **`public/sfx/`:** stamp_slam, whoosh, ripple, war_drum, clash, waves (seamless 8 s loop), gong, crowd_cheer, rumble, impact, crackle (seamless 4 s fire loop), coins, page_flip, pop and sparkle.
+- **`public/music/`:** 8-bar seamless loops:
+  - **epic_tense:** D minor, 100 bpm, drums, ostinato and brass
+  - **mysterious:** A minor, 80 bpm, pad and celesta
+  - **sad_strings:** E minor, 66 bpm
+  - **triumphant:** C major, 112 bpm, brass stabs and timpani
+- To change a sound, edit its function in `gen-sounds.mjs` and re-run. Names and loop lengths live in `src/kit/audio/library.ts`.
+
+### Mixing: `<Soundtrack durationInFrames voice={{ src, captions, startFrame }} music={[{ at, mood|"silence", volume }]} sfx={[{ at, name, volume, duration }]} drops={[{ at, holdFrames }]} />`
+- **Music** loops, crossfades between mood cues over 24 frames, and fades out at the end.
+- **Ducking:** music drops to 30% under narration. The envelope comes from the word timings (phrases merge across gaps under 350 ms, with 0.12 s attack and 0.45 s release).
+- **Music drop:** `drops` cuts the music to silence at a frame (use it on TIMELINE_SPLIT), holds for about 0.9 s, then swells back over 1.2 s.
+- **Levels:** music 0.38, voice 0.85, per-SFX defaults in `SFX_GAIN`. Loops (`waves`, `crackle`) take `duration` and fade in and out.
+- **Mastering:** the raw mix runs about −12.7 LUFS and peaks around −0.5 dB. The episode export (step 8) runs a final `loudnorm` pass to −14 LUFS and −1 dB true peak.
+
+Review outputs: `AudioDemo` (12 s, transcribed voice, captions, lip sync, ducking, stamp, ripple and the drop at the split) in `out/audio/audio-demo.mp4`. Use `--codec=wav` for a fast audio-only check.
+
 ## Project layout
 
 ```
@@ -276,9 +308,11 @@ src/
     sets/             SetScene, 12 sets, dressing, ground, geo/ (globe + maps)      (step 4)
     effects/          Shake, YearStamp, TimelineSplit, Ripple, World (3D fx)        (step 5)
     captions/         Captions, TitleCard, timing + highlight helpers               (step 6)
-scripts/              audio.mjs, episode pipeline                                   (steps 7–8)
+  kit/audio/          Soundtrack mixer, sound library names                         (step 7)
+scripts/              gen-sounds.mjs, audio.mjs, whisper-setup.mjs (7) · episode pipeline (8)
+whisper.cpp/          local speech-to-text build + model (git-ignored, npm run audio:setup)
 episodes/<name>/      scenes.json per episode                                       (step 8)
-public/               voice/, sfx/, music/ (static assets via staticFile())
+public/               fonts/, sfx/, music/ (generated), voice/<episode>/ (raw → voice.wav + captions.json)
 out/                  renders (git-ignored)
 .claude/skills/       official Remotion agent skills (-> .agents/skills)
 ```
@@ -293,6 +327,10 @@ out/                  renders (git-ignored)
 | `npx remotion still LookTest out/x.png --frame=60 --props='{"timeOfDay":"night","whatIf":1}'` | Check another time of day or grade |
 | `npx remotion render <CompositionId> out/<file>.mp4` | Render any composition |
 | `npx remotion still <CompositionId> out/<file>.png --frame=<n>` | Render one frame as an image |
+| `npm run audio:setup` | One time: build whisper.cpp and download the speech model |
+| `npm run sounds` | Regenerate all SFX and music loops into `public/sfx` and `public/music` |
+| `npm run audio -- <ep> --script <file>` | Clean `public/voice/<ep>/raw.*` and write word-timed `captions.json` |
+| `npm run render:audio` | Render the 12 s audio demo to `out/audio/` |
 | `npm run render:captions` | Render the 10 s captions demo to `out/captions/` |
 | `npm run render:effects` | Render the 20 s effects demo to `out/effects/` |
 | `npm run render:sets` | Render all 12 set stills and the globe demo to `out/sets/` |
@@ -319,6 +357,6 @@ The most relevant ones are `remotion-best-practices`, `remotion-render`, `remoti
 - [x] 3e. Motion library approved (`out/motion/showreel.mp4`, `actions-grid.mp4`)
 - [x] 4. Sets and globe approved (`out/sets/sets-sheet.png`, `globe-demo.mp4`)
 - [x] 5. Effects approved (`out/effects/effects-demo.mp4`)
-- [ ] 6. Captions: built, awaiting review (`out/captions/captions-demo.mp4`)
-- [ ] 7. Audio pipeline
+- [x] 6. Captions approved (`out/captions/captions-demo.mp4`)
+- [ ] 7. Audio pipeline: built, awaiting review (`out/audio/audio-demo.mp4`)
 - [ ] 8. Episode pipeline

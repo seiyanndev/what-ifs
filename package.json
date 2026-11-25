@@ -14,6 +14,7 @@
     "@remotion/captions": "4.0.547",
     "@remotion/cli": "4.0.547",
     "@remotion/fonts": "4.0.547",
+    "@remotion/install-whisper-cpp": "4.0.547",
     "@remotion/media": "4.0.547",
     "@remotion/three": "4.0.547",
     "@remotion/zod-types": "4.0.547",
@@ -49,7 +50,12 @@
     "render:motion": "remotion render Showreel out/motion/showreel.mp4 && remotion render ActionsGrid out/motion/actions-grid.mp4",
     "render:sets": "for s in GLOBE MAP_REGION ANCIENT_CITY THRONE_ROOM BATTLEFIELD LIBRARY PORT MEDIEVAL_VILLAGE WORKSHOP MODERN_CITY JUNGLE_PREHISTORIC BEACH; do remotion still SetPreview out/sets/$s.png --frame=45 --props=\"{\\\"set\\\":\\\"$s\\\"}\"; done && remotion render GlobeDemo out/sets/globe-demo.mp4",
     "render:effects": "remotion render EffectsDemo out/effects/effects-demo.mp4",
-    "render:captions": "remotion render CaptionsDemo out/captions/captions-demo.mp4"
+    "render:captions": "remotion render CaptionsDemo out/captions/captions-demo.mp4",
+    "audio:setup": "node scripts/whisper-setup.mjs",
+    "audio": "node scripts/audio.mjs",
+    "sounds": "node scripts/gen-sounds.mjs",
+    "render:audio": "remotion render AudioDemo out/audio/audio-demo.mp4",
+    "postinstall": "node scripts/gen-sounds.mjs"
   },
   "allowScripts": {
     "esbuild": false
