@@ -54,7 +54,7 @@ export const PROP_MOUNT: Partial<Record<PropType, "forearm">> = { shield: "forea
 const WOOD = "#7a4d2e";
 const PAPER = "#f1e4c2";
 
-const Flame: React.FC<{ scale?: number }> = ({ scale = 1 }) => {
+export const Flame: React.FC<{ scale?: number }> = ({ scale = 1 }) => {
   const frame = useCurrentFrame();
   const f = (k: number) => 1 + 0.12 * Math.sin(frame * 0.9 + k) + 0.06 * Math.sin(frame * 2.3 + k * 2);
   return (

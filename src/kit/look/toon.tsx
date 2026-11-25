@@ -87,6 +87,11 @@ type ToonMaterialProps = {
   opacity?: number;
   emissive?: THREE.ColorRepresentation;
   emissiveIntensity?: number;
+  /** Colour texture (maps, painted signs). */
+  map?: THREE.Texture | null;
+  bumpMap?: THREE.Texture | null;
+  bumpScale?: number;
+  depthWrite?: boolean;
 };
 
 /**

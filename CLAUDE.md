@@ -170,6 +170,54 @@ Code is in `src/kit/actions/`: `core.ts` (types, easing, keyframes, pose maths),
   - Robes are rigid, so sitting or kneeling in a robe pushes the skirt into the ground. Prefer standing actions for robed characters, or hide the ground line.
 - **Review outputs:** `ActionsGrid` (1920×1080; `props: { only, cols, dist }` for close-ups) and `Showreel` (15 s), rendered to `out/motion/`.
 
+## Sets and maps (step 4, awaiting review)
+
+Code is in `src/kit/sets/`: `geo/` (data, projections, map painter, globe, map board, markers), `ground.tsx`, `dressing.tsx`, `sets.tsx`, `SetScene.tsx`, `context.tsx`.
+
+### One-line shots: `<SetScene>`
+`<SetScene set="PORT" era timeOfDay whatIf camera="wide|medium|close"|OrbitShot move="static|push|pull|orbitLeft|orbitRight" duration globe={...} map={...}>…characters…</SetScene>`
+It wires up the sky or background, painted backdrop, light rig, the diorama, the camera move over `duration` frames, and the grade. Put characters on `SETS[set].marks` (for example `<Performer position={SETS.PORT.marks.center} … />`).
+
+### The 12 sets (`SETS`)
+| Set | Default era / time | Special marks |
+|---|---|---|
+| GLOBE | ageOfSail / day | (uses `globe` props) |
+| MAP_REGION | ageOfSail / day | (uses `map` props) |
+| ANCIENT_CITY | ancient / day | temple |
+| THRONE_ROOM (interior) | medieval / day | throne |
+| BATTLEFIELD | medieval / sunset (cannons in ageOfSail+) | leftArmy, rightArmy |
+| LIBRARY (interior) | medieval / night | desk, shelf |
+| PORT | ageOfSail / sunset | dock |
+| MEDIEVAL_VILLAGE | medieval / dawn | well, market |
+| WORKSHOP (interior) | modern / day | bench, machine, anvil |
+| MODERN_CITY | modern / night | street |
+| JUNGLE_PREHISTORIC | ancient / day | pond |
+| BEACH | ageOfSail / sunset | shore |
+
+- Every outdoor set also has the marks center, left, right, back, backLeft, backRight and front.
+- **Cameras:** wide 30 (outdoor) or 27 (interior), medium 19/18, close 9/8.5. In 9:16 a whole diorama needs about 30 units of distance to fit the width.
+- **Interiors** sit on a square dollhouse `RoomBase` (back and left walls), with a warm point light that is strong at night.
+
+### Set dressing (`dressing.tsx`, reuse for new sets)
+- **Nature:** Cypress, RoundTree, PineTree, PalmTree, Bush, Fern, Rock, Volcano, Dino.
+- **Architecture:** Column, House (ancient, medieval, tudor or modern), Temple, Tower, Wall, Skyscraper.
+- **Furniture and props:** Table, Throne, Carpet, Banner, Bookshelf, Barrel, Crate, TorchStand, StreetLamp, Tent, Fence, Well, Dock, Cannon, Anvil, GearMachine, Statue, Car, Bench, Candle, Market.
+- **Grounds and bases** (`ground.tsx`): `DioramaBase ground="paving|grass|sand|dirt|planks|asphalt"`, `Water`, `RoomBase`, and HalfSea for PORT and BEACH.
+- Colors come from the era palette through `useSet()`, and windows, lamps and torches glow at night.
+
+### Globe and maps (`geo/`)
+- **Data:** Natural Earth 1:50m through `world-atlas` (public domain). It has modern borders only, so build historical regions from country lists (`REGIONS` has some) or a custom `polygon: [lon, lat][]`. `country("Philippines")` and `regionCentre([...])` are helpers.
+- **One projection convention:** `lonLatToVec3` matches three's SphereGeometry UVs, so textures, pins and routes line up. `faceRotation(view)` turns the globe so a lon/lat faces the camera.
+- **`paintMap`** paints a canvas for any lon/lat window: ocean, shore glow, land, dashed borders, ink coastline, region fills and optional decor (compass and frame). There are three `MAP_STYLES`, storybook, parchment and modern, and `ERA_MAP_STYLE` picks one per era.
+- **`<Globe view style fills pins labels routes detail stand clouds atmosphere />`** is the toy globe with a 4096×2048 painted texture. `detail={{ bounds, opacity }}` adds a high-res patch for close zooms.
+- **`<MapBoard bounds width style fills pins labels routes raised frame decor />`** is the flat map-table diorama (north toward −Z). `raised` extrudes countries out of the map, with a `rise` (0–1) pop animation.
+- **BORDER_SPREAD:** a `fills` entry is `{ countries | polygon, color, progress 0–1, origin }`. Color spreads in a soft circle from `origin` and is clipped to the region.
+- **ROUTE_ARROW:** a `routes` entry is `{ from, to, via[], progress, icon: "ship"|"army"|"none", color }`. Dotted dashes draw in, an icon travels at the head, and an arrowhead appears at the end. On the globe, icons stay upright relative to the screen (a 3D ship seen from above reads as a plank).
+- **ZOOM_TO_MAP:** animate `view` with `mixView` (shortest way round), shrink the camera distance from about 10.5 to 2.75, bring elevation to 0, and fade in `detail`. See `GlobeDemo`.
+- **Labels:** `Label3D` canvas sprites in region (caps, white with an ink stroke), city (pill) or title (gold) style.
+
+Review outputs: `out/sets/<SET>.png` (12 stills), `out/sets/sets-sheet.png` and `out/sets/globe-demo.mp4`.
+
 ## Project layout
 
 ```
@@ -182,7 +230,7 @@ src/
                       PaintedBackdrop, Grade, OrbitCamera, palettes, geometry      (step 2 ✓)
     characters/       rig.ts, Body, Hand (3a ✓) · Face/ (3b ✓) · Costume/ (3c ✓) · presets.ts, PresetCharacter, Crowd (3d)
     actions/          core, library (26 actions), Performer                        (step 3e)
-    sets/             diorama sets, GLOBE, MAP_REGION                               (step 4)
+    sets/             SetScene, 12 sets, dressing, ground, geo/ (globe + maps)      (step 4)
     effects/          YEAR_STAMP, TIMELINE_SPLIT, RIPPLE, ...                       (step 5)
     captions/         word-by-word captions, title cards                            (step 6)
 scripts/              audio.mjs, episode pipeline                                   (steps 7–8)
@@ -202,6 +250,7 @@ out/                  renders (git-ignored)
 | `npx remotion still LookTest out/x.png --frame=60 --props='{"timeOfDay":"night","whatIf":1}'` | Check another time of day or grade |
 | `npx remotion render <CompositionId> out/<file>.mp4` | Render any composition |
 | `npx remotion still <CompositionId> out/<file>.png --frame=<n>` | Render one frame as an image |
+| `npm run render:sets` | Render all 12 set stills and the globe demo to `out/sets/` |
 | `npm run render:motion` | Render the motion showreel and the actions grid to `out/motion/` |
 | `npm run render:char` | Render all character review sheets to `out/char/` |
 | `npm run lint` | ESLint + TypeScript check |
@@ -223,7 +272,7 @@ The most relevant ones are `remotion-best-practices`, `remotion-render`, `remoti
 - [x] 3c. Costumes approved (`out/char/costumes.png`, `headgear.png`, `props.png`, `costume-turntable.mp4`)
 - [x] 3d. Presets + crowd approved (`out/char/cast.png`, `crowd-demo.mp4`)
 - [x] 3e. Motion library approved (`out/motion/showreel.mp4`, `actions-grid.mp4`)
-- [ ] 4. Sets and globe  ← NEXT
+- [ ] 4. Sets and globe: built, awaiting review (`out/sets/sets-sheet.png`, `globe-demo.mp4`)
 - [ ] 5. Effects
 - [ ] 6. Captions
 - [ ] 7. Audio pipeline
