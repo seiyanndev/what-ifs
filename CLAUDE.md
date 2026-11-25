@@ -218,7 +218,7 @@ It wires up the sky or background, painted backdrop, light rig, the diorama, the
 
 Review outputs: `out/sets/<SET>.png` (12 stills), `out/sets/sets-sheet.png` and `out/sets/globe-demo.mp4`.
 
-## Effects (step 5, awaiting review)
+## Effects (step 5, approved)
 
 Code is in `src/kit/effects/`: `Shake.tsx`, `YearStamp.tsx`, `TimelineSplit.tsx`, `Ripple.tsx`, `World.tsx` (3D effects).
 
@@ -242,6 +242,25 @@ Bundled in `public/fonts`, with their licenses, so every machine renders the sam
 
 Review outputs: `EffectsDemo` (all 8 demos, 20 s) in `out/effects/effects-demo.mp4`, and `EffectDemo` with `props: { effect }` for one demo.
 
+## Captions (step 6, awaiting review)
+
+Code is in `src/kit/captions/`: `timing.ts`, `highlight.ts`, `Captions.tsx`, `TitleCard.tsx`.
+
+- **Data format:** Remotion's `Caption` type (`@remotion/captions`) is `{ text, startMs, endMs, timestampMs, confidence }`, with a leading space before each word. The transcription step (7) writes this. Converters: `captionsToWords` (→ `WordTiming[]` for face talk) and `wordsToCaptions`.
+- **`estimateTimings(text, startSec, wordsPerSec≈2.7)`** fakes plausible narration timings: longer words take longer, and punctuation adds pauses. Use it for previews before a voiceover exists.
+- **`<Captions captions names y=0.74 maxWords=4 fontSize=92 offsetMs />`:**
+  - Pages come from `createTikTokStyleCaptions`, and `withPageBreaks` also breaks after sentence ends, every 4 words and at about 22 characters.
+  - The style is Lilita One in uppercase: white with a thick dark outline (`#1e1428`) and a drop shadow, wrapping to two lines. The word being spoken turns gold (`#ffd23f`), pops, lifts and tilts slightly.
+  - Pages spring in and fade out before the next page.
+- **Auto-highlighting** (`classify`, colors in `CAPTION_COLORS`):
+  - **Years** (`1519`, `44 BC`, `~3000`, `1500s`) are cyan `#5ce1e6`.
+  - **Names** are pink `#ff9fc4`: capitalized words that aren't at a sentence start or in a stop-list, plus anything in `names`.
+  - **Emphasis** is orange `#ffb347`: mark it in the script with `*word*` (the asterisks are stripped).
+- **`<TitleCard text="What if Magellan never left Spain?" exitAt y=0.3 />`:** for the opening hook. A gold "WHAT IF" stamp-pops over a soft purple dim, then the rest of the question pops in word by word on a purple banner, and the "?" wobbles. A leading "What if" in `text` becomes the stamp automatically.
+- **Layout rule:** captions sit around 74% down the screen, and year stamps and title cards in the upper third, so they never collide. Keep key action out of the bottom 30%.
+
+Review output: `CaptionsDemo` (10 s) in `out/captions/captions-demo.mp4`.
+
 ## Project layout
 
 ```
@@ -256,7 +275,7 @@ src/
     actions/          core, library (26 actions), Performer                        (step 3e)
     sets/             SetScene, 12 sets, dressing, ground, geo/ (globe + maps)      (step 4)
     effects/          Shake, YearStamp, TimelineSplit, Ripple, World (3D fx)        (step 5)
-    captions/         word-by-word captions, title cards                            (step 6)
+    captions/         Captions, TitleCard, timing + highlight helpers               (step 6)
 scripts/              audio.mjs, episode pipeline                                   (steps 7–8)
 episodes/<name>/      scenes.json per episode                                       (step 8)
 public/               voice/, sfx/, music/ (static assets via staticFile())
@@ -274,6 +293,7 @@ out/                  renders (git-ignored)
 | `npx remotion still LookTest out/x.png --frame=60 --props='{"timeOfDay":"night","whatIf":1}'` | Check another time of day or grade |
 | `npx remotion render <CompositionId> out/<file>.mp4` | Render any composition |
 | `npx remotion still <CompositionId> out/<file>.png --frame=<n>` | Render one frame as an image |
+| `npm run render:captions` | Render the 10 s captions demo to `out/captions/` |
 | `npm run render:effects` | Render the 20 s effects demo to `out/effects/` |
 | `npm run render:sets` | Render all 12 set stills and the globe demo to `out/sets/` |
 | `npm run render:motion` | Render the motion showreel and the actions grid to `out/motion/` |
@@ -298,7 +318,7 @@ The most relevant ones are `remotion-best-practices`, `remotion-render`, `remoti
 - [x] 3d. Presets + crowd approved (`out/char/cast.png`, `crowd-demo.mp4`)
 - [x] 3e. Motion library approved (`out/motion/showreel.mp4`, `actions-grid.mp4`)
 - [x] 4. Sets and globe approved (`out/sets/sets-sheet.png`, `globe-demo.mp4`)
-- [ ] 5. Effects: built, awaiting review (`out/effects/effects-demo.mp4`)
-- [ ] 6. Captions
+- [x] 5. Effects approved (`out/effects/effects-demo.mp4`)
+- [ ] 6. Captions: built, awaiting review (`out/captions/captions-demo.mp4`)
 - [ ] 7. Audio pipeline
 - [ ] 8. Episode pipeline
