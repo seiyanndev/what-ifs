@@ -1,0 +1,455 @@
+{
+  "title": "What if Magellan never left Spain?",
+  "voice": "bm_george",
+  "names": [
+    "Zheng",
+    "He",
+    "Lapulapu",
+    "Mactan",
+    "Seville",
+    "Humabon"
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "set": "PORT",
+      "camera": "medium",
+      "move": "push",
+      "narration": "What if Magellan never left Spain?",
+      "titleCard": true,
+      "music": "epic_tense",
+      "characters": [
+        {
+          "preset": "magellan",
+          "mark": "center",
+          "heading": 12,
+          "actions": [
+            {
+              "action": "look_around"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "voyage",
+      "set": "GLOBE",
+      "narration": "In 1519, a Portuguese navigator sailing for Spain set out west, hunting for a sea route to the Spice Islands.",
+      "effects": {
+        "yearStamp": {
+          "text": "1519",
+          "subtitle": "Seville",
+          "at": 0.35
+        }
+      },
+      "geo": {
+        "view": [
+          -20,
+          25
+        ],
+        "viewTo": [
+          -75,
+          -30
+        ],
+        "fills": [
+          {
+            "countries": [
+              "Spain"
+            ],
+            "color": "#c0392b",
+            "from": 0.4,
+            "to": 1.6,
+            "origin": [
+              -5,
+              40
+            ]
+          }
+        ],
+        "routes": [
+          {
+            "path": [
+              [
+                -6.0,
+                37.4
+              ],
+              [
+                -16,
+                27.5
+              ],
+              [
+                -34,
+                -6
+              ],
+              [
+                -58,
+                -36
+              ],
+              [
+                -69,
+                -52.8
+              ]
+            ],
+            "icon": "ship",
+            "from": 1.2
+          }
+        ],
+        "pins": [
+          {
+            "at": [
+              -6.0,
+              37.4
+            ],
+            "at_time": 0.6
+          }
+        ]
+      }
+    },
+    {
+      "id": "pacific",
+      "set": "GLOBE",
+      "narration": "After crossing the vast Pacific, his starving fleet reached the Philippines in 1521.",
+      "geo": {
+        "view": [
+          -150,
+          -10
+        ],
+        "viewTo": [
+          124.0,
+          10.3
+        ],
+        "zoom": true,
+        "routes": [
+          {
+            "path": [
+              [
+                -69,
+                -52.8
+              ],
+              [
+                -95,
+                -40
+              ],
+              [
+                -150,
+                -12
+              ],
+              [
+                144.8,
+                13.4
+              ],
+              [
+                124.0,
+                10.3
+              ]
+            ],
+            "icon": "ship",
+            "from": 0,
+            "to": 3.2
+          }
+        ],
+        "pins": [
+          {
+            "at": [
+              124.0,
+              10.3
+            ],
+            "color": "#f2b134",
+            "at_time": 3.4
+          }
+        ],
+        "labels": [
+          {
+            "at": [
+              124.0,
+              12.4
+            ],
+            "text": "Mactan · 1521",
+            "style": "city",
+            "from": 3.6
+          }
+        ]
+      }
+    },
+    {
+      "id": "mactan",
+      "set": "BEACH",
+      "camera": "medium",
+      "narration": "On the island of Mactan, a chieftain named Lapulapu refused to bow to a foreign king.",
+      "characters": [
+        {
+          "preset": "lapulapu",
+          "mark": "center",
+          "heading": 0,
+          "actions": [
+            {
+              "action": "idle"
+            },
+            {
+              "action": "shake_head",
+              "at": 1.6
+            },
+            {
+              "action": "idle",
+              "at": 3.4,
+              "expression": "determined"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "battle",
+      "set": "BEACH",
+      "camera": "wide",
+      "move": "push",
+      "narration": "In April 1521, Magellan attacked... and fell in the shallows of Mactan.",
+      "effects": {
+        "yearStamp": {
+          "text": "1521",
+          "subtitle": "Battle of Mactan",
+          "at": 0.3
+        },
+        "crowd": {
+          "count": 20,
+          "pool": "mactan",
+          "cheerAt": 3.8,
+          "flanks": true
+        }
+      },
+      "sfx": [
+        {
+          "name": "war_drum",
+          "at": 0.1
+        },
+        {
+          "name": "clash",
+          "at": 2.6
+        }
+      ],
+      "characters": [
+        {
+          "preset": "lapulapu",
+          "mark": "right",
+          "heading": -60,
+          "actions": [
+            {
+              "action": "idle"
+            },
+            {
+              "action": "sword_raise",
+              "at": 2.4
+            }
+          ]
+        },
+        {
+          "preset": "magellan",
+          "mark": "left",
+          "heading": 60,
+          "actions": [
+            {
+              "action": "idle",
+              "expression": "determined"
+            },
+            {
+              "action": "fall",
+              "at": 2.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "split",
+      "set": "PORT",
+      "camera": "medium",
+      "move": "static",
+      "narration": "But what if that voyage never happened at all?",
+      "music": "mysterious",
+      "effects": {
+        "timelineSplit": {
+          "takeoverAt": 1.9,
+          "whatIfCharacters": [
+            {
+              "preset": "magellan",
+              "mark": "center",
+              "heading": 12,
+              "actions": [
+                {
+                  "action": "shrug",
+                  "at": 0.6
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "characters": [
+        {
+          "preset": "magellan",
+          "mark": "center",
+          "heading": 12,
+          "actions": [
+            {
+              "action": "point",
+              "at": 0.2,
+              "params": {
+                "dir": "side",
+                "hand": "left"
+              }
+            }
+          ]
+        }
+      ],
+      "thumb": true
+    },
+    {
+      "id": "king-says-no",
+      "set": "THRONE_ROOM",
+      "camera": "medium",
+      "narration": "Picture it: the Spanish crown says *no*, and Magellan's five ships rot in Seville's harbor.",
+      "characters": [
+        {
+          "preset": "king",
+          "mark": "throne",
+          "actions": [
+            {
+              "action": "idle"
+            },
+            {
+              "action": "shake_head",
+              "at": 1.0
+            }
+          ]
+        },
+        {
+          "preset": "magellan",
+          "mark": "left",
+          "heading": 30,
+          "actions": [
+            {
+              "action": "kneel",
+              "at": 0.3
+            },
+            {
+              "action": "facepalm",
+              "at": 3.2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "no-claim",
+      "set": "MAP_REGION",
+      "narration": "Without that expedition, Spain has no reason to claim these islands... at least for now.",
+      "geo": {
+        "center": [
+          122,
+          11
+        ],
+        "span": 22,
+        "fills": [
+          {
+            "countries": [
+              "Philippines"
+            ],
+            "color": "#2f8a6a",
+            "from": 0.6,
+            "to": 2.4
+          }
+        ],
+        "labels": [
+          {
+            "at": [
+              121.5,
+              14.8
+            ],
+            "text": "Philippines",
+            "style": "region",
+            "from": 0.8
+          }
+        ],
+        "pins": [
+          {
+            "at": [
+              124.0,
+              10.3
+            ],
+            "color": "#f2b134",
+            "at_time": 1.6
+          }
+        ]
+      }
+    },
+    {
+      "id": "peace",
+      "set": "BEACH",
+      "camera": "medium",
+      "move": "orbitLeft",
+      "transition": "ripple",
+      "narration": "Lapulapu would never become a symbol of resistance. He'd just be a datu, ruling Mactan in peace.",
+      "music": "triumphant",
+      "effects": {
+        "crowd": {
+          "count": 20,
+          "pool": "mactan",
+          "cheerAt": 2.6,
+          "flanks": true
+        }
+      },
+      "characters": [
+        {
+          "preset": "lapulapu",
+          "mark": "center",
+          "actions": [
+            {
+              "action": "idle",
+              "expression": "happy"
+            },
+            {
+              "action": "cheer",
+              "at": 2.4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "outro",
+      "set": "GLOBE",
+      "narration": "One voyage that never sailed... and the whole map of Asia changes. What would *you* change?",
+      "tail": 1.6,
+      "geo": {
+        "view": [
+          124,
+          10
+        ],
+        "viewTo": [
+          60,
+          15
+        ],
+        "fills": [
+          {
+            "countries": [
+              "Philippines"
+            ],
+            "color": "#2f8a6a",
+            "from": 0,
+            "to": 0.5
+          }
+        ],
+        "labels": [
+          {
+            "at": [
+              64,
+              30
+            ],
+            "text": "What if?",
+            "style": "title",
+            "from": 1.4
+          }
+        ]
+      }
+    }
+  ]
+}

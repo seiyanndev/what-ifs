@@ -1,5 +1,6 @@
 import { Composition, Still } from "remotion";
 import { BaseTurnaround, BaseVariants, HandPoses, RigTest } from "./compositions/CharacterSheets";
+import { Episode, validateEpisode, type EpisodeProps } from "./kit/episode";
 import { AudioDemo, AUDIO_DEMO_FRAMES } from "./compositions/AudioDemo";
 import { CaptionsDemo } from "./compositions/CaptionsDemo";
 import { EffectDemo, EffectsDemo, EFFECTS_TOTAL } from "./compositions/EffectsDemo";
@@ -14,6 +15,15 @@ import { TestCube } from "./compositions/TestCube";
 
 // Series format: vertical 9:16 Shorts, 1080x1920 @ 30fps.
 export const VIDEO = { width: 1080, height: 1920, fps: 30 } as const;
+
+const EMPTY_EPISODE: EpisodeProps = {
+  name: "empty",
+  spec: { title: "What if?", scenes: [{ set: "PORT", narration: "What if?" }] },
+  scenes: [{ set: "PORT", narration: "What if?", from: 0, durationInFrames: 300, index: 0, afterSplit: false }],
+  captions: [],
+  durationInFrames: 300,
+  voice: null,
+};
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -43,6 +53,19 @@ export const RemotionRoot: React.FC = () => {
       <Still id="Cast" component={CastSheet} width={2400} height={1700} />
       <Composition id="CrowdDemo" component={CrowdDemo} durationInFrames={5 * VIDEO.fps} {...VIDEO} />
       <Composition id="ActionsGrid" component={ActionsGrid} durationInFrames={4 * VIDEO.fps} fps={30} width={1920} height={1080} />
+      {/* The daily engine: props come from episodes/<name>/timeline.json (npm run episode) */}
+      <Composition
+        id="Episode"
+        component={Episode}
+        {...VIDEO}
+        durationInFrames={300}
+        defaultProps={EMPTY_EPISODE}
+        calculateMetadata={({ props }) => {
+          const errs = validateEpisode(props.spec);
+          if (errs.length) throw new Error(`scenes.json has problems:\n- ${errs.join("\n- ")}`);
+          return { durationInFrames: Math.max(1, props.durationInFrames) };
+        }}
+      />
       <Composition id="AudioDemo" component={AudioDemo} durationInFrames={AUDIO_DEMO_FRAMES} {...VIDEO} />
       <Composition id="CaptionsDemo" component={CaptionsDemo} durationInFrames={10 * VIDEO.fps} {...VIDEO} />
       <Composition id="EffectsDemo" component={EffectsDemo} durationInFrames={EFFECTS_TOTAL} {...VIDEO} />

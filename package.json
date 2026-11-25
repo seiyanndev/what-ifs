@@ -57,7 +57,8 @@
     "render:audio": "remotion render AudioDemo out/audio/audio-demo.mp4",
     "postinstall": "node scripts/gen-sounds.mjs",
     "voice:setup": "bash scripts/tts-setup.sh",
-    "voice": ".venv-tts/bin/python scripts/tts.py"
+    "voice": ".venv-tts/bin/python scripts/tts.py",
+    "episode": "node scripts/episode.mjs"
   },
   "allowScripts": {
     "esbuild": false

@@ -261,7 +261,7 @@ Code is in `src/kit/captions/`: `timing.ts`, `highlight.ts`, `Captions.tsx`, `Ti
 
 Review output: `CaptionsDemo` (10 s) in `out/captions/captions-demo.mp4`.
 
-## Audio (step 7, awaiting review)
+## Audio (step 7, approved)
 
 Scripts are in `scripts/` (`gen-sounds.mjs`, `audio.mjs`, `whisper-setup.mjs`). The in-video mixer is in `src/kit/audio/` (`library.ts`, `Soundtrack.tsx`).
 
@@ -302,6 +302,80 @@ Uses **Kokoro**, a local neural TTS (Apache-2.0, so commercial use is fine; offl
 
 Review outputs: `AudioDemo` (12 s, transcribed voice, captions, lip sync, ducking, stamp, ripple and the drop at the split) in `out/audio/audio-demo.mp4`. Use `--codec=wav` for a fast audio-only check.
 
+## Episodes: the daily engine (step 8, awaiting review)
+
+Code: `scripts/episode.mjs` (pipeline), `src/kit/episode/` (`spec.ts` types and validation, `SceneView.tsx`, `Episode.tsx`). Example: `episodes/magellan/scenes.json`.
+
+### Daily commands
+```
+npm run episode -- <name> --preview   # half-res check   → out/<name>-preview.mp4
+npm run episode -- <name> --scene 4   # one scene only   → out/<name>-scene4.mp4
+npm run episode -- <name>             # final 1080×1920  → out/<name>.mp4 (mastered -14 LUFS)
+npm run episode -- <name> --thumb     # thumbnail        → out/<name>-thumb.png + .jpg
+```
+Options: `--no-voice` (estimated timings and silent narration, for layout checks), `--voice bm_lewis`, `--redo-voice`, `--concurrency N`. Set `REMOTION_BROWSER_EXECUTABLE` if Remotion can't download its browser.
+
+### What `npm run episode` does
+1. Joins each scene's `narration` into `public/voice/<name>/script.txt`, one paragraph per scene, which gives natural pauses between scenes.
+2. **Voice:** if you recorded `raw.*` yourself, it uses that (mic chain). Otherwise the Kokoro narrator (`spec.voice`, default `bm_george`) reads the script. The result is cached on a hash of the script and voice, so re-renders skip it.
+3. `scripts/audio.mjs --script`: cleanup, Whisper word timestamps, and alignment to the script.
+4. **Timing:** each scene runs from its first word to the next scene's first word, starting 4 frames early. The last scene adds `tail` (default 1.4 s). It writes `episodes/<name>/timeline.json` (the `Episode` props) and prints the scene table, warning outside 45–75 s.
+5. **Render:** the `Episode` composition. `calculateMetadata` validates `scenes.json` with friendly errors (for example "unknown preset 'magelan'. Did you mean 'magellan'?" or "set BEACH has no mark 'dock' (marks: …)").
+6. **Master:** two-pass FFmpeg `loudnorm` to −14 LUFS / −1 dBTP, AAC 320k, video stream copied, faststart.
+7. **Thumbnail:** the frame from the scene with `"thumb": true`, otherwise 1.2 s into the split, otherwise scene 1. It adds a big gold "WHAT IF…?" and the question on a purple banner, and hides the REAL / WHAT IF labels.
+
+### `scenes.json` format (types in `src/kit/episode/spec.ts`)
+```jsonc
+{
+  "title": "What if Magellan never left Spain?",   // title card + thumbnail
+  "voice": "bm_george",                             // optional narrator
+  "names": ["Lapulapu", "Mactan"],                  // extra caption name highlights
+  "scenes": [{
+    "id": "battle",                                 // label in the scene table / Studio
+    "set": "BEACH", "era": "ageOfSail", "timeOfDay": "sunset",   // era/time optional (set defaults)
+    "camera": "wide|medium|close", "move": "static|push|pull|orbitLeft|orbitRight",
+    "narration": "In April 1521, Magellan attacked... and fell.",  // REQUIRED; drives the length
+    "titleCard": true,                              // or a string; hides captions in this scene
+    "transition": "cut|ripple",                     // ripple into this scene (+ whoosh)
+    "music": "epic_tense|mysterious|sad_strings|triumphant|silence",  // mood change here
+    "sfx": [{ "name": "clash", "at": 2.6 }],        // seconds into the scene
+    "characters": [{
+      "preset": "magellan", "mark": "left" /* or [x,y,z] */, "heading": 60,
+      "talking": false, "expression": "determined",
+      "actions": [{ "action": "idle" }, { "action": "fall", "at": 2.8, "params": {}, "expression": "shocked" }]
+    }],
+    "effects": {
+      "yearStamp": { "text": "1521", "subtitle": "Battle of Mactan", "at": 0.3, "hold": 2.2 },   // + shake + stamp SFX
+      "timelineSplit": { "takeoverAt": 1.9, "whatIfCharacters": [ … ] },   // once per episode; music drop + ripple SFX; later scenes are What If
+      "crowd": { "count": 20, "pool": "mactan", "cheerAt": 3.8, "flanks": true },   // flanks = two groups framing the action
+      "fire": { "mark": "back" }, "plagueFog": true, "shipFleet": { "count": 7 },
+      "fallingScrolls": true, "asteroid": { "at": 1.6 }
+    },
+    "geo": {                                         // GLOBE / MAP_REGION
+      "view": [-20, 25], "viewTo": [124, 10.3], "zoom": true,     // globe turn (+ dive)
+      "center": [122, 11], "span": 22,                             // map window
+      "fills":  [{ "countries": ["Spain"], "color": "#c0392b", "from": 0.4, "to": 1.6 }],
+      "routes": [{ "path": [[lon, lat], …], "icon": "ship", "from": 1.2 }],
+      "pins":   [{ "at": [lon, lat], "at_time": 0.6 }],
+      "labels": [{ "at": [lon, lat], "text": "Mactan · 1521", "style": "city", "from": 3.6 }]
+    },
+    "whatIf": 1,                                     // force a grade (default: 0 before the split, 1 after)
+    "tail": 1.6,                                     // last scene: seconds after the last word
+    "thumb": true                                    // thumbnail frame comes from here
+  }]
+}
+```
+- **Automatic SFX:** year stamp (stamp_slam), split (ripple plus the music drop), ripple transition (whoosh), asteroid (impact), fire (crackle loop), crowd cheer (crowd_cheer), and waves under PORT and BEACH scenes.
+- **Timing is in seconds relative to the scene.** Scene lengths come from the narration, so write about 8–20 words per scene. A 60–75 s episode is about 140–180 words.
+- **Narration markup:** `*emphasis*`, `word{spoken}` (no spaces inside the braces), and `...` for a pause. Years are read naturally.
+- **Composition rules learned:** on BEACH and PORT the back half is water, so use crowd `flanks`. Keep characters on marks and the bottom 30% clear for captions.
+
+### Daily workflow (15–30 min)
+1. Fact-check the real-history claims (ask Claude: "Fact-check only the real-history claims…").
+2. Write `episodes/<name>/scenes.json` (ask Claude to convert the script using only kit presets, sets, actions and effects. Anything truly missing gets added to the kit).
+3. `npm run episode -- <name> --preview`, watch it, fix with `--scene N` checks.
+4. `npm run episode -- <name>`, then `--thumb`. Upload `out/<name>.mp4` and `out/<name>-thumb.jpg`.
+
 ## Project layout
 
 ```
@@ -318,9 +392,10 @@ src/
     effects/          Shake, YearStamp, TimelineSplit, Ripple, World (3D fx)        (step 5)
     captions/         Captions, TitleCard, timing + highlight helpers               (step 6)
   kit/audio/          Soundtrack mixer, sound library names                         (step 7)
-scripts/              gen-sounds.mjs, audio.mjs, whisper-setup.mjs (7) · episode pipeline (8)
+scripts/              gen-sounds.mjs, audio.mjs, tts.py, whisper-setup.mjs (7) · episode.mjs (8)
 whisper.cpp/          local speech-to-text build + model (git-ignored, npm run audio:setup)
-episodes/<name>/      scenes.json per episode                                       (step 8)
+  kit/episode/        scenes.json types + validation, SceneView, Episode           (step 8)
+episodes/<name>/      scenes.json (you write) + timeline.json (generated)          (step 8)
 public/               fonts/, sfx/, music/ (generated), voice/<episode>/ (raw → voice.wav + captions.json)
 out/                  renders (git-ignored)
 .claude/skills/       official Remotion agent skills (-> .agents/skills)
@@ -330,6 +405,7 @@ out/                  renders (git-ignored)
 
 | Command | What it does |
 |---|---|
+| `npm run episode -- <name> [--preview\|--thumb\|--scene N]` | **Daily:** scenes.json → mastered MP4 / preview / thumbnail |
 | `npm run dev` | Open Remotion Studio to preview compositions |
 | `npm run render:test` | Render the 3 s spinning cube to `out/test.mp4` |
 | `npm run render:look` | Render the 4 s sunset plaza look test to `out/look-test.mp4` |
@@ -369,5 +445,5 @@ The most relevant ones are `remotion-best-practices`, `remotion-render`, `remoti
 - [x] 4. Sets and globe approved (`out/sets/sets-sheet.png`, `globe-demo.mp4`)
 - [x] 5. Effects approved (`out/effects/effects-demo.mp4`)
 - [x] 6. Captions approved (`out/captions/captions-demo.mp4`)
-- [ ] 7. Audio pipeline: built, awaiting review (`out/audio/audio-demo.mp4`)
-- [ ] 8. Episode pipeline
+- [x] 7. Audio pipeline approved (`out/audio/audio-demo.mp4`)
+- [ ] 8. Episode pipeline: built, awaiting review (`out/magellan-preview.mp4`, `out/magellan.mp4`, `out/magellan-thumb.png`)

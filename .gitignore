@@ -17,3 +17,7 @@ public/music/
 # Local narrator (Kokoro) — created by `npm run voice:setup`
 .venv-tts/
 tts-models/
+
+# Generated per episode by `npm run episode`
+episodes/*/timeline.json
+episodes/*/.thumb-props.json

@@ -98,7 +98,8 @@ captions = captions.filter((c) => c.text.trim().length > 0);
 // ---------------------------------------------------------------------------
 const scriptFile = opt("script");
 if (scriptFile) {
-  const script = readFileSync(scriptFile, "utf8").split(/\s+/).filter(Boolean);
+  // word{spoken} → caption shows "word" (the narrator said the spoken form)
+  const script = readFileSync(scriptFile, "utf8").split(/\s+/).filter(Boolean).map((w) => w.replace(/\{[^}]*\}/g, ""));
   const norm = (w) => w.toLowerCase().replace(/[^a-z0-9]/g, "");
   // numbers spoken as words ("fifteen nineteen") vs script digits: allow the aligner to absorb them
   const a = captions.map((c) => norm(c.text));
