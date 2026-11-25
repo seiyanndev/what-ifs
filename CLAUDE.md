@@ -267,7 +267,10 @@ Scripts are in `scripts/` (`gen-sounds.mjs`, `audio.mjs`, `whisper-setup.mjs`). 
 
 ### Voice: `npm run audio -- <episode> [--script file.txt] [--skip-clean] [--model base.en]`
 Put the recording at `public/voice/<episode>/raw.wav` (.mp3, .m4a, .flac and .ogg also work).
-1. **Clean** with FFmpeg: high-pass at 80 Hz, light denoise, de-ess, 3:1 compression, leading and trailing silence trimmed, internal pauses capped at about 0.6 s, then `loudnorm` to −14 LUFS / −1 dB true peak. The result is `voice.wav` (48 kHz mono).
+1. **Clean** with FFmpeg, choosing one of two chains:
+   - **Studio chain** for the Kokoro narrator. `npm run voice` writes a `.tts` marker that selects it automatically, or force it with `--studio`. It **never denoises or de-esses**: on clean TTS, `afftdn` alone removed about 6.6 dB of air and 4 dB of presence, which caused the "boxed in" sound. Instead it does soxr resampling to 48 kHz, a −2.5 dB cut at 280 Hz (boxiness), +2.5 dB at 3.8 kHz (presence), a +3 dB high shelf above 8 kHz plus a light `aexciter` (air above the 12 kHz TTS ceiling), and gentle 2:1 compression.
+   - **Mic chain** for real recordings (`--mic`). It adds a light `afftdn=nf=-40` and `deesser=i=0.25` before the same tone stage.
+   - **Both** then trim silence (pauses capped at about 0.7 s) and run `loudnorm` to −14 LUFS / −1 dB true peak. The result is `voice.wav` (48 kHz mono).
 2. **Word timestamps** come from **whisper.cpp running locally** (free and offline, through `@remotion/install-whisper-cpp`) with token-level timestamps. The result is `captions.json` (Remotion `Caption[]`) plus `voice.json` (duration and word count).
 3. **`--script`** aligns the transcript to the script text (Needleman–Wunsch on words). Captions then use the script's exact spelling, so "1519" stays "1519" even when spoken as "fifteen nineteen", `*emphasis*` marks survive, and names are fixed (whisper heard "Zenhira, Miptan, Lapilapu"). Script words that weren't heard get time borrowed from their neighbors, so every word stays visible and in order. **Always pass the script.**
 
@@ -292,7 +295,7 @@ Uses **Kokoro**, a local neural TTS (Apache-2.0, so commercial use is fine; offl
 
 ### Mixing: `<Soundtrack durationInFrames voice={{ src, captions, startFrame }} music={[{ at, mood|"silence", volume }]} sfx={[{ at, name, volume, duration }]} drops={[{ at, holdFrames }]} />`
 - **Music** loops, crossfades between mood cues over 24 frames, and fades out at the end.
-- **Ducking:** music drops to 30% under narration. The envelope comes from the word timings (phrases merge across gaps under 350 ms, with 0.12 s attack and 0.45 s release).
+- **Ducking:** music drops to 20% under narration. The envelope comes from the word timings (phrases merge across gaps under 350 ms, with 0.12 s attack and 0.45 s release).
 - **Music drop:** `drops` cuts the music to silence at a frame (use it on TIMELINE_SPLIT), holds for about 0.9 s, then swells back over 1.2 s.
 - **Levels:** music 0.38, voice 0.85, per-SFX defaults in `SFX_GAIN`. Loops (`waves`, `crackle`) take `duration` and fade in and out.
 - **Mastering:** the raw mix runs about −12.7 LUFS and peaks around −0.5 dB. The episode export (step 8) runs a final `loudnorm` pass to −14 LUFS and −1 dB true peak.

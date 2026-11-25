@@ -52,7 +52,7 @@ const speechEnvelope = (captions: Caption[] | undefined, fps: number, startFrame
  * The whole mix for an episode: narration, music (looped, crossfaded between moods, ducked under
  * the voice, with music drops) and one-shot / looping SFX. Pure function of the frame.
  */
-export const Soundtrack: React.FC<SoundtrackProps> = ({ durationInFrames, voice, music = [], sfx = [], drops = [], duckTo = 0.3, musicVolume = 0.38, crossfadeFrames = 24 }) => {
+export const Soundtrack: React.FC<SoundtrackProps> = ({ durationInFrames, voice, music = [], sfx = [], drops = [], duckTo = 0.2, musicVolume = 0.38, crossfadeFrames = 24 }) => {
   const { fps } = useVideoConfig();
   const speech = speechEnvelope(voice?.captions, fps, voice?.startFrame ?? 0);
   const cues = [...music].sort((a, b) => a.at - b.at);

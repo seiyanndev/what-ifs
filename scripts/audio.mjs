@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 // Voice pipeline for an episode:
 //   1. clean   public/voice/<ep>/raw.(wav|mp3|m4a)  → public/voice/<ep>/voice.wav
-//              (high-pass, de-ess, gentle compression, trim silence, loudness ≈ -14 LUFS, true-peak -1 dB)
+//              studio chain for the generated narrator (no denoise: tone EQ, presence + air, gentle comp),
+//              mic chain for real recordings (+ light denoise/de-ess); trim silence; -14 LUFS, true-peak -1 dB.
+//              Auto-picks studio when `npm run voice` made raw.wav; force with --studio / --mic.
 //   2. words   transcribe voice.wav with local whisper.cpp → public/voice/<ep>/captions.json (Remotion Caption[])
 //   3. fix     optional: align to the script text so caption spelling matches (names, years, *emphasis*)
 //
@@ -41,15 +43,27 @@ if (!args.includes("--skip-clean")) {
     console.error(`No recording found. Put it at public/voice/${ep}/raw.wav (or .mp3/.m4a).`);
     process.exit(1);
   }
+  // "studio": already-clean source (the Kokoro narrator) — never denoise/de-ess it, that's what made
+  //           it sound boxed-in. "mic": real recordings get a light denoise + de-ess first.
+  const studio = args.includes("--studio") || (!args.includes("--mic") && existsSync(path.join(dir, ".tts")));
+  const tone = [
+    "aresample=48000:resampler=soxr:precision=28", // clean resample (TTS is 24 kHz)
+    "highpass=f=70",
+    "equalizer=f=280:t=q:w=1.1:g=-2.5", // less boxy / "in a cupboard"
+    "equalizer=f=3800:t=q:w=1.0:g=2.5", // presence: clear, close, sharp
+    "highshelf=f=8000:g=3", // air
+    "aexciter=amount=0.6:drive=3:freq=7000:ceil=18000", // restore top-end sparkle above the 12 kHz TTS ceiling
+  ];
+  const cleanup = studio ? [] : ["afftdn=nf=-40", "deesser=i=0.25"];
   const chain = [
-    "highpass=f=80", // rumble / handling noise
-    "afftdn=nf=-25", // light broadband denoise
-    "deesser=i=0.4", // soften harsh S sounds
-    "acompressor=threshold=-20dB:ratio=3:attack=8:release=120:makeup=3", // even out the narration
-    // trim leading/trailing silence, cap internal pauses at ~0.6 s (keeps it punchy)
-    "silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.12:stop_periods=-1:stop_duration=0.6:stop_threshold=-45dB",
-    "loudnorm=I=-14:TP=-1:LRA=9", // streaming loudness target
+    ...cleanup,
+    ...tone,
+    "acompressor=threshold=-18dB:ratio=2:attack=15:release=150:makeup=2", // gentle, keeps it natural
+    // trim leading/trailing silence, cap internal pauses at ~0.7 s
+    "silenceremove=start_periods=1:start_threshold=-50dB:start_silence=0.12:stop_periods=-1:stop_duration=0.7:stop_threshold=-50dB",
+    "loudnorm=I=-14:TP=-1:LRA=11", // streaming loudness target
   ].join(",");
+  console.log(`cleaning (${studio ? "studio: narrator" : "mic: recording"} chain)`);
   ff("-i", path.join(dir, raw), "-af", chain, "-ar", "48000", "-ac", "1", voice);
   console.log(`cleaned → public/voice/${ep}/voice.wav`);
 }

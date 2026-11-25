@@ -23,148 +23,148 @@
  {
   "text": " never",
   "startMs": 1050,
-  "endMs": 1480,
-  "timestampMs": 1265,
+  "endMs": 1460,
+  "timestampMs": 1255,
   "confidence": null
  },
  {
   "text": " left",
-  "startMs": 1480,
-  "endMs": 1720,
-  "timestampMs": 1600,
+  "startMs": 1460,
+  "endMs": 1730,
+  "timestampMs": 1595,
   "confidence": null
  },
  {
   "text": " Spain",
-  "startMs": 1720,
-  "endMs": 2090,
-  "timestampMs": 1905,
+  "startMs": 1730,
+  "endMs": 2180,
+  "timestampMs": 1955,
   "confidence": null
  },
  {
   "text": " in",
-  "startMs": 2090,
-  "endMs": 2240,
-  "timestampMs": 2165,
+  "startMs": 2180,
+  "endMs": 2360,
+  "timestampMs": 2270,
   "confidence": null
  },
  {
   "text": " 1519?",
-  "startMs": 2240,
-  "endMs": 3400,
-  "timestampMs": 2820,
+  "startMs": 2360,
+  "endMs": 3440,
+  "timestampMs": 2900,
   "confidence": null
  },
  {
   "text": " The",
-  "startMs": 3400,
-  "endMs": 3660,
-  "timestampMs": 3530,
+  "startMs": 3440,
+  "endMs": 3680,
+  "timestampMs": 3560,
   "confidence": null
  },
  {
   "text": " fleet",
-  "startMs": 3660,
-  "endMs": 4040,
-  "timestampMs": 3850,
+  "startMs": 3680,
+  "endMs": 4080,
+  "timestampMs": 3880,
   "confidence": null
  },
  {
   "text": " stays",
-  "startMs": 4040,
-  "endMs": 4440,
-  "timestampMs": 4240,
+  "startMs": 4080,
+  "endMs": 4480,
+  "timestampMs": 4280,
   "confidence": null
  },
  {
   "text": " home.",
-  "startMs": 4440,
-  "endMs": 5000,
-  "timestampMs": 4720,
+  "startMs": 4480,
+  "endMs": 5040,
+  "timestampMs": 4760,
   "confidence": null
  },
  {
   "text": " Instead,",
-  "startMs": 5000,
+  "startMs": 5040,
   "endMs": 5890,
-  "timestampMs": 5445,
+  "timestampMs": 5465,
   "confidence": null
  },
  {
   "text": " Zheng",
   "startMs": 5890,
-  "endMs": 6260,
-  "timestampMs": 6075,
+  "endMs": 6110,
+  "timestampMs": 6000,
   "confidence": null
  },
  {
   "text": " He",
-  "startMs": 6260,
-  "endMs": 6440,
-  "timestampMs": 6350,
+  "startMs": 6110,
+  "endMs": 6260,
+  "timestampMs": 6185,
   "confidence": null
  },
  {
   "text": " reaches",
-  "startMs": 6440,
-  "endMs": 7100,
-  "timestampMs": 6770,
+  "startMs": 6260,
+  "endMs": 6800,
+  "timestampMs": 6530,
   "confidence": null
  },
  {
   "text": " Mactan",
-  "startMs": 7100,
-  "endMs": 7610,
-  "timestampMs": 7355,
+  "startMs": 6800,
+  "endMs": 7280,
+  "timestampMs": 7040,
   "confidence": null
  },
  {
   "text": " first...",
-  "startMs": 7610,
-  "endMs": 8100,
-  "timestampMs": 7855,
+  "startMs": 7280,
+  "endMs": 8160,
+  "timestampMs": 7720,
   "confidence": null
  },
  {
   "text": " and",
-  "startMs": 8100,
-  "endMs": 8310,
-  "timestampMs": 8205,
+  "startMs": 8160,
+  "endMs": 8370,
+  "timestampMs": 8265,
   "confidence": null
  },
  {
   "text": " Lapulapu",
-  "startMs": 8310,
-  "endMs": 8870,
-  "timestampMs": 8590,
+  "startMs": 8370,
+  "endMs": 8930,
+  "timestampMs": 8650,
   "confidence": null
  },
  {
   "text": " greets",
-  "startMs": 8870,
-  "endMs": 9410,
-  "timestampMs": 9140,
+  "startMs": 8930,
+  "endMs": 9420,
+  "timestampMs": 9175,
   "confidence": null
  },
  {
   "text": " *friends*,",
-  "startMs": 9410,
+  "startMs": 9420,
   "endMs": 10110,
-  "timestampMs": 9760,
+  "timestampMs": 9765,
   "confidence": null
  },
  {
   "text": " not",
   "startMs": 10110,
-  "endMs": 10230,
-  "timestampMs": 10170,
+  "endMs": 10310,
+  "timestampMs": 10210,
   "confidence": null
  },
  {
   "text": " invaders.",
-  "startMs": 10230,
-  "endMs": 11100,
-  "timestampMs": 10665,
+  "startMs": 10310,
+  "endMs": 11160,
+  "timestampMs": 10735,
   "confidence": null
  }
 ]

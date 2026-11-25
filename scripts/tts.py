@@ -70,6 +70,7 @@ def main():
     audio = np.concatenate(out)
     pad = np.zeros(int(sr * 0.25), dtype=audio.dtype)
     sf.write(d / "raw.wav", np.concatenate([pad, audio, pad]), sr)
+    (d / ".tts").write_text(a.voice)  # tells `npm run audio` to use the studio chain
     print(f"voice {a.voice} → public/voice/{a.episode}/raw.wav ({len(audio) / sr:.1f}s)")
 
 if __name__ == "__main__":
