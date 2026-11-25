@@ -36,7 +36,7 @@ export const blinkAt = (frame: number, seed: string) => {
 
 const decalCache = new Map<number, THREE.BufferGeometry>();
 /** Front patch of the head sphere with planar (front-projected) UVs. */
-const faceDecal = (r: number) => {
+export const faceDecal = (r: number) => {
   const key = Math.round(r * 1000);
   const hit = decalCache.get(key);
   if (hit) return hit;

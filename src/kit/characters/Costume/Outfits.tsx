@@ -285,7 +285,7 @@ export const OUTFIT_TYPES: OutfitType[] = [
 /** Recolour knobs per outfit: main, second, trim, metal. */
 export type OutfitColors = { main: string; second: string; trim: string; metal: string };
 
-const OUTFIT_DEFAULTS: Record<OutfitType, OutfitColors> = {
+export const OUTFIT_DEFAULTS: Record<OutfitType, OutfitColors> = {
   toga: { main: "#f4ede0", second: "#ebe1cc", trim: "#7a2b5a", metal: METAL.gold },
   legionary: { main: "#b5463c", second: "#7a4a2e", trim: METAL.bronze, metal: METAL.steel },
   peasantTunic: { main: "#8c6b4a", second: "#6b5a48", trim: "#c9a96b", metal: METAL.iron },

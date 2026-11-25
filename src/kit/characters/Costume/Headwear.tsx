@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { extruded, lathe, warpedLathe } from "../../look";
+import { extruded, lathe, roundedBox, warpedLathe } from "../../look";
 import { useBody } from "../Body";
 import { METAL, Part, Sphere } from "./shared";
 
@@ -18,7 +18,9 @@ export type HeadwearType =
   | "featherHeaddress"
   | "topHat"
   | "leafCrown"
-  | "hardHat";
+  | "hardHat"
+  | "headwrap"
+  | "beret";
 
 export const HEADWEAR_TYPES: HeadwearType[] = [
   "laurel",
@@ -36,10 +38,12 @@ export const HEADWEAR_TYPES: HeadwearType[] = [
   "topHat",
   "leafCrown",
   "hardHat",
+  "headwrap",
+  "beret",
 ];
 
 /** Default colours per headwear (override with color / accent). */
-const DEFAULTS: Record<HeadwearType, { color: string; accent: string }> = {
+export const HEADWEAR_DEFAULTS: Record<HeadwearType, { color: string; accent: string }> = {
   laurel: { color: "#6f9a3a", accent: "#4f7a2a" },
   crown: { color: METAL.gold, accent: "#c0392b" },
   bicorne: { color: "#1f1d26", accent: "#d6a444" },
@@ -55,6 +59,8 @@ const DEFAULTS: Record<HeadwearType, { color: string; accent: string }> = {
   topHat: { color: "#1f1d26", accent: "#8e3b38" },
   leafCrown: { color: "#7fa84a", accent: "#f4c6d4" },
   hardHat: { color: "#f2b134", accent: "#e09a1a" },
+  headwrap: { color: "#a8322d", accent: "#f2b134" },
+  beret: { color: "#3a2f4a", accent: "#2a2236" },
 };
 
 const Leaves: React.FC<{ r: number; color: string; dark: string; count: number; y: number; gap: number; size?: number; flowers?: string }> = ({
@@ -112,8 +118,8 @@ const Dome: React.FC<{ r: number; color: string; height?: number }> = ({ r, colo
 export const Headwear: React.FC<{ type: HeadwearType; color?: string; accent?: string }> = ({ type, color, accent }) => {
   const { dims } = useBody();
   const r = dims.headR;
-  const c = color ?? DEFAULTS[type].color;
-  const a = accent ?? DEFAULTS[type].accent;
+  const c = color ?? HEADWEAR_DEFAULTS[type].color;
+  const a = accent ?? HEADWEAR_DEFAULTS[type].accent;
 
   switch (type) {
     case "laurel":
@@ -360,6 +366,31 @@ export const Headwear: React.FC<{ type: HeadwearType; color?: string; accent?: s
           <Part geometry={lathe("hard-hat", [[0, 1.0], [0.5, 0.94], [0.85, 0.66], [1.02, 0.3], [1.08, 0.12], [0, 0.12]])} scale={[r * 1.04, r, r * 1.04]} color={c} />
           <Part geo={<cylinderGeometry args={[r * 1.18, r * 1.18, r * 0.05, 40]} />} color={c} position={[0, r * 0.12, r * 0.08]} scale={[1, 1, 1.08]} ink="prop" />
           <Part geo={<boxGeometry args={[r * 0.16, r * 0.1, r * 1.5]} />} color={a} position={[0, r * 0.95, 0]} rotation={[0, 0, 0]} ink={false} />
+        </group>
+      );
+    case "headwrap":
+      // cloth wrapped around the head with a knot and short tail at the side
+      return (
+        <group rotation={[-0.1, 0, 0]}>
+          {[0, 1].map((k) => (
+            <Part
+              key={k}
+              geo={<torusGeometry args={[r * (0.95 - k * 0.1), r * 0.13, 10, 36]} />}
+              color={k ? a : c}
+              position={[0, r * (0.38 + k * 0.17), 0]}
+              rotation={[Math.PI / 2 + (k ? 0.1 : -0.06), 0, 0]}
+              ink={k ? false : "character"}
+            />
+          ))}
+          <Part geo={Sphere(14)} color={c} position={[r * 0.9, r * 0.45, -r * 0.25]} scale={r * 0.17} />
+          <Part geometry={roundedBox(r * 0.12, r * 0.4, r * 0.05, r * 0.02)} color={c} position={[r * 0.98, r * 0.22, -r * 0.35]} rotation={[0.2, 0.4, 0.25]} />
+        </group>
+      );
+    case "beret":
+      return (
+        <group position={[0, r * 0.62, -r * 0.02]} rotation={[-0.12, 0, 0.18]}>
+          <Part geo={Sphere(28)} color={c} scale={[r * 1.0, r * 0.32, r * 0.98]} />
+          <Part geo={<torusGeometry args={[r * 0.8, r * 0.07, 8, 32]} />} color={a} position={[0, -r * 0.1, 0]} rotation={[Math.PI / 2, 0, 0]} ink={false} />
         </group>
       );
     default:

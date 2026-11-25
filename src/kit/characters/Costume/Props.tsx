@@ -23,7 +23,9 @@ export type PropType =
   | "globe"
   | "gears"
   | "coinBag"
-  | "crownPillow";
+  | "crownPillow"
+  | "axe"
+  | "scepter";
 
 export const PROP_TYPES: PropType[] = [
   "scroll",
@@ -42,6 +44,8 @@ export const PROP_TYPES: PropType[] = [
   "gears",
   "coinBag",
   "crownPillow",
+  "axe",
+  "scepter",
 ];
 
 /** How a prop is carried: in the fist, or strapped to the forearm (shields). */
@@ -304,6 +308,28 @@ export const Prop: React.FC<{ type: PropType; color?: string; accent?: string }>
               return <Part key={i} geo={<coneGeometry args={[0.03, 0.08, 8]} />} position={[Math.sin(t) * 0.13, 0.12, Math.cos(t) * 0.13]} color={accent ?? METAL.gold} ink={false} />;
             })}
           </group>
+        </group>
+      );
+    case "axe":
+      return (
+        <group>
+          <Part geo={<cylinderGeometry args={[0.022, 0.026, 0.75, 10]} />} position={[0, 0.22, 0]} color={WOOD} ink="prop" />
+          <Part
+            geometry={extruded("axe-head", [[0, -0.06], [0.08, -0.07], [0.2, -0.16], [0.24, 0.0], [0.2, 0.16], [0.08, 0.07], [0, 0.06]], 0.025, 0.008)}
+            position={[0.0, 0.52, 0]}
+            rotation={[0, Math.PI / 2, 0]}
+            color={color ?? METAL.steel}
+            ink="prop"
+          />
+        </group>
+      );
+    case "scepter":
+      return (
+        <group>
+          <Part geo={<cylinderGeometry args={[0.022, 0.022, 0.55, 10]} />} position={[0, 0.12, 0]} color={color ?? METAL.gold} ink="prop" />
+          <Part geo={Sphere(14)} position={[0, 0.43, 0]} scale={0.06} color={color ?? METAL.gold} ink="prop" />
+          <Part geo={Sphere(12)} position={[0, 0.5, 0]} scale={[0.035, 0.05, 0.035]} color={accent ?? "#c0392b"} ink={false} />
+          <Part geo={<torusGeometry args={[0.035, 0.01, 6, 14]} />} position={[0, -0.12, 0]} rotation={[Math.PI / 2, 0, 0]} color={color ?? METAL.gold} ink={false} />
         </group>
       );
     default:

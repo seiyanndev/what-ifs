@@ -14,6 +14,8 @@ type Props = {
   shadowTarget?: [number, number, number];
   /** Shift the painted sun glow horizontally (e.g. to follow a camera orbit). */
   glowOffsetX?: number;
+  /** Distance fog on/off (off for character sheets). */
+  fog?: boolean;
   /** Replace the painted sky with a flat CSS background (character sheets, studio shots). */
   background?: string;
   /** 2D painted layer between the sky and the 3D (e.g. <PaintedBackdrop>). */
@@ -37,6 +39,7 @@ export const Stage: React.FC<Props> = ({
   overlay,
   backdrop,
   background,
+  fog = true,
   children,
 }) => {
   const { width, height } = useVideoConfig();
@@ -56,7 +59,7 @@ export const Stage: React.FC<Props> = ({
         gl={{ antialias: true, alpha: true, preserveDrawingBuffer: true }}
         dpr={1}
       >
-        <LightRig timeOfDay={timeOfDay} shadowSize={shadowSize} target={shadowTarget}>
+        <LightRig timeOfDay={timeOfDay} shadowSize={shadowSize} target={shadowTarget} fog={fog && !background}>
           {children}
         </LightRig>
       </ThreeCanvas>

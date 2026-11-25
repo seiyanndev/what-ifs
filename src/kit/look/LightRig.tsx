@@ -10,6 +10,8 @@ type Props = {
   shadowSize?: number;
   /** Rotate the key light around Y (degrees) to re-light a shot without changing the preset. */
   keyAzimuthOffset?: number;
+  /** Distance fog (aerial perspective). Off for studio sheets. */
+  fog?: boolean;
   children?: React.ReactNode;
 };
 
@@ -22,6 +24,7 @@ export const LightRig: React.FC<Props> = ({
   target = [0, 0, 0],
   shadowSize = 7,
   keyAzimuthOffset = 0,
+  fog = true,
   children,
 }) => {
   const p = TIME_OF_DAY[timeOfDay];
@@ -37,7 +40,7 @@ export const LightRig: React.FC<Props> = ({
 
   return (
     <LookContext.Provider value={look}>
-      <fog attach="fog" args={[p.fog.color, p.fog.near, p.fog.far]} />
+      {fog ? <fog attach="fog" args={[p.fog.color, p.fog.near, p.fog.far]} /> : null}
       <hemisphereLight args={[p.fill.sky, p.fill.ground, p.fill.intensity]} />
       <directionalLight
         position={keyPos}

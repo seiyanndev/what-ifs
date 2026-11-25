@@ -112,22 +112,33 @@ Code is in `src/kit/characters/Face/`: `params.ts` (shapes, presets, blending), 
 
 Review outputs: `Expressions` and `FaceParts` stills, plus the `FaceTalkTest` video, rendered to `out/char/`.
 
-## Characters: costumes (step 3c, awaiting review)
+## Characters: costumes (step 3c, approved)
 
 Code is in `src/kit/characters/Costume/`. Everything mounts on `Body` slots and sizes itself with `useBody()`.
 
 - **`<Character costume={...} skin shape face pose id capeLift />`** is the dressed figurine. A `CostumeSpec` is `{ hair, facialHair, headwear, outfit, cape, props }`. Presets (3d) are just CostumeSpecs.
 - **Hair** (`HAIR_STYLES`): short, long, bun, curly, bald (fringe), braids, ponytail, topknot. Colors are in `HAIR_COLORS` (black, darkBrown, brown, auburn, blonde, red, grey, white). Brow color follows the hair.
 - **Facial hair:** 2D layers from the face system, plus `wizard: true` for a long 3D beard (`WizardBeard`).
-- **Headwear** (`HEADWEAR_TYPES`): laurel, crown, bicorne, tricorne, vikingHelmet (no horns), galea, kabuto, morion, monkHood, turban, mingHat, featherHeaddress (generic), topHat, leafCrown, hardHat. Each takes optional `color` and `accent`.
+- **Headwear** (`HEADWEAR_TYPES`): laurel, crown, bicorne, tricorne, vikingHelmet (no horns), galea, kabuto, morion, monkHood, turban, mingHat, featherHeaddress (generic), topHat, leafCrown, hardHat, headwrap, beret. Each takes optional `color` and `accent`. Skull-covering headwear (helmets, hood, turban, wrap, Ming hat, top hat) hides the hair cap but keeps braids, ponytails and long hair.
 - **Outfits** (`OUTFIT_TYPES`, `buildOutfit`): toga, legionary, peasantTunic, monkRobe, royalRobe (brings its own cape), knightArmor, explorerCoat, napoleonic, mingRobe, samurai, filipinoWarrior (bahag + upper wrap, generic), scholarRobe, modernCasual, suit. Recolor with `colors: { main, second, trim, metal }`. An outfit sets base colors (`shirt`, `pants`, `shoes`, `boots`, `hands`), sleeves and hidden parts (robes hide the legs and pelvis), and attaches its pieces.
 - **Outfit building blocks** (reuse them for new outfits): `Skirt` (ankle, knee or thigh; `open` for coats), `Belt`, `Panel`, `WideSleeve`, `ShoulderPiece` (round, flat or epaulette), `Collar` (ring, ermine, high or vneck), `Sash`, `Strips`, `Bands`, `CoatTails`, `Buttons`, `Emblem`.
-- **Props** (`PROP_TYPES`): scroll, book, quill, sword, spear, shield (forearm mount), kampilan, bow, telescope, map, flag (waving cloth, `color` + `accent`), torch (animated flame), globe (spins), gears (turn), coinBag, crownPillow. Props are modeled with the grip at the origin and +Y out of the thumb side. `Character` mounts them in `gripL`/`gripR` and sets the hand to `hold`. They also stand on the ground in sets.
+- **Props** (`PROP_TYPES`): scroll, book, quill, sword, spear, shield (forearm mount), kampilan, bow, telescope, map, flag (waving cloth, `color` + `accent`), torch (animated flame), globe (spins), gears (turn), coinBag, crownPillow, axe, scepter. Props are modeled with the grip at the origin and +Y out of the thumb side. `Character` mounts them in `gripL`/`gripR` and sets the hand to `hold`. They also stand on the ground in sets.
 - **Cape:** a thin cloth box whose vertices are recomputed every frame. The hem lags and ripples, and the edges wrap forward. `lift` (0–1) streams it behind for runs, and `wind` sets the flutter.
 - **Rules:** keep cultural costumes generic and respectful, and make famous figures recognizable by silhouette and props only.
 - **Geometry rule:** `lathe()` profiles are auto-oriented bottom to top (top-down profiles used to render inside-out). Use `warpedLathe` for lobed brims and `extruded` for flat shapes.
 
 Review outputs: the `Headgear`, `Costumes` and `Props` stills and the `CostumeTurntable` video, rendered to `out/char/`.
+
+## Characters: presets and crowds (step 3d, awaiting review)
+
+- **`PRESETS`** (`presets.ts`): each preset is `{ label, era, shape, skin (SKIN_TONES index), costume, expression, named?, note? }`. **`<PresetCharacter preset="napoleon" />`** renders one, and any prop overrides it.
+- **`CAST`:** the 26 characters from the brief, in order: roman_emperor, roman_soldier, roman_engineer, scholar_greek, monk, peasant, lord, king, queen, knight, gutenberg, magellan, lapulapu, spanish_soldier, zheng_he, ming_emperor, ming_sailor, native_leader, napoleon, samurai, viking, inventor, explorer, modern_kid, modern_adult, news_anchor. `filipino_warrior` is an extra generic preset for crowds.
+- **Named people** (`named: true`): Gutenberg, Magellan, Lapulapu, Zheng He and Napoleon are recognized by silhouette and signature item only. Accuracy notes are in `note`: Magellan carries a chart, not a telescope, because it was invented about 1608. Napoleon is average height. Viking helmets have no horns.
+- **`<Crowd count pool|era area position lookAt cheer wave seed />`:** 20–200 cheap figurines. Each body part is one InstancedMesh, and all members share one face texture (neutral blending to laughing with `cheer`). Members are seeded picks from `CROWD_POOLS` (ancient, medieval, ageOfSail, modern, romanArmy, vikings, mactan, spanishExpedition, mingFleet, samuraiArmy, court), with per-member skin (±1) and color jitter, and hair, hat or helmet caps from the preset. `cheer` (0–1) turns on jumping, waving arms and looking up. `wave` (seconds) sweeps the cheer across the width. Named people are never in crowds, and crowd pools must stay historically coherent (no Ming sailors at Mactan).
+- **Studio sheets:** `<Stage background=...>` turns fog off automatically (`fog` prop).
+- **Performance:** `<Ink>` builds its outline mesh once and rebuilds only if the parent geometry changes. In this cloud container (software GL), a 130-figure crowd shot renders at about 1.5 s per frame. A real GPU is much faster.
+
+Review outputs: the `Cast` still and the `CrowdDemo` video, rendered to `out/char/`.
 
 ## Project layout
 
@@ -139,7 +150,7 @@ src/
   kit/                the reusable kit (filled in as we build)
     look/             Stage, LightRig, ToonMaterial, Ink, SoftShadow, Sky,
                       PaintedBackdrop, Grade, OrbitCamera, palettes, geometry      (step 2 ✓)
-    characters/       rig.ts, Body, Hand (3a ✓) · Face/ (3b ✓) · Costume/ (3c) · presets.ts, Crowd (3d)
+    characters/       rig.ts, Body, Hand (3a ✓) · Face/ (3b ✓) · Costume/ (3c ✓) · presets.ts, PresetCharacter, Crowd (3d)
     actions/          procedural animations                                         (step 3e)
     sets/             diorama sets, GLOBE, MAP_REGION                               (step 4)
     effects/          YEAR_STAMP, TIMELINE_SPLIT, RIPPLE, ...                       (step 5)
@@ -178,8 +189,9 @@ The most relevant ones are `remotion-best-practices`, `remotion-render`, `remoti
 - [x] 2. Look locked: storybook diorama, toon + ink, 4 light rigs, era palettes, What If grade (`out/look-test.mp4`, `out/look/look-sheet.png`)
 - [x] 3a. Base body approved (`out/char/base-turnaround.png`, `base-variants.png`, `hand-poses.png`, `rig-test.png`)
 - [x] 3b. Faces approved (`out/char/expressions.png`, `face-parts.png`, `face-talk-test.mp4`)
-- [ ] 3c. Costumes: built, awaiting review (`out/char/costumes.png`, `headgear.png`, `props.png`, `costume-turntable.mp4`)
-- [ ] 3d–3e. Presets + crowd, motion
+- [x] 3c. Costumes approved (`out/char/costumes.png`, `headgear.png`, `props.png`, `costume-turntable.mp4`)
+- [ ] 3d. Presets + crowd: built, awaiting review (`out/char/cast.png`, `crowd-demo.mp4`)
+- [ ] 3e. Motion library
 - [ ] 4. Sets and globe
 - [ ] 5. Effects
 - [ ] 6. Captions

@@ -9,6 +9,9 @@ import { buildOutfit, type OutfitColors, type OutfitType } from "./Outfits";
 import { Prop, PROP_MOUNT, type PropType } from "./Props";
 import { HAIR_COLORS } from "./shared";
 
+/** Headwear that covers the skull: the hair cap is skipped so it can't poke through. */
+const COVERING: HeadwearType[] = ["vikingHelmet", "galea", "kabuto", "morion", "monkHood", "turban", "mingHat", "topHat", "hardHat", "headwrap"];
+
 export type PropSpec = { type: PropType; color?: string; accent?: string };
 
 export type CostumeSpec = {
@@ -45,7 +48,8 @@ export const Character: React.FC<CharacterProps> = ({ costume = {}, attach: extr
 
   for (const [slot, node] of Object.entries(outfit?.attach ?? {})) add(slot as Slot, node);
   const hairColor = costume.hair?.color ?? costume.facialHair?.color ?? HAIR_COLORS.darkBrown;
-  if (costume.hair) add("head", <Hair style={costume.hair.style} color={hairColor} />);
+  const covered = costume.headwear ? COVERING.includes(costume.headwear.type) : false;
+  if (costume.hair) add("head", <Hair style={costume.hair.style} color={hairColor} covered={covered} />);
   if (costume.headwear) add("head", <Headwear type={costume.headwear.type} color={costume.headwear.color} accent={costume.headwear.accent} />);
   if (costume.facialHair?.wizard) add("head", <WizardBeard color={costume.facialHair.color ?? hairColor} />);
 

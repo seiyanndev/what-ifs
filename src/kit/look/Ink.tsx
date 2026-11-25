@@ -93,23 +93,38 @@ export const Ink: React.FC<Props> = ({ weight = "prop", color }) => {
   );
 
   // Attach the hull to the parent mesh's geometry (layout effect → ready before the frame renders).
+  // Rebuilt only when the parent's geometry / instance count changes, not every frame.
+  const hullRef = useRef<THREE.Mesh | THREE.InstancedMesh | null>(null);
   useLayoutEffect(() => {
     const g = group.current;
     const parent = g?.parent as THREE.Mesh | THREE.InstancedMesh | undefined;
     if (!g || !parent?.geometry) return;
-    const hull =
-      (parent as THREE.InstancedMesh).isInstancedMesh
-        ? new THREE.InstancedMesh(parent.geometry, material, (parent as THREE.InstancedMesh).count)
-        : new THREE.Mesh(parent.geometry, material);
-    if ((hull as THREE.InstancedMesh).isInstancedMesh) {
-      (hull as THREE.InstancedMesh).instanceMatrix = (parent as THREE.InstancedMesh).instanceMatrix;
+    const isInst = (parent as THREE.InstancedMesh).isInstancedMesh === true;
+    const prev = hullRef.current;
+    if (
+      prev &&
+      prev.geometry === parent.geometry &&
+      (!isInst || (prev as THREE.InstancedMesh).count === (parent as THREE.InstancedMesh).count)
+    ) {
+      return;
     }
+    if (prev) g.remove(prev);
+    const hull = isInst
+      ? new THREE.InstancedMesh(parent.geometry, material, (parent as THREE.InstancedMesh).count)
+      : new THREE.Mesh(parent.geometry, material);
+    if (isInst) (hull as THREE.InstancedMesh).instanceMatrix = (parent as THREE.InstancedMesh).instanceMatrix;
     hull.raycast = () => null;
+    hull.frustumCulled = parent.frustumCulled;
     g.add(hull);
-    return () => {
-      g.remove(hull);
-    };
+    hullRef.current = hull;
   });
+  useLayoutEffect(
+    () => () => {
+      if (hullRef.current) group.current?.remove(hullRef.current);
+      hullRef.current = null;
+    },
+    [],
+  );
 
   useLayoutEffect(() => {
     material.uniforms.thickness.value = (px * width) / 1080;

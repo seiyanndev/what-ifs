@@ -1,5 +1,6 @@
 import { Composition, Still } from "remotion";
 import { BaseTurnaround, BaseVariants, HandPoses, RigTest } from "./compositions/CharacterSheets";
+import { CastSheet, CrowdDemo } from "./compositions/CastSheets";
 import { CostumesSheet, CostumeTurntable, HeadgearSheet, PropsSheet } from "./compositions/CostumeSheets";
 import { ExpressionsSheet, FacePartsSheet, FaceTalkTest } from "./compositions/FaceSheets";
 import { LookTest } from "./compositions/LookTest";
@@ -33,6 +34,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="Headgear" component={HeadgearSheet} width={2400} height={1500} />
       <Still id="Costumes" component={CostumesSheet} width={2400} height={1500} />
       <Still id="Props" component={PropsSheet} width={2400} height={1000} />
+      <Still id="Cast" component={CastSheet} width={2400} height={1700} />
+      <Composition id="CrowdDemo" component={CrowdDemo} durationInFrames={5 * VIDEO.fps} {...VIDEO} />
       <Composition id="CostumeTurntable" component={CostumeTurntable} durationInFrames={4 * VIDEO.fps} {...VIDEO} />
       <Composition id="FaceTalkTest" component={FaceTalkTest} durationInFrames={4 * VIDEO.fps} {...VIDEO} />
     </>
