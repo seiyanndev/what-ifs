@@ -1,5 +1,25 @@
 {
   "title": "What if Magellan won the Battle of Mactan?",
+  "thumbnail": {
+    "left": {
+      "preset": "lapulapu",
+      "set": "BEACH",
+      "timeOfDay": "day",
+      "expression": "determined",
+      "action": "sword_raise",
+      "heading": -15
+    },
+    "right": {
+      "preset": "magellan",
+      "set": "BEACH",
+      "timeOfDay": "day",
+      "expression": "laughing",
+      "action": "cheer",
+      "heading": 15
+    },
+    "text": "Magellan wins?",
+    "badge": "1521"
+  },
   "voice": "bm_george",
   "names": [
     "Lapulapu",
@@ -130,11 +150,11 @@
         {
           "preset": "lapulapu",
           "mark": [
-            0.85,
+            0.75,
             0,
-            1.3
+            1.4
           ],
-          "heading": -60,
+          "heading": -45,
           "expression": "determined",
           "actions": [
             {
@@ -151,11 +171,11 @@
         {
           "preset": "magellan",
           "mark": [
-            0.05,
+            -0.15,
             0,
-            1.1
+            1.35
           ],
-          "heading": 60,
+          "heading": 25,
           "expression": "determined",
           "actions": [
             {
@@ -168,7 +188,8 @@
             }
           ]
         }
-      ]
+      ],
+      "captions": "top"
     },
     {
       "id": "split",

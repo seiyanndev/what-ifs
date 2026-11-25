@@ -177,7 +177,9 @@ if (has("thumb")) {
   const thumbProps = path.join(epDir, ".thumb-props.json");
   writeFileSync(thumbProps, JSON.stringify({ ...timeline, thumbnail: true }));
   const png = path.join(outDir, `${name}-thumb.png`);
-  run("npx", ["remotion", "still", bundleDir, "Episode", png, `--props=${thumbProps}`, `--frame=${thumbFrame()}`, ...browser], { cwd: ROOT });
+  // face-off design when scenes.json has "thumbnail"; otherwise a frame from the split scene
+  const frame = spec.thumbnail ? 22 : thumbFrame();
+  run("npx", ["remotion", "still", bundleDir, "Episode", png, `--props=${thumbProps}`, `--frame=${frame}`, ...browser], { cwd: ROOT });
   execFileSync("ffmpeg", ["-v", "error", "-y", "-i", png, "-q:v", "2", path.join(outDir, `${name}-thumb.jpg`)]);
   console.log(`\n✔ ${path.relative(ROOT, png)} (+ .jpg)`);
   process.exit(0);

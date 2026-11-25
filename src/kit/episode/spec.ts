@@ -79,6 +79,8 @@ export type SceneSpec = {
   /** Change the music mood at the start of this scene ("silence" stops it). */
   music?: MusicMood | "silence";
   sfx?: { name: SfxName; at?: number; volume?: number }[];
+  /** Move this scene's captions to the upper part of the screen (when the action is low in frame). */
+  captions?: "bottom" | "top";
   /** Cut the music to silence at the start of this scene and swell it back (like the split does). */
   musicDrop?: boolean;
   /** Force the grade: 0 real, 1 what if (default: 0 before the split, 1 after). */
@@ -91,6 +93,8 @@ export type SceneSpec = {
 
 export type EpisodeSpec = {
   title: string;
+  /** Face-off thumbnail (REAL vs WHAT IF close-ups). Without it, --thumb uses a frame of the split scene. */
+  thumbnail?: import("./Thumbnail").ThumbnailSpec;
   voice?: string;
   /** Extra words to colour as names in captions. */
   names?: string[];

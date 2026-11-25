@@ -4,6 +4,7 @@ import { Captions } from "../captions";
 import { Ripple, STAMP_IMPACT, TimelineSplit } from "../effects";
 import { FONT_DISPLAY, FONT_STAMP, QUALITY, QualityContext } from "../look";
 import { SceneShot, SceneView } from "./SceneView";
+import { Thumbnail } from "./Thumbnail";
 import type { EpisodeProps, ResolvedScene } from "./spec";
 
 const RIPPLE_FRAMES = 24;
@@ -144,6 +145,14 @@ const ThumbOverlay: React.FC<{ title: string }> = ({ title }) => {
 
 /** The whole episode, assembled from resolved scenes.json + voiceover timings. */
 export const Episode: React.FC<EpisodeProps> = (props) => {
+  if (props.thumbnail && props.spec.thumbnail) {
+    const q0 = typeof props.quality === "string" ? QUALITY[props.quality] : { ...QUALITY.final, ...props.quality };
+    return (
+      <QualityContext.Provider value={q0}>
+        <Thumbnail spec={props.spec.thumbnail} title={props.spec.title} />
+      </QualityContext.Provider>
+    );
+  }
   const { fps } = useVideoConfig();
   const { scenes, captions, durationInFrames, spec } = props;
 
@@ -222,19 +231,17 @@ export const Episode: React.FC<EpisodeProps> = (props) => {
           <ThumbOverlay title={spec.title} />
         ) : (
           <>
-            {/* no captions while a title card shows the same words */}
-            <Captions
-              captions={captions.filter(
-                (c) =>
-                  !scenes.some(
-                    (s) =>
-                      s.titleCard &&
-                      c.startMs >= (s.from / fps) * 1000 &&
-                      c.startMs < ((s.from + s.durationInFrames) / fps) * 1000,
-                  ),
-              )}
-              names={spec.names}
-            />
+            {/* no captions while a title card shows the same words; scenes can lift captions to the top */}
+            {(["bottom", "top"] as const).map((pos) => {
+              const sceneOf = (c: (typeof captions)[number]) =>
+                scenes.find((s) => c.startMs >= (s.from / fps) * 1000 && c.startMs < ((s.from + s.durationInFrames) / fps) * 1000);
+              const list = captions.filter((c) => {
+                const s = sceneOf(c);
+                if (s?.titleCard) return false;
+                return (s?.captions === "top" ? "top" : "bottom") === pos;
+              });
+              return list.length ? <Captions key={pos} captions={list} names={spec.names} y={pos === "top" ? 0.2 : undefined} /> : null;
+            })}
             <Soundtrack
               durationInFrames={durationInFrames}
               voice={

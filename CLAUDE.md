@@ -358,7 +358,10 @@ Options: `--no-voice` (estimated timings and silent narration, for layout checks
 4. **Timing:** each scene runs from its first word to the next scene's first word, starting 4 frames early. The last scene adds `tail` (default 1.4 s). It writes `episodes/<name>/timeline.json` (the `Episode` props) and prints the scene table, warning outside 45–75 s.
 5. **Render:** the `Episode` composition, scene by scene with the cache above. `calculateMetadata` validates `scenes.json` with friendly errors (for example "unknown preset 'magelan'. Did you mean 'magellan'?" or "set BEACH has no mark 'dock' (marks: …)").
 6. **Master:** two-pass FFmpeg `loudnorm` to −14 LUFS / −1 dBTP, AAC 320k, video stream copied, faststart.
-7. **Thumbnail:** the frame from the scene with `"thumb": true`, otherwise 1.2 s into the split, otherwise scene 1. It adds a big gold "WHAT IF…?" and the question on a purple banner, and hides the REAL / WHAT IF labels.
+7. **Thumbnail:**
+   - **Face-off design** when `scenes.json` has `"thumbnail"` (recommended). It's a dedicated `Thumbnail` design: close-up hero shots of two characters (REAL on the left in the normal grade, WHAT IF on the right in purple) split by the glowing diagonal crack, with a huge gold "WHAT IF…?", a punchy 2–4 word banner, a year badge and REAL / WHAT IF tags. Characters hold an action at its peak (frame 22).
+   - **Fallback:** the frame from the scene with `"thumb": true`, otherwise 1.2 s into the split, otherwise scene 1, with the "WHAT IF…?" overlay.
+   - **Tip:** use `"timeOfDay": "day"` for thumbnail sides. Backlit sunset flattens faces at close range.
 
 ### `scenes.json` format (types in `src/kit/episode/spec.ts`)
 ```jsonc
@@ -366,6 +369,11 @@ Options: `--no-voice` (estimated timings and silent narration, for layout checks
   "title": "What if Magellan never left Spain?",   // title card + thumbnail
   "voice": "bm_george",                             // optional narrator
   "names": ["Lapulapu", "Mactan"],                  // extra caption name highlights
+  "thumbnail": {                                    // face-off thumbnail (optional)
+    "left":  { "preset": "lapulapu", "set": "BEACH", "timeOfDay": "day", "expression": "determined", "action": "sword_raise", "heading": -15 },
+    "right": { "preset": "magellan", "set": "BEACH", "timeOfDay": "day", "expression": "laughing",  "action": "cheer",       "heading": 15 },
+    "text": "Magellan wins?", "badge": "1521"
+  },
   "scenes": [{
     "id": "battle",                                 // label in the scene table / Studio
     "set": "BEACH", "era": "ageOfSail", "timeOfDay": "sunset",   // era/time optional (set defaults)
@@ -401,7 +409,7 @@ Options: `--no-voice` (estimated timings and silent narration, for layout checks
   }]
 }
 ```
-- **More scene options:** `"musicDrop": true` cuts the music at the start of any scene and swells it back. A character's `"elder": true` gives the elder body plus grey hair and beard. `geo.flags` plants flags on a MAP_REGION that pop in at `at_time`. `effects.statue` adds a stone statue that vanishes and returns. Looping SFX in `sfx` (wind, waves, crackle) last until the scene ends.
+- **More scene options:** `"captions": "top"` moves a scene's captions up (use it when the action is low in frame, like a fall). `"musicDrop": true` cuts the music at the start of any scene and swells it back. A character's `"elder": true` gives the elder body plus grey hair and beard. `geo.flags` plants flags on a MAP_REGION that pop in at `at_time`. `effects.statue` adds a stone statue that vanishes and returns. Looping SFX in `sfx` (wind, waves, crackle) last until the scene ends.
 - **Automatic SFX:** year stamp (stamp_slam), split (ripple plus the music drop), ripple transition (whoosh), asteroid (impact), fire (crackle loop), crowd cheer (crowd_cheer), and waves under PORT and BEACH scenes.
 - **Timing is in seconds relative to the scene.** Scene lengths come from the narration, so write about 8–20 words per scene. A 60–75 s episode is about 140–180 words.
 - **Narration markup:** `*emphasis*`, `word{spoken}` (no spaces inside the braces), and `...` for a pause. Years are read naturally.
