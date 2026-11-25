@@ -11,3 +11,4 @@ export * from "./Stage";
 export * from "./geometry";
 export * from "./SoftShadow";
 export * from "./PaintedBackdrop";
+export * from "./fonts";

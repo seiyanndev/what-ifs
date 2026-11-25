@@ -170,7 +170,7 @@ Code is in `src/kit/actions/`: `core.ts` (types, easing, keyframes, pose maths),
   - Robes are rigid, so sitting or kneeling in a robe pushes the skirt into the ground. Prefer standing actions for robed characters, or hide the ground line.
 - **Review outputs:** `ActionsGrid` (1920×1080; `props: { only, cols, dist }` for close-ups) and `Showreel` (15 s), rendered to `out/motion/`.
 
-## Sets and maps (step 4, awaiting review)
+## Sets and maps (step 4, approved)
 
 Code is in `src/kit/sets/`: `geo/` (data, projections, map painter, globe, map board, markers), `ground.tsx`, `dressing.tsx`, `sets.tsx`, `SetScene.tsx`, `context.tsx`.
 
@@ -218,6 +218,30 @@ It wires up the sky or background, painted backdrop, light rig, the diorama, the
 
 Review outputs: `out/sets/<SET>.png` (12 stills), `out/sets/sets-sheet.png` and `out/sets/globe-demo.mp4`.
 
+## Effects (step 5, awaiting review)
+
+Code is in `src/kit/effects/`: `Shake.tsx`, `YearStamp.tsx`, `TimelineSplit.tsx`, `Ripple.tsx`, `World.tsx` (3D effects).
+
+### 2D (wrap or overlay whole shots)
+- **`<Shake impacts={[frames]} strength>`** wraps a shot in a decaying camera shake (about 0.7 s, zoomed 5% so edges never show). `shakeAt()` gives the raw offset.
+- **YEAR_STAMP: `<YearStamp text subtitle y exitAt sfx />`** slams the year down like a rubber stamp: it accelerates in, hits at `STAMP_IMPACT` (frame 7), squashes and springs back, and puffs dust. It has a rough inked frame and edges (SVG turbulence filters) in the gold Luckiest Guy font. `text` takes "1521", "44 BC", "~3000 BC" or "AD 79". Sync with `<Shake impacts={[start + STAMP_IMPACT]}>`, and `sfx` plays on impact. It sits in the upper third by default, clear of captions.
+- **TIMELINE_SPLIT: `<TimelineSplit real={…whatIf 0…} whatIf={…whatIf 1…} crackFrames takeoverAt />`** is the signature moment. A glowing jagged purple and white crack tears top to bottom with sparks at its tip. REAL stays on the left, WHAT IF? opens on the right, and both labels pop in. `takeoverAt` sweeps the crack off to the left so the alternate timeline fills the screen. Render the same `SetScene` twice with a different `whatIf`, or two different shots. It costs two canvases while split, so keep it short (2–4 s).
+- **RIPPLE: `<Ripple from to frames center />`** is the "history rewrites itself" transition: glowing rings expand from `center`, and inside them the new shot wobbles in through a displacement warp that calms as it settles.
+
+### 3D (inside a `SetScene`)
+- **`Fire`** has logs, flickering flames, embers, smoke and a flickering orange point light.
+- **`Burst kind="dust"|"sparks" at`** is a one-shot particle burst with ballistic sparks and dragged dust puffs.
+- **`PlagueFog`** is low, drifting, sickly green fog blobs. Pair it with the 2D `<PlagueTint>` (put it in `SetScene overlay`).
+- **`ShipFleet`** puts `ToyShip`s with wakes in a v, line or grid formation, sailing along `heading` at `speed`.
+- **`FallingScrolls`** has tumbling scrolls raining down (it loops).
+- **`Asteroid from to impactAt`** sends a rock with a fiery trail in, accelerating. On impact it adds a fireball, light flash, shockwave ring, dust and sparks. Pair it with `<ImpactFlash at>` and `<Shake impacts={[impactAt]}>`.
+- **`Crowd`** is re-exported from characters.
+
+### Fonts (`look/fonts.ts`)
+Bundled in `public/fonts`, with their licenses, so every machine renders the same: **Luckiest Guy** (`FONT_STAMP`, Apache-2.0) for stamps and titles, and **Lilita One** (`FONT_DISPLAY`, OFL) for secondary display text. They're loaded with `@remotion/fonts`, which holds the render until they're ready.
+
+Review outputs: `EffectsDemo` (all 8 demos, 20 s) in `out/effects/effects-demo.mp4`, and `EffectDemo` with `props: { effect }` for one demo.
+
 ## Project layout
 
 ```
@@ -231,7 +255,7 @@ src/
     characters/       rig.ts, Body, Hand (3a ✓) · Face/ (3b ✓) · Costume/ (3c ✓) · presets.ts, PresetCharacter, Crowd (3d)
     actions/          core, library (26 actions), Performer                        (step 3e)
     sets/             SetScene, 12 sets, dressing, ground, geo/ (globe + maps)      (step 4)
-    effects/          YEAR_STAMP, TIMELINE_SPLIT, RIPPLE, ...                       (step 5)
+    effects/          Shake, YearStamp, TimelineSplit, Ripple, World (3D fx)        (step 5)
     captions/         word-by-word captions, title cards                            (step 6)
 scripts/              audio.mjs, episode pipeline                                   (steps 7–8)
 episodes/<name>/      scenes.json per episode                                       (step 8)
@@ -250,6 +274,7 @@ out/                  renders (git-ignored)
 | `npx remotion still LookTest out/x.png --frame=60 --props='{"timeOfDay":"night","whatIf":1}'` | Check another time of day or grade |
 | `npx remotion render <CompositionId> out/<file>.mp4` | Render any composition |
 | `npx remotion still <CompositionId> out/<file>.png --frame=<n>` | Render one frame as an image |
+| `npm run render:effects` | Render the 20 s effects demo to `out/effects/` |
 | `npm run render:sets` | Render all 12 set stills and the globe demo to `out/sets/` |
 | `npm run render:motion` | Render the motion showreel and the actions grid to `out/motion/` |
 | `npm run render:char` | Render all character review sheets to `out/char/` |
@@ -272,8 +297,8 @@ The most relevant ones are `remotion-best-practices`, `remotion-render`, `remoti
 - [x] 3c. Costumes approved (`out/char/costumes.png`, `headgear.png`, `props.png`, `costume-turntable.mp4`)
 - [x] 3d. Presets + crowd approved (`out/char/cast.png`, `crowd-demo.mp4`)
 - [x] 3e. Motion library approved (`out/motion/showreel.mp4`, `actions-grid.mp4`)
-- [ ] 4. Sets and globe: built, awaiting review (`out/sets/sets-sheet.png`, `globe-demo.mp4`)
-- [ ] 5. Effects
+- [x] 4. Sets and globe approved (`out/sets/sets-sheet.png`, `globe-demo.mp4`)
+- [ ] 5. Effects: built, awaiting review (`out/effects/effects-demo.mp4`)
 - [ ] 6. Captions
 - [ ] 7. Audio pipeline
 - [ ] 8. Episode pipeline

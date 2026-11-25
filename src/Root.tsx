@@ -1,5 +1,6 @@
 import { Composition, Still } from "remotion";
 import { BaseTurnaround, BaseVariants, HandPoses, RigTest } from "./compositions/CharacterSheets";
+import { EffectDemo, EffectsDemo, EFFECTS_TOTAL } from "./compositions/EffectsDemo";
 import { GlobeDemo } from "./compositions/GlobeDemo";
 import { SetPreview } from "./compositions/SetSheets";
 import { ActionsGrid, Showreel } from "./compositions/ActionSheets";
@@ -40,6 +41,8 @@ export const RemotionRoot: React.FC = () => {
       <Still id="Cast" component={CastSheet} width={2400} height={1700} />
       <Composition id="CrowdDemo" component={CrowdDemo} durationInFrames={5 * VIDEO.fps} {...VIDEO} />
       <Composition id="ActionsGrid" component={ActionsGrid} durationInFrames={4 * VIDEO.fps} fps={30} width={1920} height={1080} />
+      <Composition id="EffectsDemo" component={EffectsDemo} durationInFrames={EFFECTS_TOTAL} {...VIDEO} />
+      <Composition id="EffectDemo" component={EffectDemo} durationInFrames={120} defaultProps={{ effect: "year_stamp" as const }} {...VIDEO} />
       <Composition id="SetPreview" component={SetPreview} durationInFrames={90} defaultProps={{ set: "ANCIENT_CITY" as const }} {...VIDEO} />
       <Composition id="GlobeDemo" component={GlobeDemo} durationInFrames={5 * VIDEO.fps} {...VIDEO} />
       <Composition id="Showreel" component={Showreel} durationInFrames={15 * VIDEO.fps} {...VIDEO} />

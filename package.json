@@ -12,6 +12,7 @@
     "@react-three/drei": "10.7.9",
     "@react-three/fiber": "9.2.0",
     "@remotion/cli": "4.0.547",
+    "@remotion/fonts": "4.0.547",
     "@remotion/media": "4.0.547",
     "@remotion/three": "4.0.547",
     "@remotion/zod-types": "4.0.547",
@@ -45,7 +46,8 @@
     "render:look": "remotion render LookTest out/look-test.mp4",
     "render:char": "remotion still BaseTurnaround out/char/base-turnaround.png && remotion still BaseVariants out/char/base-variants.png && remotion still HandPoses out/char/hand-poses.png && remotion still RigTest out/char/rig-test.png && remotion still Expressions out/char/expressions.png && remotion still FaceParts out/char/face-parts.png && remotion still Headgear out/char/headgear.png && remotion still Costumes out/char/costumes.png && remotion still Props out/char/props.png && remotion render FaceTalkTest out/char/face-talk-test.mp4 && remotion render CostumeTurntable out/char/costume-turntable.mp4 && remotion still Cast out/char/cast.png && remotion render CrowdDemo out/char/crowd-demo.mp4",
     "render:motion": "remotion render Showreel out/motion/showreel.mp4 && remotion render ActionsGrid out/motion/actions-grid.mp4",
-    "render:sets": "for s in GLOBE MAP_REGION ANCIENT_CITY THRONE_ROOM BATTLEFIELD LIBRARY PORT MEDIEVAL_VILLAGE WORKSHOP MODERN_CITY JUNGLE_PREHISTORIC BEACH; do remotion still SetPreview out/sets/$s.png --frame=45 --props=\"{\\\"set\\\":\\\"$s\\\"}\"; done && remotion render GlobeDemo out/sets/globe-demo.mp4"
+    "render:sets": "for s in GLOBE MAP_REGION ANCIENT_CITY THRONE_ROOM BATTLEFIELD LIBRARY PORT MEDIEVAL_VILLAGE WORKSHOP MODERN_CITY JUNGLE_PREHISTORIC BEACH; do remotion still SetPreview out/sets/$s.png --frame=45 --props=\"{\\\"set\\\":\\\"$s\\\"}\"; done && remotion render GlobeDemo out/sets/globe-demo.mp4",
+    "render:effects": "remotion render EffectsDemo out/effects/effects-demo.mp4"
   },
   "allowScripts": {
     "esbuild": false
