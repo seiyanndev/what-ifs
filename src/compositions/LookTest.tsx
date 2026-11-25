@@ -65,7 +65,7 @@ const Paving: React.FC<{ radius: number }> = ({ radius }) => {
   );
 };
 
-const DioramaBase: React.FC = () => (
+export const DioramaBase: React.FC = () => (
   <group>
     <mesh geometry={lathe("plaza-base", [[0, -0.9], [4.55, -0.9], [4.7, -0.75], [4.7, -0.12], [4.55, 0], [0, 0]], 64)} receiveShadow>
       <ToonMaterial color={pal.stone[2]} rim={0.4} />
@@ -82,7 +82,7 @@ const DioramaBase: React.FC = () => (
   </group>
 );
 
-const Column: React.FC<{ position: [number, number, number]; height?: number; broken?: boolean }> = ({
+export const Column: React.FC<{ position: [number, number, number]; height?: number; broken?: boolean }> = ({
   position,
   height = 3.2,
   broken,
@@ -119,7 +119,7 @@ const Column: React.FC<{ position: [number, number, number]; height?: number; br
   );
 };
 
-const Cypress: React.FC<{ position: [number, number, number]; scale?: number }> = ({ position, scale = 1 }) => (
+export const Cypress: React.FC<{ position: [number, number, number]; scale?: number }> = ({ position, scale = 1 }) => (
   <group position={position} scale={scale}>
     <mesh position={[0, 0.3, 0]} castShadow>
       <cylinderGeometry args={[0.09, 0.12, 0.6, 10]} />
@@ -138,7 +138,7 @@ const Cypress: React.FC<{ position: [number, number, number]; scale?: number }> 
   </group>
 );
 
-const Fountain: React.FC<{ position: [number, number, number] }> = ({ position }) => {
+export const Fountain: React.FC<{ position: [number, number, number] }> = ({ position }) => {
   const frame = useCurrentFrame();
   return (
     <group position={position}>
@@ -167,7 +167,7 @@ const Fountain: React.FC<{ position: [number, number, number] }> = ({ position }
   );
 };
 
-const Pot: React.FC<{ position: [number, number, number] }> = ({ position }) => (
+export const Pot: React.FC<{ position: [number, number, number] }> = ({ position }) => (
   <group position={position}>
     <mesh geometry={lathe("pot", [[0, 0], [0.22, 0], [0.32, 0.18], [0.3, 0.38], [0.22, 0.48], [0.26, 0.54], [0, 0.54]], 24)} castShadow receiveShadow>
       <ToonMaterial color="#c56a43" />

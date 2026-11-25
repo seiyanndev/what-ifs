@@ -129,7 +129,7 @@ Code is in `src/kit/characters/Costume/`. Everything mounts on `Body` slots and 
 
 Review outputs: the `Headgear`, `Costumes` and `Props` stills and the `CostumeTurntable` video, rendered to `out/char/`.
 
-## Characters: presets and crowds (step 3d, awaiting review)
+## Characters: presets and crowds (step 3d, approved)
 
 - **`PRESETS`** (`presets.ts`): each preset is `{ label, era, shape, skin (SKIN_TONES index), costume, expression, named?, note? }`. **`<PresetCharacter preset="napoleon" />`** renders one, and any prop overrides it.
 - **`CAST`:** the 26 characters from the brief, in order: roman_emperor, roman_soldier, roman_engineer, scholar_greek, monk, peasant, lord, king, queen, knight, gutenberg, magellan, lapulapu, spanish_soldier, zheng_he, ming_emperor, ming_sailor, native_leader, napoleon, samurai, viking, inventor, explorer, modern_kid, modern_adult, news_anchor. `filipino_warrior` is an extra generic preset for crowds.
@@ -139,6 +139,36 @@ Review outputs: the `Headgear`, `Costumes` and `Props` stills and the `CostumeTu
 - **Performance:** `<Ink>` builds its outline mesh once and rebuilds only if the parent geometry changes. In this cloud container (software GL), a 130-figure crowd shot renders at about 1.5 s per frame. A real GPU is much faster.
 
 Review outputs: the `Cast` still and the `CrowdDemo` video, rendered to `out/char/`.
+
+## Motion (step 3e, awaiting review)
+
+Code is in `src/kit/actions/`: `core.ts` (types, easing, keyframes, pose maths), `library.ts` (the actions), `Performer.tsx`.
+
+- **An action** is a pure function `(framesSinceStart, ctx) → { pose, look?, expression?, capeLift?, travel? }`. It must be deterministic and must not keep state.
+- **`<Performer preset cues position heading blend=7 inPlace? face? />`** plays a cue list `[{ action, at, params?, expression?, heading? }]`.
+  - It blends into each new cue over `blend` frames (pose, gaze, expression, cape).
+  - It turns smoothly to a cue's `heading` (degrees; 0 faces the camera, +Z).
+  - It accumulates `travel` from walks and runs along each cue's heading (root motion).
+  - Add `face={{ talk }}` for lip sync.
+- **The 26 actions** (`ACTIONS`): idle, walk (`speed`), run (`speed`), talk, point (`dir`: side, forward or up; `hand`), wave, cheer, bow, salute, sword_raise, fight_clash (looping, stylized, no gore), fall (backward, lands on its back), sit, write (`seated`), read_scroll, crank_machine, look_up, look_around, shrug, facepalm, celebrate_jump (`height`), nod, shake_head, kneel, give_item (`hands`: both or right), sail_steer. One-handed actions take `params: { hand: "left" }`, which mirrors the pose.
+- **Sign conventions** (the character faces +Z and its left is +X):
+  - shoulder X − raises the arm forward; shoulderL Z + / shoulderR Z − raise it out or up sideways
+  - elbow X − bends the forearm forward; leg X − moves the thigh forward; knee X + bends the shin back
+  - spine/chest X + leans forward; head X + looks down; head Y + turns to the character's left
+  - gaze `look` is in screen space for a camera-facing character (+x = the viewer's right)
+- **Polish rules (built in):**
+  - Anticipation: a wind-up key before big moves.
+  - Overshoot: `ease: "back"` into the pose.
+  - Squash and stretch through `pose.stretch` (volume-preserving) on jumps and landings.
+  - The head leads: look_around samples the head at t, the chest at t−4 and the eyes at t+5.
+  - Secondary motion: the cape lift is driven by speed, and hair and capes sway on their own.
+  - Eyes follow the action: each action suggests a gaze.
+- **No foot sliding:** walk and run solve the leg angle from the body speed (`asin(footOffset / legLength)`), so the planted foot stays fixed while the root moves at `speed`. The hip height follows `legLength·cos θ`, which gives the natural bob.
+- **Chibi constraints:**
+  - The head is wider than the shoulders. Raised hands must go out sideways (forearm up) to stay visible, as in `wave`.
+  - Props leave the fist on the thumb side. With the arm overhead, flex the wrist (`wristR X ≈ +1.35`) so a blade points up.
+  - Robes are rigid, so sitting or kneeling in a robe pushes the skirt into the ground. Prefer standing actions for robed characters, or hide the ground line.
+- **Review outputs:** `ActionsGrid` (1920×1080; `props: { only, cols, dist }` for close-ups) and `Showreel` (15 s), rendered to `out/motion/`.
 
 ## Project layout
 
@@ -151,7 +181,7 @@ src/
     look/             Stage, LightRig, ToonMaterial, Ink, SoftShadow, Sky,
                       PaintedBackdrop, Grade, OrbitCamera, palettes, geometry      (step 2 ✓)
     characters/       rig.ts, Body, Hand (3a ✓) · Face/ (3b ✓) · Costume/ (3c ✓) · presets.ts, PresetCharacter, Crowd (3d)
-    actions/          procedural animations                                         (step 3e)
+    actions/          core, library (26 actions), Performer                        (step 3e)
     sets/             diorama sets, GLOBE, MAP_REGION                               (step 4)
     effects/          YEAR_STAMP, TIMELINE_SPLIT, RIPPLE, ...                       (step 5)
     captions/         word-by-word captions, title cards                            (step 6)
@@ -172,6 +202,7 @@ out/                  renders (git-ignored)
 | `npx remotion still LookTest out/x.png --frame=60 --props='{"timeOfDay":"night","whatIf":1}'` | Check another time of day or grade |
 | `npx remotion render <CompositionId> out/<file>.mp4` | Render any composition |
 | `npx remotion still <CompositionId> out/<file>.png --frame=<n>` | Render one frame as an image |
+| `npm run render:motion` | Render the motion showreel and the actions grid to `out/motion/` |
 | `npm run render:char` | Render all character review sheets to `out/char/` |
 | `npm run lint` | ESLint + TypeScript check |
 
@@ -190,8 +221,8 @@ The most relevant ones are `remotion-best-practices`, `remotion-render`, `remoti
 - [x] 3a. Base body approved (`out/char/base-turnaround.png`, `base-variants.png`, `hand-poses.png`, `rig-test.png`)
 - [x] 3b. Faces approved (`out/char/expressions.png`, `face-parts.png`, `face-talk-test.mp4`)
 - [x] 3c. Costumes approved (`out/char/costumes.png`, `headgear.png`, `props.png`, `costume-turntable.mp4`)
-- [ ] 3d. Presets + crowd: built, awaiting review (`out/char/cast.png`, `crowd-demo.mp4`)
-- [ ] 3e. Motion library
+- [x] 3d. Presets + crowd approved (`out/char/cast.png`, `crowd-demo.mp4`)
+- [ ] 3e. Motion library: built, awaiting review (`out/motion/showreel.mp4`, `actions-grid.mp4`)
 - [ ] 4. Sets and globe
 - [ ] 5. Effects
 - [ ] 6. Captions

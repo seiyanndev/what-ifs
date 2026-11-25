@@ -39,7 +39,8 @@
     "lint": "eslint src && tsc",
     "render:test": "remotion render TestCube out/test.mp4",
     "render:look": "remotion render LookTest out/look-test.mp4",
-    "render:char": "remotion still BaseTurnaround out/char/base-turnaround.png && remotion still BaseVariants out/char/base-variants.png && remotion still HandPoses out/char/hand-poses.png && remotion still RigTest out/char/rig-test.png && remotion still Expressions out/char/expressions.png && remotion still FaceParts out/char/face-parts.png && remotion still Headgear out/char/headgear.png && remotion still Costumes out/char/costumes.png && remotion still Props out/char/props.png && remotion render FaceTalkTest out/char/face-talk-test.mp4 && remotion render CostumeTurntable out/char/costume-turntable.mp4 && remotion still Cast out/char/cast.png && remotion render CrowdDemo out/char/crowd-demo.mp4"
+    "render:char": "remotion still BaseTurnaround out/char/base-turnaround.png && remotion still BaseVariants out/char/base-variants.png && remotion still HandPoses out/char/hand-poses.png && remotion still RigTest out/char/rig-test.png && remotion still Expressions out/char/expressions.png && remotion still FaceParts out/char/face-parts.png && remotion still Headgear out/char/headgear.png && remotion still Costumes out/char/costumes.png && remotion still Props out/char/props.png && remotion render FaceTalkTest out/char/face-talk-test.mp4 && remotion render CostumeTurntable out/char/costume-turntable.mp4 && remotion still Cast out/char/cast.png && remotion render CrowdDemo out/char/crowd-demo.mp4",
+    "render:motion": "remotion render Showreel out/motion/showreel.mp4 && remotion render ActionsGrid out/motion/actions-grid.mp4"
   },
   "allowScripts": {
     "esbuild": false
