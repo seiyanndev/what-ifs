@@ -94,7 +94,7 @@ Code is in `src/kit/characters/`: `rig.ts` (data), `Body.tsx`, `Hand.tsx`.
 
 Review sheets (stills): `BaseTurnaround`, `BaseVariants`, `HandPoses`, `RigTest`, rendered to `out/char/*.png`.
 
-## Characters: faces (step 3b, awaiting review)
+## Characters: faces (step 3b, approved)
 
 Code is in `src/kit/characters/Face/`: `params.ts` (shapes, presets, blending), `draw.ts` (canvas drawing), `talk.ts`, `Face.tsx`.
 
@@ -112,6 +112,23 @@ Code is in `src/kit/characters/Face/`: `params.ts` (shapes, presets, blending), 
 
 Review outputs: `Expressions` and `FaceParts` stills, plus the `FaceTalkTest` video, rendered to `out/char/`.
 
+## Characters: costumes (step 3c, awaiting review)
+
+Code is in `src/kit/characters/Costume/`. Everything mounts on `Body` slots and sizes itself with `useBody()`.
+
+- **`<Character costume={...} skin shape face pose id capeLift />`** is the dressed figurine. A `CostumeSpec` is `{ hair, facialHair, headwear, outfit, cape, props }`. Presets (3d) are just CostumeSpecs.
+- **Hair** (`HAIR_STYLES`): short, long, bun, curly, bald (fringe), braids, ponytail, topknot. Colors are in `HAIR_COLORS` (black, darkBrown, brown, auburn, blonde, red, grey, white). Brow color follows the hair.
+- **Facial hair:** 2D layers from the face system, plus `wizard: true` for a long 3D beard (`WizardBeard`).
+- **Headwear** (`HEADWEAR_TYPES`): laurel, crown, bicorne, tricorne, vikingHelmet (no horns), galea, kabuto, morion, monkHood, turban, mingHat, featherHeaddress (generic), topHat, leafCrown, hardHat. Each takes optional `color` and `accent`.
+- **Outfits** (`OUTFIT_TYPES`, `buildOutfit`): toga, legionary, peasantTunic, monkRobe, royalRobe (brings its own cape), knightArmor, explorerCoat, napoleonic, mingRobe, samurai, filipinoWarrior (bahag + upper wrap, generic), scholarRobe, modernCasual, suit. Recolor with `colors: { main, second, trim, metal }`. An outfit sets base colors (`shirt`, `pants`, `shoes`, `boots`, `hands`), sleeves and hidden parts (robes hide the legs and pelvis), and attaches its pieces.
+- **Outfit building blocks** (reuse them for new outfits): `Skirt` (ankle, knee or thigh; `open` for coats), `Belt`, `Panel`, `WideSleeve`, `ShoulderPiece` (round, flat or epaulette), `Collar` (ring, ermine, high or vneck), `Sash`, `Strips`, `Bands`, `CoatTails`, `Buttons`, `Emblem`.
+- **Props** (`PROP_TYPES`): scroll, book, quill, sword, spear, shield (forearm mount), kampilan, bow, telescope, map, flag (waving cloth, `color` + `accent`), torch (animated flame), globe (spins), gears (turn), coinBag, crownPillow. Props are modeled with the grip at the origin and +Y out of the thumb side. `Character` mounts them in `gripL`/`gripR` and sets the hand to `hold`. They also stand on the ground in sets.
+- **Cape:** a thin cloth box whose vertices are recomputed every frame. The hem lags and ripples, and the edges wrap forward. `lift` (0–1) streams it behind for runs, and `wind` sets the flutter.
+- **Rules:** keep cultural costumes generic and respectful, and make famous figures recognizable by silhouette and props only.
+- **Geometry rule:** `lathe()` profiles are auto-oriented bottom to top (top-down profiles used to render inside-out). Use `warpedLathe` for lobed brims and `extruded` for flat shapes.
+
+Review outputs: the `Headgear`, `Costumes` and `Props` stills and the `CostumeTurntable` video, rendered to `out/char/`.
+
 ## Project layout
 
 ```
@@ -122,7 +139,7 @@ src/
   kit/                the reusable kit (filled in as we build)
     look/             Stage, LightRig, ToonMaterial, Ink, SoftShadow, Sky,
                       PaintedBackdrop, Grade, OrbitCamera, palettes, geometry      (step 2 ✓)
-    characters/       rig.ts, Body, Hand (3a ✓) · Face/ (3b) · Costume/, presets.ts, Crowd (3c–3d)
+    characters/       rig.ts, Body, Hand (3a ✓) · Face/ (3b ✓) · Costume/ (3c) · presets.ts, Crowd (3d)
     actions/          procedural animations                                         (step 3e)
     sets/             diorama sets, GLOBE, MAP_REGION                               (step 4)
     effects/          YEAR_STAMP, TIMELINE_SPLIT, RIPPLE, ...                       (step 5)
@@ -160,8 +177,9 @@ The most relevant ones are `remotion-best-practices`, `remotion-render`, `remoti
 - [x] 1. Scaffold. Three template, skills installed, `out/test.mp4` renders (1080×1920, 30 fps, 90 frames)
 - [x] 2. Look locked: storybook diorama, toon + ink, 4 light rigs, era palettes, What If grade (`out/look-test.mp4`, `out/look/look-sheet.png`)
 - [x] 3a. Base body approved (`out/char/base-turnaround.png`, `base-variants.png`, `hand-poses.png`, `rig-test.png`)
-- [ ] 3b. Faces: built, awaiting review (`out/char/expressions.png`, `face-parts.png`, `face-talk-test.mp4`)
-- [ ] 3c–3e. Costumes, presets, motion
+- [x] 3b. Faces approved (`out/char/expressions.png`, `face-parts.png`, `face-talk-test.mp4`)
+- [ ] 3c. Costumes: built, awaiting review (`out/char/costumes.png`, `headgear.png`, `props.png`, `costume-turntable.mp4`)
+- [ ] 3d–3e. Presets + crowd, motion
 - [ ] 4. Sets and globe
 - [ ] 5. Effects
 - [ ] 6. Captions

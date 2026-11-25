@@ -47,6 +47,10 @@ export type BodyColors = {
   shirt: string;
   pants: string;
   shoes: string;
+  /** Optional: boots colour for the shins (else pants). */
+  boots?: string;
+  /** Optional: gloves / gauntlets (else skin). */
+  hands?: string;
 };
 
 export const DEFAULT_COLORS: BodyColors = { shirt: "#e9e2d2", pants: "#8b7a66", shoes: "#5a3d2b" };
@@ -152,7 +156,7 @@ export const Body: React.FC<BodyProps> = ({
           {!hide.shins ? (
             <mesh position={[0, -d.shin / 2, 0]} castShadow>
               <capsuleGeometry args={[0.092 * Math.sqrt(w), Math.max(0.01, d.shin - 0.08), 6, 16]} />
-              <ToonMaterial color={c.pants} />
+              <ToonMaterial color={c.boots ?? c.pants} />
               {line}
             </mesh>
           ) : null}
@@ -207,7 +211,7 @@ export const Body: React.FC<BodyProps> = ({
           {attach[`elbow${L}`]}
           <group position={[0, -d.forearm, 0]} rotation={add([0, -s * Math.PI * 0.5, 0], j(`wrist${L}`))}>
             {!hide.hands ? (
-              <Hand side={s} shape={handShape} color={skin} ink={ink} grip={attach[`grip${L}`]} />
+              <Hand side={s} shape={handShape} color={c.hands ?? skin} ink={ink} grip={attach[`grip${L}`]} />
             ) : null}
             {attach[`hand${L}`]}
           </group>
