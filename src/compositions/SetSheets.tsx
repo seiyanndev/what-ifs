@@ -34,6 +34,7 @@ const CAST: Partial<Record<SetName, { preset: PresetId; mark: string; heading?: 
   ],
   JUNGLE_PREHISTORIC: [{ preset: "explorer", mark: "center", heading: 20 }],
   BEACH: [{ preset: "lapulapu", mark: "center", heading: 0 }],
+  TROPICAL_VILLAGE: [{ preset: "filipino_warrior", mark: "center", heading: 10 }],
 };
 
 export const SetPreview: React.FC<{ set: SetName; timeOfDay?: TimeOfDay }> = ({ set, timeOfDay }) => {

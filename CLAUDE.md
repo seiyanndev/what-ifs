@@ -193,6 +193,7 @@ It wires up the sky or background, painted backdrop, light rig, the diorama, the
 | MODERN_CITY | modern / night | street |
 | JUNGLE_PREHISTORIC | ancient / day | pond |
 | BEACH | ageOfSail / sunset | shore |
+| TROPICAL_VILLAGE | ageOfSail / day | hutLeft, hutRight, shore (stilt huts, outrigger, palms, half sea) |
 
 - Every outdoor set also has the marks center, left, right, back, backLeft, backRight and front.
 - **Cameras:** wide 30 (outdoor) or 27 (interior), medium 19/18, close 9/8.5. In 9:16 a whole diorama needs about 30 units of distance to fit the width.
@@ -201,6 +202,7 @@ It wires up the sky or background, painted backdrop, light rig, the diorama, the
 ### Set dressing (`dressing.tsx`, reuse for new sets)
 - **Nature:** Cypress, RoundTree, PineTree, PalmTree, Bush, Fern, Rock, Volcano, Dino.
 - **Architecture:** Column, House (ancient, medieval, tudor or modern), Temple, Tower, Wall, Skyscraper.
+- **Tropical / island:** StiltHut (thatched, woven walls, ladder; generic Southeast Asian / Pacific) and Outrigger canoe.
 - **Furniture and props:** Table, Throne, Carpet, Banner, Bookshelf, Barrel, Crate, TorchStand, StreetLamp, Tent, Fence, Well, Dock, Cannon, Anvil, GearMachine, Statue, Car, Bench, Candle, Market.
 - **Grounds and bases** (`ground.tsx`): `DioramaBase ground="paving|grass|sand|dirt|planks|asphalt"`, `Water`, `RoomBase`, and HalfSea for PORT and BEACH.
 - Colors come from the era palette through `useSet()`, and windows, lamps and torches glow at night.
@@ -236,6 +238,7 @@ Code is in `src/kit/effects/`: `Shake.tsx`, `YearStamp.tsx`, `TimelineSplit.tsx`
 - **`FallingScrolls`** has tumbling scrolls raining down (it loops).
 - **`Asteroid from to impactAt`** sends a rock with a fiery trail in, accelerating. On impact it adds a fireball, light flash, shockwave ring, dust and sparks. Pair it with `<ImpactFlash at>` and `<Shake impacts={[impactAt]}>`.
 - **`Crowd`** is re-exported from characters.
+- **Stone statues:** wrap anything in `<StoneContext.Provider value={STONE}>` (`look/stone.ts`). Every `ToonMaterial` inside turns to carved stone and faces fade to a faint carving. In episodes, `effects.statue` puts any preset on a plinth: it crumbles away at `vanishAt` (dust and rumble) and rises back at `returnAt` (sparks and ripple).
 
 ### Fonts (`look/fonts.ts`)
 Bundled in `public/fonts`, with their licenses, so every machine renders the same: **Luckiest Guy** (`FONT_STAMP`, Apache-2.0) for stamps and titles, and **Lilita One** (`FONT_DISPLAY`, OFL) for secondary display text. They're loaded with `@remotion/fonts`, which holds the render until they're ready.
@@ -299,7 +302,7 @@ Uses **Kokoro**, a local neural TTS (Apache-2.0, so commercial use is fine; offl
 - Your own recording works too: put it at `raw.wav` and skip `npm run voice`.
 
 ### Sound library: `npm run sounds` (synthesized in code, no samples or licenses; deterministic; runs automatically after `npm install`, and the WAVs are git-ignored)
-- **`public/sfx/`:** stamp_slam, whoosh, ripple, war_drum, clash, waves (seamless 8 s loop), gong, crowd_cheer, rumble, impact, crackle (seamless 4 s fire loop), coins, page_flip, pop and sparkle.
+- **`public/sfx/`:** stamp_slam, whoosh, ripple, war_drum, clash, waves (seamless 8 s loop), gong, crowd_cheer, rumble, impact, crackle (seamless 4 s fire loop), coins, page_flip, pop, sparkle, fanfare (royal brass call and held chord), wind (seamless 8 s loop) and swell (orchestral crescendo into a hit).
 - **`public/music/`:** 8-bar seamless loops:
   - **epic_tense:** D minor, 100 bpm, drums, ostinato and brass
   - **mysterious:** A minor, 80 bpm, pad and celesta
@@ -398,10 +401,12 @@ Options: `--no-voice` (estimated timings and silent narration, for layout checks
   }]
 }
 ```
+- **More scene options:** `"musicDrop": true` cuts the music at the start of any scene and swells it back. A character's `"elder": true` gives the elder body plus grey hair and beard. `geo.flags` plants flags on a MAP_REGION that pop in at `at_time`. `effects.statue` adds a stone statue that vanishes and returns. Looping SFX in `sfx` (wind, waves, crackle) last until the scene ends.
 - **Automatic SFX:** year stamp (stamp_slam), split (ripple plus the music drop), ripple transition (whoosh), asteroid (impact), fire (crackle loop), crowd cheer (crowd_cheer), and waves under PORT and BEACH scenes.
 - **Timing is in seconds relative to the scene.** Scene lengths come from the narration, so write about 8–20 words per scene. A 60–75 s episode is about 140–180 words.
 - **Narration markup:** `*emphasis*`, `word{spoken}` (no spaces inside the braces), and `...` for a pause. Years are read naturally.
-- **Composition rules learned:** on BEACH and PORT the back half is water, so use crowd `flanks`. Keep characters on marks and the bottom 30% clear for captions.
+- **Composition rules learned:** the `close` camera on outdoor sets frames about 2.7 units of width, so two characters at the left and right marks fall out of frame; use `medium`, or custom marks within ±0.9. Seated or low characters near the front marks end up behind the captions, so put them about 1 unit further back. Labels on a MAP_REGION need to stay near the centre, since the portrait crop cuts the map's sides.
+- **More composition rules:** on BEACH and PORT the back half is water, so use crowd `flanks`. Keep characters on marks and the bottom 30% clear for captions.
 
 ### Daily workflow (15–30 min)
 1. Fact-check the real-history claims (ask Claude: "Fact-check only the real-history claims…").

@@ -2,8 +2,9 @@ import type { Caption } from "@remotion/captions";
 import { AbsoluteFill, Easing, interpolate, Sequence, useCurrentFrame, useVideoConfig } from "remotion";
 import { Performer, type Cue } from "../actions";
 import { captionsToWords, TitleCard } from "../captions";
-import { talkFromWords } from "../characters";
+import { BODY_TYPES, HAIR_COLORS, PRESETS, PresetCharacter, talkFromWords } from "../characters";
 import { Asteroid, Burst, Crowd, FallingScrolls, Fire, ImpactFlash, PlagueFog, PlagueTint, Shake, ShipFleet, STAMP_IMPACT, YearStamp } from "../effects";
+import { STONE, StoneContext, ToonMaterial } from "../look";
 import { boundsAround, mixView, SETS, SetScene, type GeoBounds, type LonLat } from "../sets";
 import type { CharacterSpec, ResolvedScene } from "./spec";
 
@@ -37,8 +38,20 @@ const CharacterView: React.FC<{ c: CharacterSpec; scene: ResolvedScene; words: R
   if (cues[0].at > 0) cues.unshift({ action: "idle", at: 0, expression: c.expression });
   const t = (scene.from + frame) / fps;
   const talk = c.talking ? talkFromWords(words, t) : undefined;
+  const p = PRESETS[c.preset];
+  const elder = c.elder
+    ? {
+        shape: BODY_TYPES.elder,
+        costume: {
+          ...p.costume,
+          hair: p.costume.hair ? { ...p.costume.hair, color: HAIR_COLORS.grey } : { style: "bald" as const, color: HAIR_COLORS.grey },
+          facialHair: p.costume.facialHair ? { ...p.costume.facialHair, color: HAIR_COLORS.grey } : undefined,
+        },
+      }
+    : {};
   return (
     <Performer
+      {...elder}
       preset={c.preset}
       id={`${scene.index}-${side}-${idx}-${c.preset}`}
       position={markPos(scene, c.mark)}
@@ -85,7 +98,8 @@ export const SceneShot: React.FC<{ scene: ResolvedScene; captions: Caption[]; wh
   let map;
   if (scene.set === "MAP_REGION" && g?.center) {
     const bounds: GeoBounds = boundsAround(g.center, g.span ?? 22, 0.85);
-    map = { bounds, width: 5.4, fills: fills.map((f) => ({ ...f, opacity: 0.6 })), routes, pins, labels };
+    const flags = (g.flags ?? []).map((f) => ({ at: f.at, color: f.color, accent: f.accent, pop: interpolate(frame, [(f.at_time ?? 0.5) * fps, (f.at_time ?? 0.5) * fps + 9], [0, 1], { ...clamp, easing: Easing.out(Easing.back(2.2)) }) }));
+    map = { bounds, width: 5.4, fills: fills.map((f) => ({ ...f, opacity: 0.6 })), routes, pins, labels, flags };
   }
 
   const chars = characters ?? scene.characters ?? [];
@@ -111,6 +125,7 @@ export const SceneShot: React.FC<{ scene: ResolvedScene; captions: Caption[]; wh
         {fx.fire ? <Fire position={markPos(scene, fx.fire.mark ?? "back")} scale={fx.fire.scale ?? 1.4} /> : null}
         {fx.fire ? <Burst position={markPos(scene, fx.fire.mark ?? "back")} at={10} kind="sparks" count={24} /> : null}
         {fx.plagueFog ? <PlagueFog /> : null}
+        {fx.statue ? <StatueFx spec={fx.statue} scene={scene} /> : null}
         {fx.shipFleet ? <ShipFleet count={fx.shipFleet.count ?? 7} formation={fx.shipFleet.formation ?? "v"} heading={fx.shipFleet.heading ?? 90} position={[-3.8, 0.06, -2.1]} speed={1.2} scale={1} spacing={1.25} /> : null}
         {fx.fallingScrolls ? <FallingScrolls position={[0, 0, -0.5]} area={[7, 4]} top={6} /> : null}
         {fx.asteroid ? <Asteroid impactAt={impact} start={Math.max(0, impact - 44)} from={[-5.5, 10.5, -7]} to={fx.asteroid.target ?? [1.6, 0, -2.2]} /> : null}
@@ -165,5 +180,36 @@ export const SceneView: React.FC<{ scene: ResolvedScene; captions: Caption[]; ti
         </Sequence>
       ) : null}
     </AbsoluteFill>
+  );
+};
+
+/** A stone statue of any preset on a plinth; crumbles away at vanishAt and rises back at returnAt. */
+const StatueFx: React.FC<{ spec: NonNullable<NonNullable<ResolvedScene["effects"]>["statue"]>; scene: ResolvedScene }> = ({ spec, scene }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const pos = markPos(scene, spec.mark ?? "center");
+  const v = spec.vanishAt !== undefined ? Math.round(spec.vanishAt * fps) : -1;
+  const r = spec.returnAt !== undefined ? Math.round(spec.returnAt * fps) : -1;
+  let h = 1;
+  if (v >= 0 && frame >= v) h = interpolate(frame, [v, v + 14], [1, 0], { ...clamp, easing: Easing.in(Easing.quad) });
+  if (r >= 0 && frame >= r) h = interpolate(frame, [r, r + 18], [0, 1], { ...clamp, easing: Easing.out(Easing.back(1.6)) });
+  const s = spec.scale ?? 1.35;
+  const plinthH = 0.55;
+  return (
+    <group position={pos}>
+      <mesh position={[0, plinthH / 2, 0]} castShadow receiveShadow>
+        <boxGeometry args={[1.25, plinthH, 1.25]} />
+        <ToonMaterial color={STONE} />
+      </mesh>
+      {h > 0.002 ? (
+        <StoneContext.Provider value={STONE}>
+          <group position={[0, plinthH, 0]} scale={[s * (0.6 + 0.4 * h), s * h, s * (0.6 + 0.4 * h)]}>
+            <PresetCharacter preset={spec.preset} id={`statue-${scene.index}`} rotation={[0, ((spec.heading ?? 0) * Math.PI) / 180, 0]} face={{ expression: "proud", blink: false }} pose={{ joints: { chest: [-0.05, 0, 0] } }} />
+          </group>
+        </StoneContext.Provider>
+      ) : null}
+      {v >= 0 ? <Burst position={[0, plinthH + 0.6, 0]} at={v + 4} kind="dust" count={26} power={1.3} color={STONE} seed={`sv-${scene.index}`} /> : null}
+      {r >= 0 ? <Burst position={[0, plinthH + 1.2, 0]} at={r + 6} kind="sparks" count={28} seed={`sr-${scene.index}`} color="#ffe27a" /> : null}
+    </group>
   );
 };

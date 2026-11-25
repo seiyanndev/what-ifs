@@ -13,3 +13,4 @@ export * from "./SoftShadow";
 export * from "./PaintedBackdrop";
 export * from "./fonts";
 export * from "./quality";
+export * from "./stone";

@@ -19,6 +19,8 @@ export type CharacterSpec = {
   heading?: number;
   /** Lip-sync this character to the narration. */
   talking?: boolean;
+  /** Show this person in old age (elder body, grey hair/beard). */
+  elder?: boolean;
   expression?: ExpressionName;
   /** Action cues; the first defaults to idle at 0. */
   actions?: { action: ActionName; at?: number; params?: Record<string, number | string>; expression?: ExpressionName; heading?: number }[];
@@ -36,6 +38,8 @@ export type GeoSpec = {
   fills?: { countries?: string[]; polygon?: LonLat[]; color: string; from?: number; to?: number; origin?: LonLat }[];
   routes?: { path: LonLat[]; icon?: "ship" | "army" | "none"; color?: string; from?: number; to?: number }[];
   pins?: { at: LonLat; color?: string; at_time?: number }[];
+  /** MAP_REGION: little flags planted on the map, popping in at `at_time` (e.g. a power spreading). */
+  flags?: { at: LonLat; color?: string; accent?: string; at_time?: number }[];
   labels?: { at: LonLat; text: string; style?: "region" | "city" | "title"; from?: number }[];
 };
 
@@ -50,6 +54,8 @@ export type EffectsSpec = {
   fallingScrolls?: boolean;
   asteroid?: { at?: number; target?: [number, number, number] };
   /** `flanks: true` splits it into two groups left and right that frame the action instead of covering it. */
+  /** A stone statue of a preset on a plinth. `vanishAt` crumbles it away, `returnAt` raises it back (seconds). */
+  statue?: { preset: PresetId; mark?: string | [number, number, number]; heading?: number; scale?: number; vanishAt?: number; returnAt?: number };
   crowd?: { count?: number; pool?: string; cheerAt?: number; area?: [number, number]; position?: [number, number, number]; flanks?: boolean; scale?: number };
 };
 
@@ -73,6 +79,8 @@ export type SceneSpec = {
   /** Change the music mood at the start of this scene ("silence" stops it). */
   music?: MusicMood | "silence";
   sfx?: { name: SfxName; at?: number; volume?: number }[];
+  /** Cut the music to silence at the start of this scene and swell it back (like the split does). */
+  musicDrop?: boolean;
   /** Force the grade: 0 real, 1 what if (default: 0 before the split, 1 after). */
   whatIf?: number;
   /** Extra seconds after the narration of the LAST scene (outro breathing room). */
@@ -137,6 +145,7 @@ export const validateEpisode = (spec: EpisodeSpec): string[] => {
     if (s.music) check(s.music === "silence" || (MUSIC_MOODS as readonly string[]).includes(s.music), `${where}: unknown music "${s.music}".${suggest(s.music, [...MUSIC_MOODS, "silence"])}`);
     for (const x of s.sfx ?? []) check((SFX_NAMES as readonly string[]).includes(x.name), `${where}: unknown sfx "${x.name}".${suggest(x.name, SFX_NAMES)}`);
     const chars = [...(s.characters ?? []), ...(s.effects?.timelineSplit?.whatIfCharacters ?? [])];
+    if (s.effects?.statue) check(presets.includes(s.effects.statue.preset), `${where}: unknown statue preset "${s.effects.statue.preset}".${suggest(s.effects.statue.preset, presets)}`);
     for (const c of chars) {
       check(presets.includes(c.preset), `${where}: unknown preset "${c.preset}".${suggest(c.preset, presets)}`);
       if (typeof c.mark === "string" && s.set in SETS) {

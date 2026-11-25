@@ -1,6 +1,7 @@
 import { useLayoutEffect, useMemo } from "react";
 import * as THREE from "three";
 import { useLook } from "./LookContext";
+import { useStone } from "./stone";
 
 // ---------------------------------------------------------------------------
 // 3-tone toon ramp: shadow / mid / light. The ramp is sampled with
@@ -99,7 +100,10 @@ type ToonMaterialProps = {
  *   <mesh><sphereGeometry /><ToonMaterial color="#c8553d" /></mesh>
  * Rim color and shadow tint come from the surrounding <LightRig>.
  */
-export const ToonMaterial: React.FC<ToonMaterialProps> = ({ color = "#ffffff", rim = 1, ramp = "default", ...rest }) => {
+export const ToonMaterial: React.FC<ToonMaterialProps> = ({ color: colorIn = "#ffffff", rim = 1, ramp = "default", ...restIn }) => {
+  const stone = useStone();
+  const color = stone && !restIn.map ? stone : colorIn;
+  const rest = stone ? { ...restIn, emissive: undefined, emissiveIntensity: 0 } : restIn;
   const look = useLook();
   const uniforms = useMemo(
     () => ({

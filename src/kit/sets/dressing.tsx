@@ -553,3 +553,60 @@ export const Market: React.FC<At & { color?: string }> = ({ color = "#c0392b", .
     </G>
   );
 };
+
+// ---------------------------------------------------------------------------
+// Tropical / island dressing (generic Southeast Asian & Pacific: stilt huts, outriggers)
+// ---------------------------------------------------------------------------
+/** Stilt hut with woven walls and a steep thatched roof (generic island dwelling). */
+export const StiltHut: React.FC<At & { w?: number; d?: number }> = ({ w = 1.7, d = 1.4, ...p }) => {
+  const { night } = useSet();
+  const stilt = 0.55;
+  const wallH = 0.85;
+  return (
+    <G {...p}>
+      {[
+        [1, 1],
+        [-1, 1],
+        [1, -1],
+        [-1, -1],
+      ].map(([sx, sz], i) => (
+        <Part key={i} geo={<cylinderGeometry args={[0.05, 0.06, stilt + 0.1, 8]} />} position={[sx * (w / 2 - 0.1), stilt / 2, sz * (d / 2 - 0.1)]} color="#7a5a3a" ink="set" />
+      ))}
+      <Part geometry={roundedBox(w + 0.15, 0.08, d + 0.15, 0.02)} position={[0, stilt, 0]} color="#a07a4e" ink="set" />
+      <Part geometry={roundedBox(w, wallH, d, 0.04)} position={[0, stilt + wallH / 2 + 0.04, 0]} color="#d8bf8a" ink="set" />
+      {/* woven bands */}
+      {[0.2, 0.45, 0.7].map((y) => (
+        <Part key={y} geometry={roundedBox(w + 0.01, 0.025, d + 0.01, 0.01)} position={[0, stilt + y, 0]} color="#b89a62" ink={false} />
+      ))}
+      {/* steep thatch roof */}
+      <Part
+        geometry={extruded(`thatch-${w}-${d}`, [[-w / 2 - 0.32, 0], [w / 2 + 0.32, 0], [0, w * 0.62]], d + 0.45, 0.04)}
+        position={[0, stilt + wallH + 0.02, 0]}
+        color="#b8955a"
+        ink="set"
+      />
+      <Part geometry={roundedBox(w * 0.12, 0.08, d + 0.5, 0.03)} position={[0, stilt + wallH + w * 0.6, 0]} color="#8a6a3e" ink={false} />
+      {/* doorway + ladder */}
+      <Part geometry={roundedBox(0.34, 0.52, 0.04, 0.03)} position={[0, stilt + 0.32, d / 2 + 0.01]} color={night ? "#ffcf7a" : "#4a3326"} emissive={night ? "#ffb84a" : undefined} emissiveIntensity={night ? 0.7 : 0} ink={false} rim={0} />
+      <group position={[0, stilt / 2, d / 2 + 0.25]} rotation={[-0.35, 0, 0]}>
+        {[-1, 1].map((s) => (
+          <Part key={s} geometry={roundedBox(0.04, stilt + 0.25, 0.04, 0.01)} position={[s * 0.15, 0, 0]} color="#7a5a3a" ink={false} />
+        ))}
+        {[-0.18, 0, 0.18].map((y) => (
+          <Part key={y} geometry={roundedBox(0.32, 0.03, 0.04, 0.01)} position={[0, y, 0]} color="#7a5a3a" ink={false} />
+        ))}
+      </group>
+    </G>
+  );
+};
+
+/** Outrigger canoe (bangka-style, generic) pulled up on the shore or afloat. */
+export const Outrigger: React.FC<At & { color?: string }> = ({ color = "#9a6a45", ...p }) => (
+  <G {...p}>
+    <Part geometry={lathe("canoe-hull", [[0, -0.12], [0.16, -0.1], [0.2, 0.02], [0.18, 0.1], [0, 0.1]], 16)} position={[0, 0.1, 0]} rotation={[Math.PI / 2, 0, 0]} scale={[1, 6.5, 0.8]} color={color} ink="set" />
+    {[-0.45, 0.45].map((z) => (
+      <Part key={z} geo={<cylinderGeometry args={[0.025, 0.025, 1.3, 8]} />} position={[0.55, 0.22, z]} rotation={[0, 0, Math.PI / 2]} color="#7a5a3a" ink={false} />
+    ))}
+    <Part geo={<capsuleGeometry args={[0.06, 1.3, 4, 10]} />} position={[1.15, 0.1, 0]} rotation={[Math.PI / 2, 0, 0]} color="#c9a96b" ink="set" />
+  </G>
+);

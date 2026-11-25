@@ -1,0 +1,772 @@
+[
+ {
+  "text": "What",
+  "startMs": 100,
+  "endMs": 470,
+  "timestampMs": 285,
+  "confidence": null
+ },
+ {
+  "text": " if",
+  "startMs": 470,
+  "endMs": 580,
+  "timestampMs": 525,
+  "confidence": null
+ },
+ {
+  "text": " Magellan",
+  "startMs": 580,
+  "endMs": 1440,
+  "timestampMs": 1010,
+  "confidence": null
+ },
+ {
+  "text": " had",
+  "startMs": 1440,
+  "endMs": 1650,
+  "timestampMs": 1545,
+  "confidence": null
+ },
+ {
+  "text": " won",
+  "startMs": 1650,
+  "endMs": 1940,
+  "timestampMs": 1795,
+  "confidence": null
+ },
+ {
+  "text": " the",
+  "startMs": 1940,
+  "endMs": 2230,
+  "timestampMs": 2085,
+  "confidence": null
+ },
+ {
+  "text": " Battle",
+  "startMs": 2230,
+  "endMs": 2810,
+  "timestampMs": 2520,
+  "confidence": null
+ },
+ {
+  "text": " of",
+  "startMs": 2810,
+  "endMs": 3000,
+  "timestampMs": 2905,
+  "confidence": null
+ },
+ {
+  "text": " Mactan?",
+  "startMs": 3000,
+  "endMs": 3980,
+  "timestampMs": 3490,
+  "confidence": null
+ },
+ {
+  "text": " In",
+  "startMs": 3980,
+  "endMs": 4100,
+  "timestampMs": 4040,
+  "confidence": null
+ },
+ {
+  "text": " April",
+  "startMs": 4100,
+  "endMs": 4560,
+  "timestampMs": 4330,
+  "confidence": null
+ },
+ {
+  "text": " 1521,",
+  "startMs": 4560,
+  "endMs": 5880,
+  "timestampMs": 5220,
+  "confidence": null
+ },
+ {
+  "text": " Ferdinand",
+  "startMs": 5880,
+  "endMs": 6390,
+  "timestampMs": 6135,
+  "confidence": null
+ },
+ {
+  "text": " Magellan",
+  "startMs": 6390,
+  "endMs": 7100,
+  "timestampMs": 6745,
+  "confidence": null
+ },
+ {
+  "text": " attacked",
+  "startMs": 7100,
+  "endMs": 7460,
+  "timestampMs": 7280,
+  "confidence": null
+ },
+ {
+  "text": " Mactan,",
+  "startMs": 7460,
+  "endMs": 8320,
+  "timestampMs": 7890,
+  "confidence": null
+ },
+ {
+  "text": " a",
+  "startMs": 8320,
+  "endMs": 8440,
+  "timestampMs": 8380,
+  "confidence": null
+ },
+ {
+  "text": " small",
+  "startMs": 8440,
+  "endMs": 8740,
+  "timestampMs": 8590,
+  "confidence": null
+ },
+ {
+  "text": " island",
+  "startMs": 8740,
+  "endMs": 9150,
+  "timestampMs": 8945,
+  "confidence": null
+ },
+ {
+  "text": " in",
+  "startMs": 9150,
+  "endMs": 9290,
+  "timestampMs": 9220,
+  "confidence": null
+ },
+ {
+  "text": " what's",
+  "startMs": 9290,
+  "endMs": 9720,
+  "timestampMs": 9505,
+  "confidence": null
+ },
+ {
+  "text": " now",
+  "startMs": 9720,
+  "endMs": 9910,
+  "timestampMs": 9815,
+  "confidence": null
+ },
+ {
+  "text": " the",
+  "startMs": 9910,
+  "endMs": 10120,
+  "timestampMs": 10015,
+  "confidence": null
+ },
+ {
+  "text": " Philippines.",
+  "startMs": 10120,
+  "endMs": 11120,
+  "timestampMs": 10620,
+  "confidence": null
+ },
+ {
+  "text": " Lapulapu",
+  "startMs": 11120,
+  "endMs": 12130,
+  "timestampMs": 11625,
+  "confidence": null
+ },
+ {
+  "text": " and",
+  "startMs": 12130,
+  "endMs": 12360,
+  "timestampMs": 12245,
+  "confidence": null
+ },
+ {
+  "text": " his",
+  "startMs": 12360,
+  "endMs": 12730,
+  "timestampMs": 12545,
+  "confidence": null
+ },
+ {
+  "text": " warriors",
+  "startMs": 12730,
+  "endMs": 13510,
+  "timestampMs": 13120,
+  "confidence": null
+ },
+ {
+  "text": " defeated",
+  "startMs": 13510,
+  "endMs": 14340,
+  "timestampMs": 13925,
+  "confidence": null
+ },
+ {
+  "text": " him.",
+  "startMs": 14340,
+  "endMs": 15040,
+  "timestampMs": 14690,
+  "confidence": null
+ },
+ {
+  "text": " Magellan",
+  "startMs": 15040,
+  "endMs": 15600,
+  "timestampMs": 15320,
+  "confidence": null
+ },
+ {
+  "text": " was",
+  "startMs": 15600,
+  "endMs": 15810,
+  "timestampMs": 15705,
+  "confidence": null
+ },
+ {
+  "text": " killed,",
+  "startMs": 15810,
+  "endMs": 16240,
+  "timestampMs": 16025,
+  "confidence": null
+ },
+ {
+  "text": " and",
+  "startMs": 16240,
+  "endMs": 16650,
+  "timestampMs": 16445,
+  "confidence": null
+ },
+ {
+  "text": " his",
+  "startMs": 16650,
+  "endMs": 16660,
+  "timestampMs": 16655,
+  "confidence": null
+ },
+ {
+  "text": " crew",
+  "startMs": 16660,
+  "endMs": 16960,
+  "timestampMs": 16810,
+  "confidence": null
+ },
+ {
+  "text": " sailed",
+  "startMs": 16960,
+  "endMs": 17370,
+  "timestampMs": 17165,
+  "confidence": null
+ },
+ {
+  "text": " away.",
+  "startMs": 17370,
+  "endMs": 17920,
+  "timestampMs": 17645,
+  "confidence": null
+ },
+ {
+  "text": " But",
+  "startMs": 17920,
+  "endMs": 18250,
+  "timestampMs": 18085,
+  "confidence": null
+ },
+ {
+  "text": " what",
+  "startMs": 18250,
+  "endMs": 18910,
+  "timestampMs": 18580,
+  "confidence": null
+ },
+ {
+  "text": " if",
+  "startMs": 18910,
+  "endMs": 18930,
+  "timestampMs": 18920,
+  "confidence": null
+ },
+ {
+  "text": " Magellan",
+  "startMs": 18930,
+  "endMs": 19790,
+  "timestampMs": 19360,
+  "confidence": null
+ },
+ {
+  "text": " won?",
+  "startMs": 19790,
+  "endMs": 20480,
+  "timestampMs": 20135,
+  "confidence": null
+ },
+ {
+  "text": " Spain",
+  "startMs": 20480,
+  "endMs": 21920,
+  "timestampMs": 21200,
+  "confidence": null
+ },
+ {
+  "text": " might",
+  "startMs": 21920,
+  "endMs": 22080,
+  "timestampMs": 22000,
+  "confidence": null
+ },
+ {
+  "text": " have",
+  "startMs": 22080,
+  "endMs": 22240,
+  "timestampMs": 22160,
+  "confidence": null
+ },
+ {
+  "text": " taken",
+  "startMs": 22240,
+  "endMs": 22640,
+  "timestampMs": 22440,
+  "confidence": null
+ },
+ {
+  "text": " control",
+  "startMs": 22640,
+  "endMs": 23180,
+  "timestampMs": 22910,
+  "confidence": null
+ },
+ {
+  "text": " of",
+  "startMs": 23180,
+  "endMs": 23330,
+  "timestampMs": 23255,
+  "confidence": null
+ },
+ {
+  "text": " the",
+  "startMs": 23330,
+  "endMs": 23570,
+  "timestampMs": 23450,
+  "confidence": null
+ },
+ {
+  "text": " islands",
+  "startMs": 23570,
+  "endMs": 24220,
+  "timestampMs": 23895,
+  "confidence": null
+ },
+ {
+  "text": " decades",
+  "startMs": 24220,
+  "endMs": 24710,
+  "timestampMs": 24465,
+  "confidence": null
+ },
+ {
+  "text": " earlier.",
+  "startMs": 24710,
+  "endMs": 25630,
+  "timestampMs": 25170,
+  "confidence": null
+ },
+ {
+  "text": " In",
+  "startMs": 25630,
+  "endMs": 25770,
+  "timestampMs": 25700,
+  "confidence": null
+ },
+ {
+  "text": " real",
+  "startMs": 25770,
+  "endMs": 25940,
+  "timestampMs": 25855,
+  "confidence": null
+ },
+ {
+  "text": " history,",
+  "startMs": 25940,
+  "endMs": 26630,
+  "timestampMs": 26285,
+  "confidence": null
+ },
+ {
+  "text": " colonization",
+  "startMs": 26630,
+  "endMs": 27560,
+  "timestampMs": 27095,
+  "confidence": null
+ },
+ {
+  "text": " didn't",
+  "startMs": 27560,
+  "endMs": 28070,
+  "timestampMs": 27815,
+  "confidence": null
+ },
+ {
+  "text": " start",
+  "startMs": 28070,
+  "endMs": 28720,
+  "timestampMs": 28395,
+  "confidence": null
+ },
+ {
+  "text": " until",
+  "startMs": 28820,
+  "endMs": 29190,
+  "timestampMs": 29005,
+  "confidence": null
+ },
+ {
+  "text": " 1565.",
+  "startMs": 29190,
+  "endMs": 30920,
+  "timestampMs": 30055,
+  "confidence": null
+ },
+ {
+  "text": " Magellan",
+  "startMs": 30920,
+  "endMs": 31330,
+  "timestampMs": 31125,
+  "confidence": null
+ },
+ {
+  "text": " would",
+  "startMs": 31330,
+  "endMs": 31750,
+  "timestampMs": 31540,
+  "confidence": null
+ },
+ {
+  "text": " have",
+  "startMs": 31750,
+  "endMs": 32120,
+  "timestampMs": 31935,
+  "confidence": null
+ },
+ {
+  "text": " returned",
+  "startMs": 32120,
+  "endMs": 32860,
+  "timestampMs": 32490,
+  "confidence": null
+ },
+ {
+  "text": " a",
+  "startMs": 32860,
+  "endMs": 32950,
+  "timestampMs": 32905,
+  "confidence": null
+ },
+ {
+  "text": " hero,",
+  "startMs": 32950,
+  "endMs": 33480,
+  "timestampMs": 33215,
+  "confidence": null
+ },
+ {
+  "text": " and",
+  "startMs": 33480,
+  "endMs": 33520,
+  "timestampMs": 33500,
+  "confidence": null
+ },
+ {
+  "text": " probably",
+  "startMs": 33520,
+  "endMs": 34000,
+  "timestampMs": 33760,
+  "confidence": null
+ },
+ {
+  "text": " led",
+  "startMs": 34000,
+  "endMs": 34240,
+  "timestampMs": 34120,
+  "confidence": null
+ },
+ {
+  "text": " more",
+  "startMs": 34240,
+  "endMs": 34590,
+  "timestampMs": 34415,
+  "confidence": null
+ },
+ {
+  "text": " expeditions",
+  "startMs": 34590,
+  "endMs": 35520,
+  "timestampMs": 35055,
+  "confidence": null
+ },
+ {
+  "text": " across",
+  "startMs": 35520,
+  "endMs": 36000,
+  "timestampMs": 35760,
+  "confidence": null
+ },
+ {
+  "text": " the",
+  "startMs": 36000,
+  "endMs": 36180,
+  "timestampMs": 36090,
+  "confidence": null
+ },
+ {
+  "text": " Pacific",
+  "startMs": 36180,
+  "endMs": 36690,
+  "timestampMs": 36435,
+  "confidence": null
+ },
+ {
+  "text": " himself.",
+  "startMs": 36690,
+  "endMs": 37440,
+  "timestampMs": 37065,
+  "confidence": null
+ },
+ {
+  "text": " And",
+  "startMs": 37440,
+  "endMs": 37910,
+  "timestampMs": 37675,
+  "confidence": null
+ },
+ {
+  "text": " Lapulapu,",
+  "startMs": 37910,
+  "endMs": 38750,
+  "timestampMs": 38330,
+  "confidence": null
+ },
+ {
+  "text": " today",
+  "startMs": 38750,
+  "endMs": 39230,
+  "timestampMs": 38990,
+  "confidence": null
+ },
+ {
+  "text": " a",
+  "startMs": 39230,
+  "endMs": 39320,
+  "timestampMs": 39275,
+  "confidence": null
+ },
+ {
+  "text": " national",
+  "startMs": 39320,
+  "endMs": 40090,
+  "timestampMs": 39705,
+  "confidence": null
+ },
+ {
+  "text": " hero,",
+  "startMs": 40090,
+  "endMs": 40790,
+  "timestampMs": 40440,
+  "confidence": null
+ },
+ {
+  "text": " might",
+  "startMs": 40790,
+  "endMs": 41080,
+  "timestampMs": 40935,
+  "confidence": null
+ },
+ {
+  "text": " be",
+  "startMs": 41080,
+  "endMs": 41110,
+  "timestampMs": 41095,
+  "confidence": null
+ },
+ {
+  "text": " a",
+  "startMs": 41110,
+  "endMs": 41160,
+  "timestampMs": 41135,
+  "confidence": null
+ },
+ {
+  "text": " forgotten",
+  "startMs": 41160,
+  "endMs": 41680,
+  "timestampMs": 41420,
+  "confidence": null
+ },
+ {
+  "text": " name.",
+  "startMs": 41680,
+  "endMs": 42000,
+  "timestampMs": 41840,
+  "confidence": null
+ },
+ {
+  "text": " Today,",
+  "startMs": 42000,
+  "endMs": 42980,
+  "timestampMs": 42490,
+  "confidence": null
+ },
+ {
+  "text": " Lapulapu",
+  "startMs": 42980,
+  "endMs": 43740,
+  "timestampMs": 43360,
+  "confidence": null
+ },
+ {
+  "text": " is",
+  "startMs": 43740,
+  "endMs": 43940,
+  "timestampMs": 43840,
+  "confidence": null
+ },
+ {
+  "text": " a",
+  "startMs": 43940,
+  "endMs": 44100,
+  "timestampMs": 44020,
+  "confidence": null
+ },
+ {
+  "text": " symbol",
+  "startMs": 44100,
+  "endMs": 44700,
+  "timestampMs": 44400,
+  "confidence": null
+ },
+ {
+  "text": " of",
+  "startMs": 44700,
+  "endMs": 44920,
+  "timestampMs": 44810,
+  "confidence": null
+ },
+ {
+  "text": " resistance.",
+  "startMs": 44920,
+  "endMs": 46530,
+  "timestampMs": 45725,
+  "confidence": null
+ },
+ {
+  "text": " One",
+  "startMs": 46530,
+  "endMs": 46610,
+  "timestampMs": 46570,
+  "confidence": null
+ },
+ {
+  "text": " battle",
+  "startMs": 46610,
+  "endMs": 47020,
+  "timestampMs": 46815,
+  "confidence": null
+ },
+ {
+  "text": " made",
+  "startMs": 47020,
+  "endMs": 47460,
+  "timestampMs": 47240,
+  "confidence": null
+ },
+ {
+  "text": " that",
+  "startMs": 47460,
+  "endMs": 47590,
+  "timestampMs": 47525,
+  "confidence": null
+ },
+ {
+  "text": " possible.",
+  "startMs": 47590,
+  "endMs": 48400,
+  "timestampMs": 47995,
+  "confidence": null
+ },
+ {
+  "text": " Would",
+  "startMs": 48400,
+  "endMs": 49440,
+  "timestampMs": 48920,
+  "confidence": null
+ },
+ {
+  "text": " the",
+  "startMs": 49440,
+  "endMs": 49520,
+  "timestampMs": 49480,
+  "confidence": null
+ },
+ {
+  "text": " Philippines",
+  "startMs": 49520,
+  "endMs": 50480,
+  "timestampMs": 50000,
+  "confidence": null
+ },
+ {
+  "text": " be",
+  "startMs": 50640,
+  "endMs": 50640,
+  "timestampMs": 50640,
+  "confidence": null
+ },
+ {
+  "text": " different",
+  "startMs": 50640,
+  "endMs": 51390,
+  "timestampMs": 51015,
+  "confidence": null
+ },
+ {
+  "text": " today?",
+  "startMs": 51390,
+  "endMs": 52290,
+  "timestampMs": 51840,
+  "confidence": null
+ },
+ {
+  "text": " Tell",
+  "startMs": 52290,
+  "endMs": 52480,
+  "timestampMs": 52385,
+  "confidence": null
+ },
+ {
+  "text": " me",
+  "startMs": 52480,
+  "endMs": 52680,
+  "timestampMs": 52580,
+  "confidence": null
+ },
+ {
+  "text": " in",
+  "startMs": 52680,
+  "endMs": 52880,
+  "timestampMs": 52780,
+  "confidence": null
+ },
+ {
+  "text": " the",
+  "startMs": 52880,
+  "endMs": 53180,
+  "timestampMs": 53030,
+  "confidence": null
+ },
+ {
+  "text": " comments.",
+  "startMs": 53180,
+  "endMs": 54560,
+  "timestampMs": 53870,
+  "confidence": null
+ }
+]

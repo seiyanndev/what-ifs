@@ -1,5 +1,6 @@
 import { useLayoutEffect, useMemo } from "react";
 import * as THREE from "three";
+import { Prop } from "../../characters/Costume";
 import { Ink, roundedBox, ToonMaterial } from "../../look";
 import { countries as resolveCountries, polygonsOf, type LonLat } from "./data";
 import type { GeoLabel, GeoPin, GeoRoute } from "./Globe";
@@ -19,6 +20,8 @@ export type MapBoardProps = {
   labels?: GeoLabel[];
   routes?: (GeoRoute & { icon?: "ship" | "army" | "none" })[];
   raised?: RaisedRegion[];
+  /** Planted flags (pop 0..1). */
+  flags?: { at: LonLat; color?: string; accent?: string; pop?: number }[];
   frame?: "wood" | "none";
   decor?: boolean;
 };
@@ -26,7 +29,7 @@ export type MapBoardProps = {
 const shapeCache = new Map<string, THREE.ExtrudeGeometry>();
 
 /** Flat "map table" diorama (MAP_REGION). Map plane lies in XZ at y = 0, north toward −Z. */
-export const MapBoard: React.FC<MapBoardProps> = ({ bounds: b, width: w = 6, style = "parchment", fills = [], pins = [], labels = [], routes = [], raised = [], frame = "wood", decor = true }) => {
+export const MapBoard: React.FC<MapBoardProps> = ({ bounds: b, width: w = 6, style = "parchment", fills = [], pins = [], labels = [], routes = [], raised = [], flags = [], frame = "wood", decor = true }) => {
   const aspect = boundsAspect(b);
   const h = w / aspect;
   const texW = 2048;
@@ -115,6 +118,13 @@ export const MapBoard: React.FC<MapBoardProps> = ({ bounds: b, width: w = 6, sty
         };
         return <Route key={i} at={at} upAt={() => new THREE.Vector3(0, 1, 0)} progress={rt.progress} color={rt.color} icon={rt.icon} iconScale={w * 0.07} dotSize={w * 0.0045} dashes={70} />;
       })}
+      {flags.map((f, i) => (
+        <group key={`f${i}`} position={toBoard(f.at)} scale={w * 0.075 * Math.max(0.0001, f.pop ?? 1)} rotation={[0, -0.5, 0]}>
+          <group position={[0, -0.33, 0]}>
+            <Prop type="flag" color={f.color ?? "#c0392b"} accent={f.accent ?? "#f2b134"} />
+          </group>
+        </group>
+      ))}
       {pins.map((p, i) => (
         <Pin key={i} position={toBoard(p.at)} color={p.color} pop={p.pop ?? 1} scale={w * 0.12} />
       ))}

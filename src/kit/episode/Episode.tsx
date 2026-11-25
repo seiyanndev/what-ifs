@@ -1,5 +1,5 @@
 import { AbsoluteFill, Sequence, staticFile, useVideoConfig } from "remotion";
-import { Soundtrack, type MusicCue, type SfxCue } from "../audio";
+import { SFX_LOOPS, Soundtrack, type MusicCue, type SfxCue } from "../audio";
 import { Captions } from "../captions";
 import { Ripple, STAMP_IMPACT, TimelineSplit } from "../effects";
 import { FONT_DISPLAY, FONT_STAMP, QUALITY, QualityContext } from "../look";
@@ -153,12 +153,16 @@ export const Episode: React.FC<EpisodeProps> = (props) => {
   const drops: { at: number; holdFrames?: number }[] = [];
   for (const s of scenes) {
     if (s.music) music.push({ at: s.from, mood: s.music });
-    for (const x of s.sfx ?? [])
+    for (const x of s.sfx ?? []) {
+      const at = Math.round((x.at ?? 0) * fps);
+      // looping ambiences (wind, waves, crackle) last until the end of their scene
       sfx.push({
-        at: s.from + Math.round((x.at ?? 0) * fps),
+        at: s.from + at,
         name: x.name,
         volume: x.volume,
+        duration: SFX_LOOPS[x.name] ? Math.max(15, s.durationInFrames - at) : undefined,
       });
+    }
     const fx = s.effects ?? {};
     if (fx.yearStamp)
       sfx.push({
@@ -170,6 +174,10 @@ export const Episode: React.FC<EpisodeProps> = (props) => {
       sfx.push({ at: s.from, name: "ripple" });
     }
     if (s.transition === "ripple") sfx.push({ at: s.from, name: "whoosh" });
+    if (s.musicDrop) drops.push({ at: s.from, holdFrames: 30 });
+    if (fx.statue?.vanishAt !== undefined) sfx.push({ at: s.from + Math.round(fx.statue.vanishAt * fps), name: "rumble", volume: 0.5 });
+    if (fx.statue?.returnAt !== undefined) sfx.push({ at: s.from + Math.round(fx.statue.returnAt * fps), name: "ripple" });
+    if (s.set === "TROPICAL_VILLAGE") sfx.push({ at: s.from, name: "waves", duration: s.durationInFrames, volume: 0.14 });
     if (fx.asteroid)
       sfx.push({
         at: s.from + Math.round((fx.asteroid.at ?? 1.6) * fps),

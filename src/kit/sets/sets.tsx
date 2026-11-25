@@ -28,6 +28,8 @@ import {
   Rock,
   RoundTree,
   Skyscraper,
+  StiltHut,
+  Outrigger,
   Statue,
   StreetLamp,
   Table,
@@ -257,6 +259,24 @@ const JunglePrehistoric: React.FC = () => (
 
 const VolcanoLazy: React.FC = () => <Volcano />;
 
+const TropicalVillage: React.FC = () => (
+  <group>
+    <DioramaBase ground="sand" seed="tv" rimColor="#c9a96b" />
+    <HalfSea y={0.05} color="#62c3da" />
+    <StiltHut position={[-2.5, 0, 0.7]} rotation={0.55} />
+    <StiltHut position={[2.6, 0, 0.9]} rotation={-0.5} w={1.5} d={1.3} />
+    <StiltHut position={[0.3, 0.05, -1.3]} rotation={0.1} w={1.4} d={1.2} />
+    <Outrigger position={[1.6, 0.05, -2.6]} rotation={-0.35} />
+    <PalmTree position={[-3.6, 0, -0.6]} lean={0.2} />
+    <PalmTree position={[3.6, 0, -0.4]} lean={-0.25} scale={0.85} />
+    <PalmTree position={[-1.2, 0, 2.9]} lean={0.1} scale={0.7} />
+    <Fern position={[3.2, 0, 2.2]} scale={1.1} />
+    <Bush position={[-3.3, 0, 2.1]} color="#4d8a35" />
+    <Crate position={[1.2, 0, 2.6]} size={0.45} rotation={0.4} />
+    <Barrel position={[-1.6, 0, 1.6]} scale={0.8} />
+  </group>
+);
+
 // ---------------------------------------------------------------------------
 // Interiors
 // ---------------------------------------------------------------------------
@@ -336,7 +356,8 @@ export type SetName =
   | "WORKSHOP"
   | "MODERN_CITY"
   | "JUNGLE_PREHISTORIC"
-  | "BEACH";
+  | "BEACH"
+  | "TROPICAL_VILLAGE";
 
 export type Mark = [number, number, number];
 export type SetInfo = {
@@ -375,6 +396,7 @@ export const SETS: Record<SetName, SetInfo> = {
   WORKSHOP: { label: "Workshop", component: Workshop, era: "modern", timeOfDay: "day", interior: true, floorY: 0, marks: { ...OUTDOOR_MARKS(0), bench: [1.3, 0, -1.7], machine: [-1.9, 0, -1.6], anvil: [1.6, 0, 1.1] }, camera: { target: [0, 1.2, -0.7], wide: 27, medium: 18, close: 8.5 } },
   MODERN_CITY: { label: "Modern city", component: ModernCity, era: "modern", timeOfDay: "night", floorY: 0.08, marks: { center: [0, 0.08, 2.4], left: [-1.6, 0.08, 2.5], right: [1.6, 0.08, 2.5], street: [0.5, 0.0, 0.9], back: [0, 0.0, -0.4] }, camera: { target: [0, 1.6, -0.6], wide: 30, medium: 19, close: 9 } },
   JUNGLE_PREHISTORIC: { label: "Prehistoric jungle", component: JunglePrehistoric, era: "ancient", timeOfDay: "day", floorY: 0, marks: { ...OUTDOOR_MARKS(0), pond: [1.9, 0, 2.0] }, camera: { target: [0, 1.2, -0.6], wide: 30, medium: 19, close: 9 } },
+  TROPICAL_VILLAGE: { label: "Tropical village", component: TropicalVillage, era: "ageOfSail", timeOfDay: "day", floorY: 0, marks: { center: [0, 0, 1.9], left: [-1.4, 0, 2.2], right: [1.5, 0, 2.3], front: [0, 0, 3.0], hutLeft: [-2.0, 0, 1.7], hutRight: [2.1, 0, 1.9], shore: [0.4, 0, 0.3] }, camera: { target: [0, 1.0, -0.2], wide: 30, medium: 19, close: 9 } },
   BEACH: { label: "Beach", component: Beach, era: "ageOfSail", timeOfDay: "sunset", floorY: 0, marks: { center: [0, 0, 1.4], left: [-1.6, 0, 1.6], right: [1.4, 0, 1.9], shore: [0, 0, 0.4], front: [0, 0, 2.8] }, camera: { target: [0, 1.0, -0.4], wide: 30, medium: 19, close: 9 } },
 };
 

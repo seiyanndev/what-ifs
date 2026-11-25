@@ -1,7 +1,7 @@
 import { useLayoutEffect, useMemo } from "react";
 import { random, useCurrentFrame } from "remotion";
 import * as THREE from "three";
-import { useLook, useQuality } from "../../look";
+import { useLook, useQuality, useStone } from "../../look";
 import { drawFace } from "./draw";
 import { resolveExpression, type Expression, type ExpressionName, type FacialHair } from "./params";
 import { applyTalk, type TalkState } from "./talk";
@@ -70,6 +70,7 @@ export const Face: React.FC<FaceProps & { r: number; id: string; headScale?: [nu
   const frame = useCurrentFrame();
   const lookCtx = useLook();
   const res = useQuality().faceRes ?? CANVAS;
+  const stoneTint = useStone(); // statues: faint carved face in the stone colour
   const canvas = useMemo(() => {
     const c = document.createElement("canvas");
     c.width = res;
@@ -105,7 +106,8 @@ export const Face: React.FC<FaceProps & { r: number; id: string; headScale?: [nu
         polygonOffset
         polygonOffsetFactor={-2}
         polygonOffsetUnits={-2}
-        color={FACE_TINT[lookCtx.timeOfDay]}
+        color={stoneTint ?? FACE_TINT[lookCtx.timeOfDay]}
+        opacity={stoneTint ? 0.45 : 1}
       />
     </mesh>
   );

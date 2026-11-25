@@ -18,6 +18,9 @@ export const SFX_NAMES = [
   "page_flip",
   "pop",
   "sparkle",
+  "fanfare",
+  "wind",
+  "swell",
 ] as const;
 export type SfxName = (typeof SFX_NAMES)[number];
 
@@ -27,7 +30,7 @@ export type MusicMood = (typeof MUSIC_MOODS)[number];
 /** Seamless-loop lengths (seconds) — keep in sync with gen-sounds.mjs (8 bars each). */
 export const MUSIC_LOOP_SEC: Record<MusicMood, number> = { epic_tense: 19.2, mysterious: 24, sad_strings: (60 / 66) * 32, triumphant: (60 / 112) * 32 };
 /** SFX that are loops (ambiences). */
-export const SFX_LOOPS: Partial<Record<SfxName, number>> = { waves: 8, crackle: 4 };
+export const SFX_LOOPS: Partial<Record<SfxName, number>> = { waves: 8, crackle: 4, wind: 8 };
 
 export const sfxSrc = (n: SfxName) => staticFile(`sfx/${n}.wav`);
 export const musicSrc = (m: MusicMood) => staticFile(`music/${m}.wav`);
@@ -36,6 +39,9 @@ export const captionsSrc = (ep: string) => staticFile(`voice/${ep}/captions.json
 
 /** Default volume per SFX (0..1) so a mix sounds balanced without tweaking. */
 export const SFX_GAIN: Partial<Record<SfxName, number>> = {
+  fanfare: 0.55,
+  wind: 0.3,
+  swell: 0.6,
   stamp_slam: 0.68,
   whoosh: 0.41,
   ripple: 0.45,

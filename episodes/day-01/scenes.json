@@ -1,0 +1,489 @@
+{
+  "title": "What if Magellan won the Battle of Mactan?",
+  "voice": "bm_george",
+  "names": [
+    "Lapulapu",
+    "Mactan",
+    "Philippines",
+    "Magellan"
+  ],
+  "scenes": [
+    {
+      "id": "hook",
+      "set": "BEACH",
+      "camera": "wide",
+      "move": "push",
+      "narration": "What if Magellan had won the Battle of Mactan?",
+      "titleCard": true,
+      "music": "epic_tense",
+      "sfx": [
+        {
+          "name": "war_drum",
+          "at": 0.2
+        },
+        {
+          "name": "war_drum",
+          "at": 1.4
+        }
+      ],
+      "characters": [
+        {
+          "preset": "magellan",
+          "mark": "left",
+          "heading": 60,
+          "expression": "proud",
+          "actions": [
+            {
+              "action": "idle",
+              "expression": "proud"
+            },
+            {
+              "action": "point",
+              "at": 0.6,
+              "params": {
+                "dir": "forward"
+              },
+              "expression": "smirk"
+            }
+          ]
+        },
+        {
+          "preset": "lapulapu",
+          "mark": "right",
+          "heading": -60,
+          "expression": "determined",
+          "actions": [
+            {
+              "action": "idle",
+              "expression": "determined"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "invasion",
+      "set": "BEACH",
+      "camera": "medium",
+      "narration": "In April 1521, Ferdinand Magellan attacked Mactan, a small island in what's now the Philippines.",
+      "effects": {
+        "yearStamp": {
+          "text": "1521",
+          "subtitle": "Mactan",
+          "at": 0.3
+        },
+        "crowd": {
+          "count": 14,
+          "pool": "spanishExpedition",
+          "area": [
+            6.5,
+            1.1
+          ],
+          "position": [
+            0,
+            0,
+            -1.3
+          ]
+        }
+      },
+      "sfx": [
+        {
+          "name": "clash",
+          "at": 3.2
+        }
+      ],
+      "characters": [
+        {
+          "preset": "magellan",
+          "mark": "center",
+          "heading": 0,
+          "expression": "determined",
+          "actions": [
+            {
+              "action": "idle",
+              "expression": "determined"
+            },
+            {
+              "action": "point",
+              "at": 2.4,
+              "params": {
+                "dir": "forward"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "defeat",
+      "set": "BEACH",
+      "camera": "medium",
+      "musicDrop": true,
+      "narration": "Lapulapu and his warriors defeated him. Magellan was killed, and his crew sailed away.",
+      "sfx": [
+        {
+          "name": "clash",
+          "at": 0.6
+        }
+      ],
+      "characters": [
+        {
+          "preset": "lapulapu",
+          "mark": [
+            0.85,
+            0,
+            1.3
+          ],
+          "heading": -60,
+          "expression": "determined",
+          "actions": [
+            {
+              "action": "idle",
+              "expression": "determined"
+            },
+            {
+              "action": "sword_raise",
+              "at": 0.4,
+              "expression": "determined"
+            }
+          ]
+        },
+        {
+          "preset": "magellan",
+          "mark": [
+            0.05,
+            0,
+            1.1
+          ],
+          "heading": 60,
+          "expression": "determined",
+          "actions": [
+            {
+              "action": "idle",
+              "expression": "determined"
+            },
+            {
+              "action": "fall",
+              "at": 1.4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "split",
+      "set": "BEACH",
+      "camera": "medium",
+      "move": "orbitLeft",
+      "narration": "But what if Magellan won?",
+      "music": "mysterious",
+      "thumb": true,
+      "sfx": [
+        {
+          "name": "whoosh",
+          "at": 0.1
+        }
+      ],
+      "effects": {
+        "timelineSplit": {
+          "takeoverAt": 1.3,
+          "whatIfCharacters": [
+            {
+              "preset": "magellan",
+              "mark": "center",
+              "heading": 0,
+              "actions": [
+                {
+                  "action": "cheer",
+                  "at": 0.2,
+                  "expression": "laughing"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "characters": [
+        {
+          "preset": "lapulapu",
+          "mark": "center",
+          "heading": 0,
+          "actions": [
+            {
+              "action": "sword_raise",
+              "at": 0.2,
+              "expression": "proud"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spain-spreads",
+      "set": "MAP_REGION",
+      "move": "push",
+      "narration": "Spain might have taken control of the islands decades earlier. In real history, colonization didn't start until 1565.",
+      "geo": {
+        "center": [
+          122,
+          11.5
+        ],
+        "span": 19,
+        "fills": [
+          {
+            "countries": [
+              "Philippines"
+            ],
+            "color": "#c0392b",
+            "from": 0.6,
+            "to": 4.0,
+            "origin": [
+              123.9,
+              10.3
+            ]
+          }
+        ],
+        "flags": [
+          {
+            "at": [
+              123.9,
+              10.3
+            ],
+            "color": "#c0392b",
+            "accent": "#f2b134",
+            "at_time": 0.7
+          },
+          {
+            "at": [
+              122.6,
+              10.7
+            ],
+            "color": "#c0392b",
+            "accent": "#f2b134",
+            "at_time": 1.6
+          },
+          {
+            "at": [
+              121.0,
+              14.6
+            ],
+            "color": "#c0392b",
+            "accent": "#f2b134",
+            "at_time": 2.4
+          },
+          {
+            "at": [
+              125.4,
+              7.2
+            ],
+            "color": "#c0392b",
+            "accent": "#f2b134",
+            "at_time": 3.1
+          },
+          {
+            "at": [
+              120.6,
+              17.4
+            ],
+            "color": "#c0392b",
+            "accent": "#f2b134",
+            "at_time": 3.7
+          }
+        ],
+        "labels": [
+          {
+            "at": [
+              121.2,
+              16.0
+            ],
+            "text": "Philippines",
+            "style": "region",
+            "from": 0.5
+          },
+          {
+            "at": [
+              122.6,
+              12.9
+            ],
+            "text": "Real: 1565",
+            "style": "city",
+            "from": 4.6
+          }
+        ]
+      }
+    },
+    {
+      "id": "hero",
+      "set": "THRONE_ROOM",
+      "camera": "medium",
+      "narration": "Magellan would have returned a hero, and probably led more expeditions across the Pacific himself.",
+      "music": "triumphant",
+      "sfx": [
+        {
+          "name": "fanfare",
+          "at": 0.15
+        }
+      ],
+      "characters": [
+        {
+          "preset": "king",
+          "mark": "throne",
+          "expression": "happy",
+          "actions": [
+            {
+              "action": "idle",
+              "expression": "happy"
+            },
+            {
+              "action": "nod",
+              "at": 1.2,
+              "expression": "happy"
+            }
+          ]
+        },
+        {
+          "preset": "magellan",
+          "mark": "left",
+          "heading": 30,
+          "expression": "proud",
+          "actions": [
+            {
+              "action": "bow",
+              "at": 0.4,
+              "expression": "proud"
+            },
+            {
+              "action": "idle",
+              "at": 2.2,
+              "expression": "proud"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "forgotten",
+      "set": "TROPICAL_VILLAGE",
+      "timeOfDay": "sunset",
+      "camera": "medium",
+      "narration": "And Lapulapu, today a national hero, might be a forgotten name.",
+      "music": "sad_strings",
+      "sfx": [
+        {
+          "name": "wind",
+          "at": 0,
+          "volume": 0.35
+        }
+      ],
+      "characters": [
+        {
+          "preset": "lapulapu",
+          "elder": true,
+          "mark": [
+            0,
+            0,
+            0.45
+          ],
+          "heading": 15,
+          "expression": "sad",
+          "actions": [
+            {
+              "action": "sit",
+              "at": 0,
+              "expression": "sad"
+            },
+            {
+              "action": "sit",
+              "at": 2.0,
+              "expression": "defeated"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "statue",
+      "set": "MODERN_CITY",
+      "timeOfDay": "sunset",
+      "camera": "medium",
+      "narration": "Today, Lapulapu is a symbol of resistance. One battle made that possible.",
+      "music": "triumphant",
+      "effects": {
+        "statue": {
+          "preset": "lapulapu",
+          "mark": "back",
+          "scale": 1.45,
+          "vanishAt": 0.7,
+          "returnAt": 2.3
+        }
+      },
+      "characters": [
+        {
+          "preset": "modern_kid",
+          "mark": "left",
+          "heading": 150,
+          "actions": [
+            {
+              "action": "look_up",
+              "at": 0.2,
+              "expression": "wonder"
+            }
+          ]
+        },
+        {
+          "preset": "modern_adult",
+          "mark": "right",
+          "heading": -150,
+          "actions": [
+            {
+              "action": "idle"
+            },
+            {
+              "action": "point",
+              "at": 2.8,
+              "params": {
+                "dir": "up",
+                "hand": "left"
+              },
+              "expression": "happy"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "outro",
+      "set": "BEACH",
+      "timeOfDay": "sunset",
+      "camera": "medium",
+      "move": "push",
+      "narration": "Would the Philippines be different today? Tell me in the comments.",
+      "tail": 1.8,
+      "sfx": [
+        {
+          "name": "swell",
+          "at": 0.1
+        }
+      ],
+      "characters": [
+        {
+          "preset": "lapulapu",
+          "mark": "center",
+          "heading": 0,
+          "expression": "proud",
+          "actions": [
+            {
+              "action": "idle",
+              "expression": "proud"
+            },
+            {
+              "action": "sword_raise",
+              "at": 1.6,
+              "expression": "proud"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

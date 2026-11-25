@@ -387,6 +387,50 @@ const SFX = {
     });
     return b;
   },
+  /** Royal brass fanfare: two rising calls then a held major chord with a timpani roll. */
+  fanfare: () => {
+    const b = buf(3.6);
+    const call = [[67, 0], [72, 0.16], [76, 0.32], [79, 0.48]];
+    call.forEach(([n, t]) => ensemble(b, t, 0.14, n, { brass: true, attack: 0.02, release: 0.1, cutoff: 3200, gain: 0.32, seed: 41 }));
+    call.forEach(([n, t]) => ensemble(b, 0.75 + t * 0.8, 0.12, n + 2, { brass: true, attack: 0.02, release: 0.1, cutoff: 3200, gain: 0.3, seed: 42 }));
+    [60, 64, 67, 72, 76].forEach((n, i) => ensemble(b, 1.45, 1.4, n, { brass: true, attack: 0.04, release: 0.7, cutoff: 3000, gain: 0.2, pan: (i - 2) * 0.3, seed: 43 }));
+    for (let i = 0; i < 10; i++) drum(b, 1.0 + i * 0.045, { f0: 120, f1: 80, decay: 0.12, noise: 0.25, gain: 0.25 + i * 0.03, seed: 50 + i });
+    drum(b, 1.45, { f0: 110, f1: 55, decay: 0.7, noise: 0.3, gain: 0.9, seed: 60 });
+    reverb(b, 0.3, 1.3, 0.4);
+    return b;
+  },
+  /** Soft wind (seamless 8 s loop): band-passed noise with slow gusts. */
+  wind: () =>
+    loopRender(
+      8,
+      (b) => {
+        const nz = noiseGen(71);
+        const nz2 = noiseGen(72);
+        const bp = new Biquad("bp", 500, 0.8);
+        const bp2 = new Biquad("bp", 900, 1.2);
+        add(b, 0, 17.5, (t) => {
+          const g = 0.45 + 0.35 * Math.sin((TAU * t) / 5.3) + 0.2 * Math.sin((TAU * t) / 2.1 + 1);
+          bp.set(380 + 380 * g);
+          bp2.set(700 + 600 * g);
+          return (bp.run(nz()) * 1.4 + bp2.run(nz2()) * 0.6) * g;
+        }, -0.3);
+        reverb(b, 0.3, 1.2, 0.5);
+      },
+      1.5,
+    ),
+  /** Epic swell: rising orchestral crescendo (strings + cymbal roll) into a hit. */
+  swell: () => {
+    const b = buf(4.2);
+    [48, 55, 60, 64, 67].forEach((n, i) =>
+      ensemble(b, 0, 2.6, n, { attack: 2.4, release: 0.9, cutoff: 2600, vibrato: 0.006, gain: 0.13, pan: (i - 2) * 0.35, seed: 80 + i }),
+    );
+    const nz = noiseGen(81);
+    const hp = new Biquad("hp", 3500);
+    add(b, 0, 2.7, (t) => hp.run(nz()) * (t / 2.7) ** 2.5 * 0.9);
+    drum(b, 2.6, { f0: 100, f1: 45, decay: 0.9, noise: 0.6, gain: 1, len: 1.6, seed: 82 });
+    reverb(b, 0.35, 1.4, 0.4);
+    return b;
+  },
   sparkle: () => {
     const b = buf(1.6);
     [84, 88, 91, 96, 100].forEach((n, i) => bell(b, i * 0.06, n, { decay: 0.8, gain: 0.14, pan: (i - 2) * 0.3 }));
