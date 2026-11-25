@@ -2,169 +2,169 @@
  {
   "text": "What",
   "startMs": 120,
-  "endMs": 280,
-  "timestampMs": 200,
+  "endMs": 300,
+  "timestampMs": 210,
   "confidence": null
  },
  {
   "text": " if",
-  "startMs": 280,
-  "endMs": 470,
+  "startMs": 300,
+  "endMs": 450,
   "timestampMs": 375,
   "confidence": null
  },
  {
   "text": " Magellan",
-  "startMs": 470,
-  "endMs": 980,
-  "timestampMs": 725,
+  "startMs": 450,
+  "endMs": 1050,
+  "timestampMs": 750,
   "confidence": null
  },
  {
   "text": " never",
-  "startMs": 980,
-  "endMs": 1330,
-  "timestampMs": 1155,
+  "startMs": 1050,
+  "endMs": 1480,
+  "timestampMs": 1265,
   "confidence": null
  },
  {
   "text": " left",
-  "startMs": 1330,
-  "endMs": 1690,
-  "timestampMs": 1510,
+  "startMs": 1480,
+  "endMs": 1720,
+  "timestampMs": 1600,
   "confidence": null
  },
  {
   "text": " Spain",
-  "startMs": 1690,
-  "endMs": 1960,
-  "timestampMs": 1825,
+  "startMs": 1720,
+  "endMs": 2090,
+  "timestampMs": 1905,
   "confidence": null
  },
  {
   "text": " in",
-  "startMs": 1960,
-  "endMs": 2100,
-  "timestampMs": 2030,
+  "startMs": 2090,
+  "endMs": 2240,
+  "timestampMs": 2165,
   "confidence": null
  },
  {
   "text": " 1519?",
-  "startMs": 2100,
-  "endMs": 3200,
-  "timestampMs": 2650,
+  "startMs": 2240,
+  "endMs": 3400,
+  "timestampMs": 2820,
   "confidence": null
  },
  {
   "text": " The",
-  "startMs": 3200,
-  "endMs": 3500,
-  "timestampMs": 3350,
+  "startMs": 3400,
+  "endMs": 3660,
+  "timestampMs": 3530,
   "confidence": null
  },
  {
   "text": " fleet",
-  "startMs": 3500,
-  "endMs": 3810,
-  "timestampMs": 3655,
+  "startMs": 3660,
+  "endMs": 4040,
+  "timestampMs": 3850,
   "confidence": null
  },
  {
   "text": " stays",
-  "startMs": 3810,
-  "endMs": 4320,
-  "timestampMs": 4065,
+  "startMs": 4040,
+  "endMs": 4440,
+  "timestampMs": 4240,
   "confidence": null
  },
  {
   "text": " home.",
-  "startMs": 4320,
-  "endMs": 4750,
-  "timestampMs": 4535,
+  "startMs": 4440,
+  "endMs": 5000,
+  "timestampMs": 4720,
   "confidence": null
  },
  {
   "text": " Instead,",
-  "startMs": 4750,
-  "endMs": 5430,
-  "timestampMs": 5090,
+  "startMs": 5000,
+  "endMs": 5890,
+  "timestampMs": 5445,
   "confidence": null
  },
  {
   "text": " Zheng",
-  "startMs": 5430,
-  "endMs": 5715,
-  "timestampMs": 5573,
+  "startMs": 5890,
+  "endMs": 6260,
+  "timestampMs": 6075,
   "confidence": null
  },
  {
   "text": " He",
-  "startMs": 5715,
-  "endMs": 6000,
-  "timestampMs": 5858,
+  "startMs": 6260,
+  "endMs": 6440,
+  "timestampMs": 6350,
   "confidence": null
  },
  {
   "text": " reaches",
-  "startMs": 6000,
-  "endMs": 6470,
-  "timestampMs": 6235,
+  "startMs": 6440,
+  "endMs": 7100,
+  "timestampMs": 6770,
   "confidence": null
  },
  {
   "text": " Mactan",
-  "startMs": 6470,
-  "endMs": 6980,
-  "timestampMs": 6725,
+  "startMs": 7100,
+  "endMs": 7610,
+  "timestampMs": 7355,
   "confidence": null
  },
  {
-  "text": " first,",
-  "startMs": 6980,
-  "endMs": 7420,
-  "timestampMs": 7200,
+  "text": " first...",
+  "startMs": 7610,
+  "endMs": 8100,
+  "timestampMs": 7855,
   "confidence": null
  },
  {
   "text": " and",
-  "startMs": 7420,
-  "endMs": 7630,
-  "timestampMs": 7525,
+  "startMs": 8100,
+  "endMs": 8310,
+  "timestampMs": 8205,
   "confidence": null
  },
  {
   "text": " Lapulapu",
-  "startMs": 7630,
-  "endMs": 8190,
-  "timestampMs": 7910,
+  "startMs": 8310,
+  "endMs": 8870,
+  "timestampMs": 8590,
   "confidence": null
  },
  {
   "text": " greets",
-  "startMs": 8190,
-  "endMs": 8760,
-  "timestampMs": 8475,
+  "startMs": 8870,
+  "endMs": 9410,
+  "timestampMs": 9140,
   "confidence": null
  },
  {
   "text": " *friends*,",
-  "startMs": 8760,
-  "endMs": 9270,
-  "timestampMs": 9015,
+  "startMs": 9410,
+  "endMs": 10110,
+  "timestampMs": 9760,
   "confidence": null
  },
  {
   "text": " not",
-  "startMs": 9270,
-  "endMs": 9500,
-  "timestampMs": 9385,
+  "startMs": 10110,
+  "endMs": 10230,
+  "timestampMs": 10170,
   "confidence": null
  },
  {
   "text": " invaders.",
-  "startMs": 9500,
-  "endMs": 10400,
-  "timestampMs": 9950,
+  "startMs": 10230,
+  "endMs": 11100,
+  "timestampMs": 10665,
   "confidence": null
  }
 ]

@@ -273,7 +273,13 @@ Put the recording at `public/voice/<episode>/raw.wav` (.mp3, .m4a, .flac and .og
 
 **One-time setup:** `npm run audio:setup` builds whisper.cpp 1.5.5 into `whisper.cpp/` (git-ignored) and downloads `ggml-base.en.bin`. Use `-- small.en` for better accuracy. If the model download fails behind a proxy, use `curl -L -o whisper.cpp/ggml-base.en.bin https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-base.en.bin`.
 
-**Voice source:** a TTS service that allows commercial use, or your own recording. The demo voice (`public/voice/demo`) is FFmpeg's built-in flite robot voice and is only for testing.
+### Narrator: `npm run voice -- <episode> [--voice bm_george] [--speed 0.95]`
+Uses **Kokoro**, a local neural TTS (Apache-2.0, so commercial use is fine; offline). It reads `public/voice/<episode>/script.txt` and writes `raw.wav`, then you run `npm run audio -- <episode> --script public/voice/<episode>/script.txt`.
+- **Default voice `bm_george`:** a British documentary narrator. It came out clearest under Whisper, along with bm_lewis.
+- **Other good narrators:** bm_lewis, bm_daniel, am_michael, am_onyx and am_fenrir. Samples are in `out/voices/` (regenerate with the snippet in `scripts/tts.py`).
+- **Script markup:** `*word*` is emphasis (captions only). Years are read naturally (1519 → "fifteen nineteen", 44 BC → "forty-four B C", 1500s → "fifteen hundreds", ~3000 BC → "around three thousand B C"). `word{spoken}` changes pronunciation without changing the caption, and `...` makes a dramatic pause. Blank lines between paragraphs add 0.45 s pauses.
+- **One-time setup:** `npm run voice:setup` creates `.venv-tts/` and downloads about 350 MB of models into `tts-models/` (both git-ignored).
+- Your own recording works too: put it at `raw.wav` and skip `npm run voice`.
 
 ### Sound library: `npm run sounds` (synthesized in code, no samples or licenses; deterministic; runs automatically after `npm install`, and the WAVs are git-ignored)
 - **`public/sfx/`:** stamp_slam, whoosh, ripple, war_drum, clash, waves (seamless 8 s loop), gong, crowd_cheer, rumble, impact, crackle (seamless 4 s fire loop), coins, page_flip, pop and sparkle.
@@ -329,6 +335,8 @@ out/                  renders (git-ignored)
 | `npx remotion still <CompositionId> out/<file>.png --frame=<n>` | Render one frame as an image |
 | `npm run audio:setup` | One time: build whisper.cpp and download the speech model |
 | `npm run sounds` | Regenerate all SFX and music loops into `public/sfx` and `public/music` |
+| `npm run voice:setup` | One time: install the Kokoro narrator (offline neural TTS) |
+| `npm run voice -- <ep> [--voice bm_george]` | Script → narration `public/voice/<ep>/raw.wav` |
 | `npm run audio -- <ep> --script <file>` | Clean `public/voice/<ep>/raw.*` and write word-timed `captions.json` |
 | `npm run render:audio` | Render the 12 s audio demo to `out/audio/` |
 | `npm run render:captions` | Render the 10 s captions demo to `out/captions/` |
