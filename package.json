@@ -1,7 +1,7 @@
 {
   "name": "what-if-history",
   "version": "1.0.0",
-  "description": "A React Three Fiber Project",
+  "description": "What If History Changed? vertical video kit (Remotion + Three.js)",
   "repository": {},
   "license": "UNLICENSED",
   "engines": {
@@ -14,12 +14,12 @@
     "@remotion/media": "4.0.547",
     "@remotion/three": "4.0.547",
     "@remotion/zod-types": "4.0.547",
+    "mediabunny": "1.66.0",
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "remotion": "4.0.547",
     "three": "0.178.0",
-    "zod": "4.6.7",
-    "mediabunny": "1.66.0"
+    "zod": "4.6.7"
   },
   "devDependencies": {
     "@remotion/eslint-config-flat": "4.0.547",
@@ -34,7 +34,8 @@
     "dev": "remotion studio",
     "build": "remotion bundle",
     "upgrade": "remotion upgrade",
-    "lint": "eslint src && tsc"
+    "lint": "eslint src && tsc",
+    "render:test": "remotion render TestCube out/test.mp4"
   },
   "allowScripts": {
     "esbuild": false
