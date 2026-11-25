@@ -1,5 +1,6 @@
 import { Composition, Still } from "remotion";
 import { BaseTurnaround, BaseVariants, HandPoses, RigTest } from "./compositions/CharacterSheets";
+import { ExpressionsSheet, FacePartsSheet, FaceTalkTest } from "./compositions/FaceSheets";
 import { LookTest } from "./compositions/LookTest";
 import { TestCube } from "./compositions/TestCube";
 
@@ -26,6 +27,9 @@ export const RemotionRoot: React.FC = () => {
       <Still id="BaseVariants" component={BaseVariants} width={2400} height={1350} />
       <Still id="HandPoses" component={HandPoses} width={2400} height={1350} />
       <Still id="RigTest" component={RigTest} width={2400} height={1350} />
+      <Still id="Expressions" component={ExpressionsSheet} width={2400} height={1500} />
+      <Still id="FaceParts" component={FacePartsSheet} width={2400} height={1500} />
+      <Composition id="FaceTalkTest" component={FaceTalkTest} durationInFrames={4 * VIDEO.fps} {...VIDEO} />
     </>
   );
 };

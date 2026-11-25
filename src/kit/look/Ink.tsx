@@ -11,6 +11,9 @@ export const INK = {
   set: 2.4,
 } as const;
 
+/** Camera depth (world units) below which outlines start to thicken for close-ups. */
+export const INK_REF_DEPTH = 14;
+
 // Screen-space inverted hull: back faces pushed out along the projected normal by N pixels.
 // Guarded against zero-length normals (lathe poles, sphere caps) which would otherwise explode.
 const vertexShader = /* glsl */ `
@@ -18,6 +21,7 @@ const vertexShader = /* glsl */ `
 #include <fog_pars_vertex>
 uniform float thickness;
 uniform vec2 size;
+uniform float refDepth;
 void main() {
   vec4 pos = vec4(position, 1.0);
   vec3 n = normal;
@@ -31,7 +35,9 @@ void main() {
   vec2 cn = (projectionMatrix * vec4(viewN, 0.0)).xy;
   float l = length(cn);
   if (l > 1e-5) {
-    clip.xy += (cn / l) * thickness / size * clip.w * 2.0;
+    // close-ups get proportionally bolder lines (up to 2.5×); wide shots keep the base width
+    float boost = clamp(refDepth / max(clip.w, 0.001), 1.0, 2.5);
+    clip.xy += (cn / l) * thickness * boost / size * clip.w * 2.0;
   }
   gl_Position = clip;
   #include <fog_vertex>
@@ -71,7 +77,12 @@ export const Ink: React.FC<Props> = ({ weight = "prop", color }) => {
       new THREE.ShaderMaterial({
         uniforms: THREE.UniformsUtils.merge([
           THREE.UniformsLib.fog,
-          { thickness: { value: 1 }, size: { value: new THREE.Vector2(1080, 1920) }, color: { value: new THREE.Color() } },
+          {
+            thickness: { value: 1 },
+            size: { value: new THREE.Vector2(1080, 1920) },
+            color: { value: new THREE.Color() },
+            refDepth: { value: INK_REF_DEPTH },
+          },
         ]),
         vertexShader,
         fragmentShader,

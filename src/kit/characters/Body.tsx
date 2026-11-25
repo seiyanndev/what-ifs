@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
-import { random, useCurrentFrame } from "remotion";
 import { Ink, lathe, SKIN_TONES, ToonMaterial } from "../look";
+import { Face, type FaceProps } from "./Face";
 import { Hand } from "./Hand";
 import { bodyDims, DEFAULT_SHAPE, resolveHand, type BodyShape, type Joint, type Pose, type Vec3 } from "./rig";
 
@@ -62,7 +62,9 @@ export type BodyProps = {
   /** Short sleeves show skin on the forearm; long sleeves use the shirt colour. */
   sleeves?: "short" | "long";
   ink?: boolean;
-  /** Seed for the placeholder face's blink timing. */
+  /** Expression, gaze, talking, facial hair — see Face/. */
+  face?: FaceProps;
+  /** Stable id: seeds blinking and other per-character randomness. */
   id?: string;
   position?: Vec3;
   rotation?: Vec3;
@@ -91,9 +93,10 @@ const BELLY: [number, number][] = [
   [0, -0.06],
   [0.285, -0.06],
   [0.305, 0.06],
-  [0.31, 0.2],
-  [0.3, 0.27],
-  [0, 0.28],
+  [0.31, 0.18],
+  [0.305, 0.3],
+  [0.2, 0.34],
+  [0, 0.35],
 ];
 const CHEST_PIVOT = 0.22; // chest pivot height above spine, unit height
 const CHEST: [number, number][] = [
@@ -108,51 +111,6 @@ const CHEST: [number, number][] = [
   [0, 0.34],
 ];
 
-/** Placeholder face until the 2D face system (step 3b) replaces it via the `face` slot. */
-const PlaceholderFace: React.FC<{ r: number; id: string }> = ({ r, id }) => {
-  const frame = useCurrentFrame();
-  const period = 95 + Math.floor(random(`blink-${id}`) * 40);
-  const phase = Math.floor(random(`blink-ph-${id}`) * period);
-  const blink = (frame + phase) % period < 4 ? 0.12 : 1;
-  const onSphere = (x: number, y: number) => Math.sqrt(Math.max(0, r * r - x * x - y * y)) * 0.985;
-  return (
-    <group>
-      {[-1, 1].map((s) => {
-        const x = s * r * 0.34;
-        const y = -r * 0.04;
-        return (
-          <group key={s} position={[x, y, onSphere(x, y)]} rotation={[0.04, Math.asin(x / r), 0]}>
-            <mesh scale={[r * 0.13, r * 0.19 * blink, r * 0.06]}>
-              <sphereGeometry args={[1, 16, 12]} />
-              <meshBasicMaterial color="#1d1420" />
-            </mesh>
-            {blink > 0.5 ? (
-              <mesh position={[s * r * 0.035, r * 0.07, r * 0.05]} scale={[r * 0.045, r * 0.055, r * 0.02]}>
-                <sphereGeometry args={[1, 10, 8]} />
-                <meshBasicMaterial color="#ffffff" />
-              </mesh>
-            ) : null}
-          </group>
-        );
-      })}
-      {[-1, 1].map((s) => {
-        const x = s * r * 0.56;
-        const y = -r * 0.3;
-        return (
-          <mesh key={s} position={[x, y, onSphere(x, y)]} rotation={[0, Math.asin(x / r), 0]}>
-            <circleGeometry args={[r * 0.13, 20]} />
-            <meshBasicMaterial color="#ff8a8a" transparent opacity={0.5} />
-          </mesh>
-        );
-      })}
-      <mesh position={[0, -r * 0.32, onSphere(0, -r * 0.32) + 0.004]} rotation={[0.3, 0, Math.PI]}>
-        <torusGeometry args={[r * 0.11, r * 0.026, 8, 20, Math.PI]} />
-        <meshBasicMaterial color="#5a2430" />
-      </mesh>
-    </group>
-  );
-};
-
 export const Body: React.FC<BodyProps> = ({
   shape = DEFAULT_SHAPE,
   skin = SKIN_TONES[3],
@@ -162,6 +120,7 @@ export const Body: React.FC<BodyProps> = ({
   hide = {},
   sleeves = "short",
   ink = true,
+  face,
   id = "body",
   position,
   rotation,
@@ -317,7 +276,7 @@ export const Body: React.FC<BodyProps> = ({
                 <group position={[0, 0.33 * h - 0.03, 0]} rotation={add(ZERO, j("neck"))}>
                   <mesh position={[0, 0.05, 0]} castShadow>
                     <cylinderGeometry args={[0.1, 0.115, 0.14, 16]} />
-                    <ToonMaterial color={skin} />
+                    <ToonMaterial color={skin} ramp="soft" />
                   </mesh>
                   {attach.neck}
                   <group position={[0, 0.09, 0]} rotation={add(ZERO, j("head"))}>
@@ -325,7 +284,7 @@ export const Body: React.FC<BodyProps> = ({
                       {!hide.head ? (
                         <mesh scale={[1.04, 0.97, 1]} castShadow>
                           <sphereGeometry args={[d.headR, 48, 32]} />
-                          <ToonMaterial color={skin} />
+                          <ToonMaterial color={skin} ramp="soft" />
                           {line}
                         </mesh>
                       ) : null}
@@ -338,11 +297,11 @@ export const Body: React.FC<BodyProps> = ({
                               castShadow
                             >
                               <sphereGeometry args={[1, 16, 12]} />
-                              <ToonMaterial color={skin} />
+                              <ToonMaterial color={skin} ramp="soft" />
                             </mesh>
                           ))
                         : null}
-                      {attach.face ?? <PlaceholderFace r={d.headR} id={id} />}
+                      {attach.face ?? <Face r={d.headR} id={id} {...face} />}
                       {attach.head}
                     </group>
                   </group>

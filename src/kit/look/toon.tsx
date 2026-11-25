@@ -9,17 +9,21 @@ import { useLook } from "./LookContext";
 //   → N·L < -0.5 : shadow,  -0.5..0 : mid,  > 0 : light
 // ---------------------------------------------------------------------------
 export const TOON_RAMP = [0.18, 0.55, 1, 1] as const;
+/** Softer ramp for skin: keeps faces readable (no hard dark band across the cheeks). */
+export const TOON_RAMP_SOFT = [0.42, 0.78, 1, 1] as const;
 
-let rampTexture: THREE.DataTexture | null = null;
-export const getToonRamp = (): THREE.DataTexture => {
-  if (rampTexture) return rampTexture;
-  const data = new Uint8Array(TOON_RAMP.map((v) => Math.round(v * 255)));
+const rampTextures: Partial<Record<"default" | "soft", THREE.DataTexture>> = {};
+export const getToonRamp = (kind: "default" | "soft" = "default"): THREE.DataTexture => {
+  const hit = rampTextures[kind];
+  if (hit) return hit;
+  const ramp = kind === "soft" ? TOON_RAMP_SOFT : TOON_RAMP;
+  const data = new Uint8Array(ramp.map((v) => Math.round(v * 255)));
   const tex = new THREE.DataTexture(data, TOON_RAMP.length, 1, THREE.RedFormat);
   tex.minFilter = THREE.NearestFilter;
   tex.magFilter = THREE.NearestFilter;
   tex.generateMipmaps = false;
   tex.needsUpdate = true;
-  rampTexture = tex;
+  rampTextures[kind] = tex;
   return tex;
 };
 
@@ -76,6 +80,8 @@ type ToonMaterialProps = {
   vertexColors?: boolean;
   /** Multiply rim strength for this surface (0 disables). */
   rim?: number;
+  /** "soft" for skin. */
+  ramp?: "default" | "soft";
   side?: THREE.Side;
   transparent?: boolean;
   opacity?: number;
@@ -88,7 +94,7 @@ type ToonMaterialProps = {
  *   <mesh><sphereGeometry /><ToonMaterial color="#c8553d" /></mesh>
  * Rim color and shadow tint come from the surrounding <LightRig>.
  */
-export const ToonMaterial: React.FC<ToonMaterialProps> = ({ color = "#ffffff", rim = 1, ...rest }) => {
+export const ToonMaterial: React.FC<ToonMaterialProps> = ({ color = "#ffffff", rim = 1, ramp = "default", ...rest }) => {
   const look = useLook();
   const uniforms = useMemo(
     () => ({
@@ -119,7 +125,7 @@ export const ToonMaterial: React.FC<ToonMaterialProps> = ({ color = "#ffffff", r
   return (
     <meshToonMaterial
       color={color}
-      gradientMap={getToonRamp()}
+      gradientMap={getToonRamp(ramp)}
       onBeforeCompile={onBeforeCompile}
       customProgramCacheKey={() => "house-toon-v1"}
       {...rest}

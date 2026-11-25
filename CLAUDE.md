@@ -77,7 +77,7 @@ Always pull colors from the palette by name instead of writing new hex values in
 - Remotion renders each frame from an effect right after commit, so per-frame changes must be props or `useLayoutEffect`, never `useEffect` or `useFrame`.
 - drei's `<Outlines>` is not used (it reads the canvas size too early and explodes on degenerate normals). Use `<Ink>`.
 
-## Characters: base figurine (step 3a, awaiting review)
+## Characters: base figurine (step 3a, approved)
 
 Code is in `src/kit/characters/`: `rig.ts` (data), `Body.tsx`, `Hand.tsx`.
 
@@ -89,10 +89,28 @@ Code is in `src/kit/characters/`: `rig.ts` (data), `Body.tsx`, `Hand.tsx`.
 - **Hands:** a palm, a 3-finger mitten block, a separate index finger and a thumb. `HAND_POSES`: open, relaxed, fist, point, hold, wave (numeric `HandShape`, so they blend). Props held in a hand go in the `gripL`/`gripR` slots.
 - **Costume hooks:** `attach={{ head, face, chest, torso, hips, neck, shoulderL/R, elbowL/R, handL/R, gripL/R, legL/R, kneeL/R, footL/R, root }}` mounts parts on bones. `hide={{ pelvis, torso, upperArms, forearms, hands, thighs, shins, feet, head, ears }}` lets costume shells replace base parts. `useBody()` gives an attached part the shape, dims and skin of the body it's on.
 - **Base outfit:** `colors={{ shirt, pants, shoes }}`, `sleeves="short" | "long"`.
-- **Face:** a placeholder with seeded blinks, used until step 3b replaces it through the `face` slot.
-- **Ink:** character outlines are 4 px at 1080 wide. Ears and neck have no ink.
+- **Skin** uses `ToonMaterial ramp="soft"` (bands `[0.42, 0.78, 1, 1]`) so faces never get a hard dark band.
+- **Ink:** character outlines are 4 px at 1080 wide. Ears and neck have no ink. All ink thickens for close-ups: ×(14 / camera depth), clamped to 1–2.5×.
 
 Review sheets (stills): `BaseTurnaround`, `BaseVariants`, `HandPoses`, `RigTest`, rendered to `out/char/*.png`.
+
+## Characters: faces (step 3b, awaiting review)
+
+Code is in `src/kit/characters/Face/`: `params.ts` (shapes, presets, blending), `draw.ts` (canvas drawing), `talk.ts`, `Face.tsx`.
+
+- **How it works:** every frame, the face is drawn with the canvas 2D API onto a 600 px texture, which is mapped (front-projected) onto a curved patch slightly in front of the head sphere. The patch is unlit and gets a time-of-day tint (dimmer at night). It's deterministic because it redraws in `useLayoutEffect` before Remotion captures the frame.
+- **Usage:** `<Body face={{ expression, look, talk, blink, browColor, facialHair }} id="..." />`. `id` seeds the blink timing.
+- **Everything is numeric and blendable:** `EyeParams` (mode normal/arc/caret, open, lidTilt, lower, size, iris, sparkle), `BrowParams` (y, angle, curve), `MouthParams` (w, open, curve, asym, round, teeth, tongue, gritted). `mixExpression(a, b, t)` blends expressions; eye-mode switches pass through a closed eye.
+- **Eyes:** open, half, closed, happy, wide, angry, sad, sly. Pupils follow `look=[x, y]` in the range -1..1, where `[0, 0]` looks at the camera. Blinks are automatic and seeded: 7-frame blinks every 85–145 frames, with 25% double blinks.
+- **Brows:** neutral, raised, angry, worried, low, plus skeptical (one raised, one low).
+- **Mouths:** neutral, smile, grin, laugh, frown, shockedO, gritted, smirk.
+- **Visemes:** A, E, O, MBP, FV, rest.
+- **Extras:** blush (strong blush adds hatch lines), sweat drop, tear streams (animated), anger mark (pulsing).
+- **Facial hair** (2D): mustache `thin | full | walrus | curled`, beard `stubble | goatee | full`, plus `color`. Big 3D beards belong to costumes (3c).
+- **15 presets (`EXPRESSIONS`):** neutral, proud, happy, laughing, scared, shocked, angry, sad, crying, thinking, smirk, focused, wonder, determined, defeated.
+- **Talk mode:** `talkFromWords(words, seconds)` takes word timings (`{word, start, end}`), maps letters to visemes, holds each shape about 60% of the time and glides to the next, and fades between words. `talkFromLevel(level, frame)` works from loudness instead. `applyTalk` keeps the expression's smile or frown while speaking.
+
+Review outputs: `Expressions` and `FaceParts` stills, plus the `FaceTalkTest` video, rendered to `out/char/`.
 
 ## Project layout
 
@@ -104,7 +122,7 @@ src/
   kit/                the reusable kit (filled in as we build)
     look/             Stage, LightRig, ToonMaterial, Ink, SoftShadow, Sky,
                       PaintedBackdrop, Grade, OrbitCamera, palettes, geometry      (step 2 ✓)
-    characters/       rig.ts, Body, Hand (3a ✓) · Face/, Costume/, presets.ts, Crowd (3b–3d)
+    characters/       rig.ts, Body, Hand (3a ✓) · Face/ (3b) · Costume/, presets.ts, Crowd (3c–3d)
     actions/          procedural animations                                         (step 3e)
     sets/             diorama sets, GLOBE, MAP_REGION                               (step 4)
     effects/          YEAR_STAMP, TIMELINE_SPLIT, RIPPLE, ...                       (step 5)
@@ -141,8 +159,9 @@ The most relevant ones are `remotion-best-practices`, `remotion-render`, `remoti
 
 - [x] 1. Scaffold. Three template, skills installed, `out/test.mp4` renders (1080×1920, 30 fps, 90 frames)
 - [x] 2. Look locked: storybook diorama, toon + ink, 4 light rigs, era palettes, What If grade (`out/look-test.mp4`, `out/look/look-sheet.png`)
-- [ ] 3a. Base body: built, awaiting review (`out/char/base-turnaround.png`, `base-variants.png`, `hand-poses.png`, `rig-test.png`)
-- [ ] 3b–3e. Faces, costumes, presets, motion
+- [x] 3a. Base body approved (`out/char/base-turnaround.png`, `base-variants.png`, `hand-poses.png`, `rig-test.png`)
+- [ ] 3b. Faces: built, awaiting review (`out/char/expressions.png`, `face-parts.png`, `face-talk-test.mp4`)
+- [ ] 3c–3e. Costumes, presets, motion
 - [ ] 4. Sets and globe
 - [ ] 5. Effects
 - [ ] 6. Captions

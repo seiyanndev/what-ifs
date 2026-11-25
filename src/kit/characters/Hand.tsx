@@ -18,7 +18,7 @@ type Props = {
  * (The wrist's rest rotation turns the palm toward the body.)
  */
 export const Hand: React.FC<Props> = ({ side: s, shape, color, ink = true, grip, scale = 1 }) => {
-  const mat = <ToonMaterial color={color} />;
+  const mat = <ToonMaterial color={color} ramp="soft" />;
   const line = ink ? <Ink weight="character" /> : null;
   return (
     <group scale={scale}>
