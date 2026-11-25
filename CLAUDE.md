@@ -77,6 +77,23 @@ Always pull colors from the palette by name instead of writing new hex values in
 - Remotion renders each frame from an effect right after commit, so per-frame changes must be props or `useLayoutEffect`, never `useEffect` or `useFrame`.
 - drei's `<Outlines>` is not used (it reads the canvas size too early and explodes on degenerate normals). Use `<Ink>`.
 
+## Characters: base figurine (step 3a, awaiting review)
+
+Code is in `src/kit/characters/`: `rig.ts` (data), `Body.tsx`, `Hand.tsx`.
+
+- **Proportions:** head radius 0.5 world units (1 head = 1.0). The standard body is about 2.5 heads tall (≈2.45 units). The head pivots at its base (good for nods), and the head sphere is slightly wide (1.04 × 0.97).
+- **Rig (rigid pivots, no skinning):** `hips → legL/R → kneeL/R → ankleL/R` and `hips → spine (belly) → chest → neck → head`, plus `chest → shoulderL/R → elbowL/R → wristL/R`. L/R are the *character's* sides. The character faces +Z, so its left is +X.
+- **Rest pose:** arms out 0.2 rad (A-pose), elbows bent 0.12, palms facing the body. `pose.joints` rotations are added on top of the rest pose.
+- **`Pose`:** `{ joints, rootOffset, rootRotation, stretch, handL, handR }`. `stretch` is volume-preserving squash and stretch. `mixPose(a, b, t)` blends poses for transitions.
+- **`BodyShape`:** `{ height, width, belly, shoulders, head }`. Presets in `BODY_TYPES`: standard, kid, slim, stocky, heroic, round, elder. `bodyDims(shape)` gives the derived joint positions.
+- **Hands:** a palm, a 3-finger mitten block, a separate index finger and a thumb. `HAND_POSES`: open, relaxed, fist, point, hold, wave (numeric `HandShape`, so they blend). Props held in a hand go in the `gripL`/`gripR` slots.
+- **Costume hooks:** `attach={{ head, face, chest, torso, hips, neck, shoulderL/R, elbowL/R, handL/R, gripL/R, legL/R, kneeL/R, footL/R, root }}` mounts parts on bones. `hide={{ pelvis, torso, upperArms, forearms, hands, thighs, shins, feet, head, ears }}` lets costume shells replace base parts. `useBody()` gives an attached part the shape, dims and skin of the body it's on.
+- **Base outfit:** `colors={{ shirt, pants, shoes }}`, `sleeves="short" | "long"`.
+- **Face:** a placeholder with seeded blinks, used until step 3b replaces it through the `face` slot.
+- **Ink:** character outlines are 4 px at 1080 wide. Ears and neck have no ink.
+
+Review sheets (stills): `BaseTurnaround`, `BaseVariants`, `HandPoses`, `RigTest`, rendered to `out/char/*.png`.
+
 ## Project layout
 
 ```
@@ -87,7 +104,7 @@ src/
   kit/                the reusable kit (filled in as we build)
     look/             Stage, LightRig, ToonMaterial, Ink, SoftShadow, Sky,
                       PaintedBackdrop, Grade, OrbitCamera, palettes, geometry      (step 2 ✓)
-    characters/       Body, Face/, Costume/, presets.ts, Crowd                      (step 3)
+    characters/       rig.ts, Body, Hand (3a ✓) · Face/, Costume/, presets.ts, Crowd (3b–3d)
     actions/          procedural animations                                         (step 3e)
     sets/             diorama sets, GLOBE, MAP_REGION                               (step 4)
     effects/          YEAR_STAMP, TIMELINE_SPLIT, RIPPLE, ...                       (step 5)
@@ -109,6 +126,7 @@ out/                  renders (git-ignored)
 | `npx remotion still LookTest out/x.png --frame=60 --props='{"timeOfDay":"night","whatIf":1}'` | Check another time of day or grade |
 | `npx remotion render <CompositionId> out/<file>.mp4` | Render any composition |
 | `npx remotion still <CompositionId> out/<file>.png --frame=<n>` | Render one frame as an image |
+| `npm run render:char` | Render all character review sheets to `out/char/` |
 | `npm run lint` | ESLint + TypeScript check |
 
 If Remotion can't download its headless browser (offline or restricted network), add
@@ -123,7 +141,8 @@ The most relevant ones are `remotion-best-practices`, `remotion-render`, `remoti
 
 - [x] 1. Scaffold. Three template, skills installed, `out/test.mp4` renders (1080×1920, 30 fps, 90 frames)
 - [x] 2. Look locked: storybook diorama, toon + ink, 4 light rigs, era palettes, What If grade (`out/look-test.mp4`, `out/look/look-sheet.png`)
-- [ ] 3a–3e. Characters (body, faces, costumes, presets, motion)
+- [ ] 3a. Base body: built, awaiting review (`out/char/base-turnaround.png`, `base-variants.png`, `hand-poses.png`, `rig-test.png`)
+- [ ] 3b–3e. Faces, costumes, presets, motion
 - [ ] 4. Sets and globe
 - [ ] 5. Effects
 - [ ] 6. Captions

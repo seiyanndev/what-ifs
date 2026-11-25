@@ -6,7 +6,7 @@ import { useLook } from "./LookContext";
 
 /** Outline settings. Thickness is in pixels at 1080px width (auto-scaled for previews). */
 export const INK = {
-  character: 4.5,
+  character: 4,
   prop: 3.2,
   set: 2.4,
 } as const;

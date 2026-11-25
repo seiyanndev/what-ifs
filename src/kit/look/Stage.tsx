@@ -14,6 +14,8 @@ type Props = {
   shadowTarget?: [number, number, number];
   /** Shift the painted sun glow horizontally (e.g. to follow a camera orbit). */
   glowOffsetX?: number;
+  /** Replace the painted sky with a flat CSS background (character sheets, studio shots). */
+  background?: string;
   /** 2D painted layer between the sky and the 3D (e.g. <PaintedBackdrop>). */
   backdrop?: React.ReactNode;
   /** 2D overlays drawn above the 3D but under the grade (labels, effects). */
@@ -34,12 +36,17 @@ export const Stage: React.FC<Props> = ({
   glowOffsetX,
   overlay,
   backdrop,
+  background,
   children,
 }) => {
   const { width, height } = useVideoConfig();
   return (
     <Grade whatIf={whatIf}>
-      <Sky timeOfDay={timeOfDay} glowOffsetX={glowOffsetX} />
+      {background ? (
+        <AbsoluteFill style={{ background }} />
+      ) : (
+        <Sky timeOfDay={timeOfDay} glowOffsetX={glowOffsetX} />
+      )}
       {backdrop}
       <ThreeCanvas
         width={width}

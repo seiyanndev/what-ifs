@@ -38,7 +38,8 @@
     "upgrade": "remotion upgrade",
     "lint": "eslint src && tsc",
     "render:test": "remotion render TestCube out/test.mp4",
-    "render:look": "remotion render LookTest out/look-test.mp4"
+    "render:look": "remotion render LookTest out/look-test.mp4",
+    "render:char": "remotion still BaseTurnaround out/char/base-turnaround.png && remotion still BaseVariants out/char/base-variants.png && remotion still HandPoses out/char/hand-poses.png && remotion still RigTest out/char/rig-test.png"
   },
   "allowScripts": {
     "esbuild": false

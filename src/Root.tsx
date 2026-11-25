@@ -1,4 +1,5 @@
-import { Composition } from "remotion";
+import { Composition, Still } from "remotion";
+import { BaseTurnaround, BaseVariants, HandPoses, RigTest } from "./compositions/CharacterSheets";
 import { LookTest } from "./compositions/LookTest";
 import { TestCube } from "./compositions/TestCube";
 
@@ -21,6 +22,10 @@ export const RemotionRoot: React.FC = () => {
         defaultProps={{ timeOfDay: "sunset" as const, whatIf: 0 }}
         {...VIDEO}
       />
+      <Still id="BaseTurnaround" component={BaseTurnaround} width={2400} height={1350} />
+      <Still id="BaseVariants" component={BaseVariants} width={2400} height={1350} />
+      <Still id="HandPoses" component={HandPoses} width={2400} height={1350} />
+      <Still id="RigTest" component={RigTest} width={2400} height={1350} />
     </>
   );
 };
