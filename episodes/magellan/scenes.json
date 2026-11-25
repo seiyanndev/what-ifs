@@ -173,7 +173,7 @@
     {
       "id": "mactan",
       "set": "BEACH",
-      "camera": "medium",
+      "camera": "close",
       "narration": "On the island of Mactan, one chieftain refused to bow. His name was Lapulapu.",
       "characters": [
         {
@@ -182,18 +182,21 @@
           "heading": 0,
           "actions": [
             {
-              "action": "idle"
+              "action": "idle",
+              "expression": "determined"
             },
             {
               "action": "shake_head",
-              "at": 1.2
+              "at": 1.2,
+              "expression": "determined"
             },
             {
               "action": "idle",
               "at": 2.8,
               "expression": "determined"
             }
-          ]
+          ],
+          "expression": "determined"
         }
       ]
     },
