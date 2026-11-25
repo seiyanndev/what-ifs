@@ -280,7 +280,21 @@ Put the recording at `public/voice/<episode>/raw.wav` (.mp3, .m4a, .flac and .og
 Uses **Kokoro**, a local neural TTS (Apache-2.0, so commercial use is fine; offline). It reads `public/voice/<episode>/script.txt` and writes `raw.wav`, then you run `npm run audio -- <episode> --script public/voice/<episode>/script.txt`.
 - **Default voice `bm_george`:** a British documentary narrator. It came out clearest under Whisper, along with bm_lewis.
 - **Other good narrators:** bm_lewis, bm_daniel, am_michael, am_onyx and am_fenrir. Samples are in `out/voices/` (regenerate with the snippet in `scripts/tts.py`).
-- **Script markup:** `*word*` is emphasis (captions only). Years are read naturally (1519 → "fifteen nineteen", 44 BC → "forty-four B C", 1500s → "fifteen hundreds", ~3000 BC → "around three thousand B C"). `word{spoken}` changes pronunciation without changing the caption, and `...` makes a dramatic pause. Blank lines between paragraphs add 0.45 s pauses.
+- **Reading:** the script is voiced **sentence by sentence** (each gets its own cadence) with **deliberate pauses** instead of the model's flat 0.2–0.6 s gaps:
+  - **Timings:** `.` and `!` 0.36 s, `?` 0.52 s, `:` and ` — ` 0.32 s, `...` 0.70 s suspense (the line before it is read about 7% slower and left hanging), a blank line between scenes 0.80 s, and `[pause]` (0.7 s) or `[pause:1.2]` explicit.
+  - **Speed:** base speed is 1.08 (about 120 words/min including pauses). Questions are read 4% slower, and lines of 4 words or fewer 2% faster.
+  - **Question lift:** Kokoro reads every "?" with a falling, statement-like ending, so `--question-lift` (default 2.5 semitones on short questions, 60% of that on long ones) glides the last part of each question up with Rubber Band (formants preserved). Use `--question-lift 0` to turn it off.
+  - **Silence handling:** the cleanup step only trims the very start and end of narrator audio. The old internal silence trimmer deleted any pause over 0.7 s.
+  - **Caching:** `TTS_VERSION` in `tts.py` plus the code of `tts.py` and `audio.mjs` are part of the episode voice cache key, so improvements re-voice automatically.
+- **Script markup:** `*word*` is emphasis (captions only). Years are read naturally (1519 → "fifteen nineteen", 44 BC → "forty-four B C", 1500s → "fifteen hundreds", ~3000 BC → "around three thousand B C"). `word{spoken}` changes pronunciation without changing the caption (for example `datu{da-too}`). Don't put spaces inside the braces.
+- **Writing for the narrator** (grammar for the ear):
+  - Keep one idea per sentence, about 6–14 words, and avoid stacked clauses and appositives.
+  - Name a person before using "he", "his" or "they".
+  - Use contractions (he'd, never leave) and present tense for what-if scenes ("Imagine the king says no.").
+  - Set up and pay off: a short question, then the answer ("His mission? Find a sea route…").
+  - Put `...` before a reveal, and end on a direct question to the viewer.
+  - Avoid parentheses, abbreviations and slashes, which the narrator reads badly.
+  - Check unusual names: generate, then run Whisper on the phrase. If it's badly wrong, add `{phonetic}` (hyphenated syllables work best).
 - **One-time setup:** `npm run voice:setup` creates `.venv-tts/` and downloads about 350 MB of models into `tts-models/` (both git-ignored).
 - Your own recording works too: put it at `raw.wav` and skip `npm run voice`.
 

@@ -57,7 +57,7 @@ const voiceDir = path.join(ROOT, "public", "voice", name);
 mkdirSync(voiceDir, { recursive: true });
 const script = spec.scenes.map((s) => String(s.narration).trim().replace(/\s+/g, " ")).join("\n\n") + "\n";
 writeFileSync(path.join(voiceDir, "script.txt"), script);
-const words = (t) => t.split(/\s+/).filter(Boolean);
+const words = (t) => t.replace(/\[pause(?::[\d.]+)?\]/g, " ").split(/\s+/).filter(Boolean);
 const sceneWordCounts = spec.scenes.map((s) => words(String(s.narration)).length);
 const totalWords = sceneWordCounts.reduce((a, b) => a + b, 0);
 
@@ -81,7 +81,9 @@ if (has("no-voice")) {
   });
 } else {
   const voiceId = opt("voice") ?? spec.voice ?? "bm_george";
-  const hash = createHash("sha1").update(script + "|" + voiceId).digest("hex").slice(0, 12);
+  // cache key: script + voice + the narrator/cleanup code itself (so improvements re-voice automatically)
+  const code = ["tts.py", "audio.mjs"].map((f) => readFileSync(path.join(ROOT, "scripts", f), "utf8")).join("");
+  const hash = createHash("sha1").update(script + "|" + voiceId + "|" + code).digest("hex").slice(0, 12);
   const stamp = path.join(voiceDir, ".pipeline-hash");
   const userRecording = readdirSync(voiceDir).find((f) => /^raw\.(wav|mp3|m4a|flac|ogg|aac)$/i.test(f)) && !existsSync(path.join(voiceDir, ".tts"));
   const cached = existsSync(stamp) && readFileSync(stamp, "utf8") === hash && existsSync(path.join(voiceDir, "captions.json")) && !has("redo-voice");

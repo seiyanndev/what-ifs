@@ -59,8 +59,11 @@ if (!args.includes("--skip-clean")) {
     ...cleanup,
     ...tone,
     "acompressor=threshold=-18dB:ratio=2:attack=15:release=150:makeup=2", // gentle, keeps it natural
-    // trim leading/trailing silence, cap internal pauses at ~0.7 s
-    "silenceremove=start_periods=1:start_threshold=-50dB:start_silence=0.12:stop_periods=-1:stop_duration=0.7:stop_threshold=-50dB",
+    // Studio (narrator): trim ONLY the very start/end — the pauses were placed on purpose by tts.py.
+    // Mic: also shorten long hesitations to 0.6 s (stop_silence keeps 0.6 s instead of deleting the pause).
+    studio
+      ? "silenceremove=start_periods=1:start_threshold=-50dB:start_silence=0.1,areverse,silenceremove=start_periods=1:start_threshold=-50dB:start_silence=0.35,areverse"
+      : "silenceremove=start_periods=1:start_threshold=-50dB:start_silence=0.1:stop_periods=-1:stop_duration=0.9:stop_threshold=-50dB:stop_silence=0.6",
     "loudnorm=I=-14:TP=-1:LRA=11", // streaming loudness target
   ].join(",");
   console.log(`cleaning (${studio ? "studio: narrator" : "mic: recording"} chain)`);
@@ -99,7 +102,11 @@ captions = captions.filter((c) => c.text.trim().length > 0);
 const scriptFile = opt("script");
 if (scriptFile) {
   // word{spoken} → caption shows "word" (the narrator said the spoken form)
-  const script = readFileSync(scriptFile, "utf8").split(/\s+/).filter(Boolean).map((w) => w.replace(/\{[^}]*\}/g, ""));
+  const script = readFileSync(scriptFile, "utf8")
+    .replace(/\[pause(?::[\d.]+)?\]/g, " ") // pause markers are not words
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((w) => w.replace(/\{[^}]*\}/g, ""));
   const norm = (w) => w.toLowerCase().replace(/[^a-z0-9]/g, "");
   // numbers spoken as words ("fifteen nineteen") vs script digits: allow the aligner to absorb them
   const a = captions.map((c) => norm(c.text));

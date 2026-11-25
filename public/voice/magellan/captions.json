@@ -1,975 +1,947 @@
 [
  {
   "text": "What",
-  "startMs": 120,
-  "endMs": 460,
-  "timestampMs": 290,
+  "startMs": 100,
+  "endMs": 410,
+  "timestampMs": 255,
   "confidence": null
  },
  {
   "text": " if",
-  "startMs": 460,
-  "endMs": 600,
-  "timestampMs": 530,
+  "startMs": 410,
+  "endMs": 610,
+  "timestampMs": 510,
   "confidence": null
  },
  {
   "text": " Magellan",
-  "startMs": 600,
-  "endMs": 1400,
-  "timestampMs": 1000,
+  "startMs": 610,
+  "endMs": 1430,
+  "timestampMs": 1020,
   "confidence": null
  },
  {
   "text": " never",
-  "startMs": 1400,
-  "endMs": 1900,
-  "timestampMs": 1650,
+  "startMs": 1430,
+  "endMs": 1960,
+  "timestampMs": 1695,
   "confidence": null
  },
  {
   "text": " left",
-  "startMs": 1900,
-  "endMs": 2300,
-  "timestampMs": 2100,
+  "startMs": 1960,
+  "endMs": 2310,
+  "timestampMs": 2135,
   "confidence": null
  },
  {
   "text": " Spain?",
-  "startMs": 2300,
-  "endMs": 3240,
-  "timestampMs": 2770,
+  "startMs": 2310,
+  "endMs": 3250,
+  "timestampMs": 2780,
   "confidence": null
  },
  {
   "text": " In",
-  "startMs": 3240,
-  "endMs": 3310,
-  "timestampMs": 3275,
+  "startMs": 3250,
+  "endMs": 3350,
+  "timestampMs": 3300,
   "confidence": null
  },
  {
   "text": " 1519,",
-  "startMs": 3310,
-  "endMs": 4710,
-  "timestampMs": 4010,
+  "startMs": 3350,
+  "endMs": 4270,
+  "timestampMs": 3810,
   "confidence": null
  },
  {
-  "text": " a",
-  "startMs": 4710,
-  "endMs": 4790,
-  "timestampMs": 4750,
-  "confidence": null
- },
- {
-  "text": " Portuguese",
-  "startMs": 4790,
-  "endMs": 5460,
-  "timestampMs": 5125,
-  "confidence": null
- },
- {
-  "text": " navigator",
-  "startMs": 5460,
-  "endMs": 6160,
-  "timestampMs": 5810,
-  "confidence": null
- },
- {
-  "text": " sailing",
-  "startMs": 6160,
-  "endMs": 6640,
-  "timestampMs": 6400,
-  "confidence": null
- },
- {
-  "text": " for",
-  "startMs": 6640,
-  "endMs": 6800,
-  "timestampMs": 6720,
-  "confidence": null
- },
- {
-  "text": " Spain",
-  "startMs": 6800,
-  "endMs": 7360,
-  "timestampMs": 7080,
-  "confidence": null
- },
- {
-  "text": " set",
-  "startMs": 7360,
-  "endMs": 7600,
-  "timestampMs": 7480,
-  "confidence": null
- },
- {
-  "text": " out",
-  "startMs": 7600,
-  "endMs": 7840,
-  "timestampMs": 7720,
-  "confidence": null
- },
- {
-  "text": " west,",
-  "startMs": 7840,
-  "endMs": 8800,
-  "timestampMs": 8320,
-  "confidence": null
- },
- {
-  "text": " hunting",
-  "startMs": 8800,
-  "endMs": 8970,
-  "timestampMs": 8885,
-  "confidence": null
- },
- {
-  "text": " for",
-  "startMs": 8970,
-  "endMs": 9280,
-  "timestampMs": 9125,
-  "confidence": null
- },
- {
-  "text": " a",
-  "startMs": 9280,
-  "endMs": 9310,
-  "timestampMs": 9295,
-  "confidence": null
- },
- {
-  "text": " sea",
-  "startMs": 9310,
-  "endMs": 9570,
-  "timestampMs": 9440,
-  "confidence": null
- },
- {
-  "text": " route",
-  "startMs": 9570,
-  "endMs": 10010,
-  "timestampMs": 9790,
-  "confidence": null
- },
- {
-  "text": " to",
-  "startMs": 10010,
-  "endMs": 10280,
-  "timestampMs": 10145,
-  "confidence": null
- },
- {
-  "text": " the",
-  "startMs": 10280,
-  "endMs": 10430,
-  "timestampMs": 10355,
-  "confidence": null
- },
- {
-  "text": " Spice",
-  "startMs": 10430,
-  "endMs": 10940,
-  "timestampMs": 10685,
-  "confidence": null
- },
- {
-  "text": " Islands.",
-  "startMs": 10940,
-  "endMs": 12090,
-  "timestampMs": 11515,
-  "confidence": null
- },
- {
-  "text": " After",
-  "startMs": 12090,
-  "endMs": 12160,
-  "timestampMs": 12125,
-  "confidence": null
- },
- {
-  "text": " crossing",
-  "startMs": 12160,
-  "endMs": 12850,
-  "timestampMs": 12505,
-  "confidence": null
- },
- {
-  "text": " the",
-  "startMs": 12850,
-  "endMs": 13110,
-  "timestampMs": 12980,
-  "confidence": null
- },
- {
-  "text": " vast",
-  "startMs": 13110,
-  "endMs": 13490,
-  "timestampMs": 13300,
-  "confidence": null
- },
- {
-  "text": " Pacific,",
-  "startMs": 13490,
-  "endMs": 14320,
-  "timestampMs": 13905,
-  "confidence": null
- },
- {
-  "text": " his",
-  "startMs": 14320,
-  "endMs": 14530,
-  "timestampMs": 14425,
-  "confidence": null
- },
- {
-  "text": " starving",
-  "startMs": 14530,
-  "endMs": 15110,
-  "timestampMs": 14820,
-  "confidence": null
- },
- {
-  "text": " fleet",
-  "startMs": 15110,
-  "endMs": 15590,
-  "timestampMs": 15350,
-  "confidence": null
- },
- {
-  "text": " reached",
-  "startMs": 15590,
-  "endMs": 15970,
-  "timestampMs": 15780,
-  "confidence": null
- },
- {
-  "text": " the",
-  "startMs": 15970,
-  "endMs": 16180,
-  "timestampMs": 16075,
-  "confidence": null
- },
- {
-  "text": " Philippines",
-  "startMs": 16180,
-  "endMs": 17060,
-  "timestampMs": 16620,
-  "confidence": null
- },
- {
-  "text": " in",
-  "startMs": 17060,
-  "endMs": 17110,
-  "timestampMs": 17085,
-  "confidence": null
- },
- {
-  "text": " 1521.",
-  "startMs": 17110,
-  "endMs": 18230,
-  "timestampMs": 17670,
-  "confidence": null
- },
- {
-  "text": " On",
-  "startMs": 18230,
-  "endMs": 18800,
-  "timestampMs": 18515,
-  "confidence": null
- },
- {
-  "text": " the",
-  "startMs": 18800,
-  "endMs": 18940,
-  "timestampMs": 18870,
-  "confidence": null
- },
- {
-  "text": " island",
-  "startMs": 18940,
-  "endMs": 19480,
-  "timestampMs": 19210,
-  "confidence": null
- },
- {
-  "text": " of",
-  "startMs": 19480,
-  "endMs": 19700,
-  "timestampMs": 19590,
-  "confidence": null
- },
- {
-  "text": " Mactan,",
-  "startMs": 19700,
-  "endMs": 20640,
-  "timestampMs": 20170,
-  "confidence": null
- },
- {
-  "text": " a",
-  "startMs": 20640,
-  "endMs": 20740,
-  "timestampMs": 20690,
-  "confidence": null
- },
- {
-  "text": " chieftain",
-  "startMs": 20740,
-  "endMs": 21390,
-  "timestampMs": 21065,
-  "confidence": null
- },
- {
-  "text": " named",
-  "startMs": 21390,
-  "endMs": 21770,
-  "timestampMs": 21580,
-  "confidence": null
- },
- {
-  "text": " Lapulapu",
-  "startMs": 21770,
-  "endMs": 22370,
-  "timestampMs": 22070,
-  "confidence": null
- },
- {
-  "text": " refused",
-  "startMs": 22370,
-  "endMs": 22900,
-  "timestampMs": 22635,
-  "confidence": null
- },
- {
-  "text": " to",
-  "startMs": 22900,
-  "endMs": 23050,
-  "timestampMs": 22975,
-  "confidence": null
- },
- {
-  "text": " bow",
-  "startMs": 23050,
-  "endMs": 23280,
-  "timestampMs": 23165,
-  "confidence": null
- },
- {
-  "text": " to",
-  "startMs": 23280,
-  "endMs": 23430,
-  "timestampMs": 23355,
-  "confidence": null
- },
- {
-  "text": " a",
-  "startMs": 23430,
-  "endMs": 23500,
-  "timestampMs": 23465,
-  "confidence": null
- },
- {
-  "text": " foreign",
-  "startMs": 23500,
-  "endMs": 24030,
-  "timestampMs": 23765,
-  "confidence": null
- },
- {
-  "text": " king.",
-  "startMs": 24030,
-  "endMs": 24630,
-  "timestampMs": 24330,
-  "confidence": null
- },
- {
-  "text": " In",
-  "startMs": 24630,
-  "endMs": 25330,
-  "timestampMs": 24980,
-  "confidence": null
- },
- {
-  "text": " April",
-  "startMs": 25330,
-  "endMs": 25520,
-  "timestampMs": 25425,
-  "confidence": null
- },
- {
-  "text": " 1521,",
-  "startMs": 25520,
-  "endMs": 27210,
-  "timestampMs": 26365,
+  "text": " Ferdinand",
+  "startMs": 4270,
+  "endMs": 4970,
+  "timestampMs": 4620,
   "confidence": null
  },
  {
   "text": " Magellan",
-  "startMs": 27210,
-  "endMs": 27760,
-  "timestampMs": 27485,
+  "startMs": 4970,
+  "endMs": 5590,
+  "timestampMs": 5280,
   "confidence": null
  },
  {
-  "text": " attacked...",
-  "startMs": 27760,
-  "endMs": 28720,
-  "timestampMs": 28240,
+  "text": " sailed",
+  "startMs": 5590,
+  "endMs": 6080,
+  "timestampMs": 5835,
   "confidence": null
  },
  {
-  "text": " and",
-  "startMs": 28850,
-  "endMs": 28960,
-  "timestampMs": 28905,
-  "confidence": null
- },
- {
-  "text": " fell",
-  "startMs": 28960,
-  "endMs": 29280,
-  "timestampMs": 29120,
-  "confidence": null
- },
- {
-  "text": " in",
-  "startMs": 29280,
-  "endMs": 29440,
-  "timestampMs": 29360,
-  "confidence": null
- },
- {
-  "text": " the",
-  "startMs": 29440,
-  "endMs": 29680,
-  "timestampMs": 29560,
-  "confidence": null
- },
- {
-  "text": " shallows",
-  "startMs": 29680,
-  "endMs": 30300,
-  "timestampMs": 29990,
-  "confidence": null
- },
- {
-  "text": " of",
-  "startMs": 30300,
-  "endMs": 30480,
-  "timestampMs": 30390,
-  "confidence": null
- },
- {
-  "text": " Mactan.",
-  "startMs": 30480,
-  "endMs": 31350,
-  "timestampMs": 30915,
-  "confidence": null
- },
- {
-  "text": " But",
-  "startMs": 31350,
-  "endMs": 31450,
-  "timestampMs": 31400,
-  "confidence": null
- },
- {
-  "text": " what",
-  "startMs": 31450,
-  "endMs": 31810,
-  "timestampMs": 31630,
-  "confidence": null
- },
- {
-  "text": " if",
-  "startMs": 31810,
-  "endMs": 31970,
-  "timestampMs": 31890,
-  "confidence": null
- },
- {
-  "text": " that",
-  "startMs": 31970,
-  "endMs": 32270,
-  "timestampMs": 32120,
-  "confidence": null
- },
- {
-  "text": " voyage",
-  "startMs": 32270,
-  "endMs": 32830,
-  "timestampMs": 32550,
-  "confidence": null
- },
- {
-  "text": " never",
-  "startMs": 32830,
-  "endMs": 33060,
-  "timestampMs": 32945,
-  "confidence": null
- },
- {
-  "text": " happened",
-  "startMs": 33060,
-  "endMs": 33480,
-  "timestampMs": 33270,
-  "confidence": null
- },
- {
-  "text": " at",
-  "startMs": 33480,
-  "endMs": 33580,
-  "timestampMs": 33530,
-  "confidence": null
- },
- {
-  "text": " all?",
-  "startMs": 33580,
-  "endMs": 33920,
-  "timestampMs": 33750,
-  "confidence": null
- },
- {
-  "text": " Picture",
-  "startMs": 33920,
-  "endMs": 35040,
-  "timestampMs": 34480,
-  "confidence": null
- },
- {
-  "text": " it:",
-  "startMs": 35040,
-  "endMs": 35200,
-  "timestampMs": 35120,
-  "confidence": null
- },
- {
-  "text": " the",
-  "startMs": 35200,
-  "endMs": 35420,
-  "timestampMs": 35310,
-  "confidence": null
- },
- {
-  "text": " Spanish",
-  "startMs": 35420,
-  "endMs": 35960,
-  "timestampMs": 35690,
-  "confidence": null
- },
- {
-  "text": " crown",
-  "startMs": 35960,
-  "endMs": 36300,
-  "timestampMs": 36130,
-  "confidence": null
- },
- {
-  "text": " says",
-  "startMs": 36300,
-  "endMs": 36590,
-  "timestampMs": 36445,
-  "confidence": null
- },
- {
-  "text": " *no*,",
-  "startMs": 36590,
-  "endMs": 36870,
-  "timestampMs": 36730,
-  "confidence": null
- },
- {
-  "text": " and",
-  "startMs": 36870,
-  "endMs": 37330,
-  "timestampMs": 37100,
-  "confidence": null
- },
- {
-  "text": " Magellan's",
-  "startMs": 37330,
-  "endMs": 37810,
-  "timestampMs": 37570,
-  "confidence": null
- },
- {
-  "text": " five",
-  "startMs": 37810,
-  "endMs": 38220,
-  "timestampMs": 38015,
-  "confidence": null
- },
- {
-  "text": " ships",
-  "startMs": 38220,
-  "endMs": 38470,
-  "timestampMs": 38345,
-  "confidence": null
- },
- {
-  "text": " rot",
-  "startMs": 38470,
-  "endMs": 38690,
-  "timestampMs": 38580,
-  "confidence": null
- },
- {
-  "text": " in",
-  "startMs": 38690,
-  "endMs": 38830,
-  "timestampMs": 38760,
-  "confidence": null
- },
- {
-  "text": " Seville's",
-  "startMs": 38830,
-  "endMs": 39480,
-  "timestampMs": 39155,
-  "confidence": null
- },
- {
-  "text": " harbor.",
-  "startMs": 39480,
-  "endMs": 40320,
-  "timestampMs": 39900,
-  "confidence": null
- },
- {
-  "text": " Without",
-  "startMs": 40320,
-  "endMs": 41280,
-  "timestampMs": 40800,
-  "confidence": null
- },
- {
-  "text": " that",
-  "startMs": 41280,
-  "endMs": 41520,
-  "timestampMs": 41400,
-  "confidence": null
- },
- {
-  "text": " expedition,",
-  "startMs": 41520,
-  "endMs": 42620,
-  "timestampMs": 42070,
-  "confidence": null
- },
- {
-  "text": " Spain",
-  "startMs": 42620,
-  "endMs": 42810,
-  "timestampMs": 42715,
-  "confidence": null
- },
- {
-  "text": " has",
-  "startMs": 42810,
-  "endMs": 43030,
-  "timestampMs": 42920,
-  "confidence": null
- },
- {
-  "text": " no",
-  "startMs": 43030,
-  "endMs": 43180,
-  "timestampMs": 43105,
-  "confidence": null
- },
- {
-  "text": " reason",
-  "startMs": 43180,
-  "endMs": 43630,
-  "timestampMs": 43405,
-  "confidence": null
- },
- {
-  "text": " to",
-  "startMs": 43630,
-  "endMs": 43780,
-  "timestampMs": 43705,
-  "confidence": null
- },
- {
-  "text": " claim",
-  "startMs": 43780,
-  "endMs": 44160,
-  "timestampMs": 43970,
-  "confidence": null
- },
- {
-  "text": " these",
-  "startMs": 44160,
-  "endMs": 44540,
-  "timestampMs": 44350,
-  "confidence": null
- },
- {
-  "text": " islands...",
-  "startMs": 44540,
-  "endMs": 45210,
-  "timestampMs": 44875,
-  "confidence": null
- },
- {
-  "text": " at",
-  "startMs": 45210,
-  "endMs": 45620,
-  "timestampMs": 45415,
-  "confidence": null
- },
- {
-  "text": " least",
-  "startMs": 45620,
-  "endMs": 45750,
-  "timestampMs": 45685,
+  "text": " west",
+  "startMs": 6080,
+  "endMs": 6490,
+  "timestampMs": 6285,
   "confidence": null
  },
  {
   "text": " for",
-  "startMs": 45750,
-  "endMs": 46010,
-  "timestampMs": 45880,
-  "confidence": null
- },
- {
-  "text": " now.",
-  "startMs": 46010,
-  "endMs": 46470,
-  "timestampMs": 46240,
-  "confidence": null
- },
- {
-  "text": " Lapulapu",
-  "startMs": 46470,
-  "endMs": 47840,
-  "timestampMs": 47155,
-  "confidence": null
- },
- {
-  "text": " would",
-  "startMs": 47840,
-  "endMs": 48000,
-  "timestampMs": 47920,
-  "confidence": null
- },
- {
-  "text": " never",
-  "startMs": 48000,
-  "endMs": 48320,
-  "timestampMs": 48160,
-  "confidence": null
- },
- {
-  "text": " become",
-  "startMs": 48320,
-  "endMs": 49190,
-  "timestampMs": 48755,
-  "confidence": null
- },
- {
-  "text": " a",
-  "startMs": 49190,
-  "endMs": 49330,
-  "timestampMs": 49260,
-  "confidence": null
- },
- {
-  "text": " symbol",
-  "startMs": 49330,
-  "endMs": 50200,
-  "timestampMs": 49765,
-  "confidence": null
- },
- {
-  "text": " of",
-  "startMs": 50200,
-  "endMs": 50660,
-  "timestampMs": 50430,
-  "confidence": null
- },
- {
-  "text": " resistance.",
-  "startMs": 50660,
-  "endMs": 52380,
-  "timestampMs": 51520,
-  "confidence": null
- },
- {
-  "text": " He'd",
-  "startMs": 52380,
-  "endMs": 52960,
-  "timestampMs": 52670,
-  "confidence": null
- },
- {
-  "text": " just",
-  "startMs": 52960,
-  "endMs": 53540,
-  "timestampMs": 53250,
-  "confidence": null
- },
- {
-  "text": " be",
-  "startMs": 53540,
-  "endMs": 53970,
-  "timestampMs": 53755,
-  "confidence": null
- },
- {
-  "text": " a",
-  "startMs": 53970,
-  "endMs": 54180,
-  "timestampMs": 54075,
-  "confidence": null
- },
- {
-  "text": " datu,",
-  "startMs": 54180,
-  "endMs": 54340,
-  "timestampMs": 54260,
-  "confidence": null
- },
- {
-  "text": " ruling",
-  "startMs": 54340,
-  "endMs": 54470,
-  "timestampMs": 54405,
-  "confidence": null
- },
- {
-  "text": " Mactan",
-  "startMs": 54470,
-  "endMs": 54600,
-  "timestampMs": 54535,
-  "confidence": null
- },
- {
-  "text": " in",
-  "startMs": 54600,
-  "endMs": 54640,
-  "timestampMs": 54620,
-  "confidence": null
- },
- {
-  "text": " peace.",
-  "startMs": 54640,
-  "endMs": 54830,
-  "timestampMs": 54735,
-  "confidence": null
- },
- {
-  "text": " One",
-  "startMs": 54830,
-  "endMs": 54900,
-  "timestampMs": 54865,
-  "confidence": null
- },
- {
-  "text": " voyage",
-  "startMs": 54900,
-  "endMs": 55120,
-  "timestampMs": 55010,
-  "confidence": null
- },
- {
-  "text": " that",
-  "startMs": 55120,
-  "endMs": 55360,
-  "timestampMs": 55240,
-  "confidence": null
- },
- {
-  "text": " never",
-  "startMs": 55360,
-  "endMs": 55750,
-  "timestampMs": 55555,
-  "confidence": null
- },
- {
-  "text": " sailed...",
-  "startMs": 55750,
-  "endMs": 56600,
-  "timestampMs": 56175,
-  "confidence": null
- },
- {
-  "text": " and",
-  "startMs": 56600,
-  "endMs": 56710,
-  "timestampMs": 56655,
+  "startMs": 6490,
+  "endMs": 6720,
+  "timestampMs": 6605,
   "confidence": null
  },
  {
   "text": " the",
-  "startMs": 56710,
-  "endMs": 56830,
-  "timestampMs": 56770,
+  "startMs": 6720,
+  "endMs": 6800,
+  "timestampMs": 6760,
   "confidence": null
  },
  {
-  "text": " whole",
-  "startMs": 56830,
-  "endMs": 57220,
-  "timestampMs": 57025,
-  "confidence": null
- },
- {
-  "text": " map",
-  "startMs": 57220,
-  "endMs": 57470,
-  "timestampMs": 57345,
+  "text": " King",
+  "startMs": 6800,
+  "endMs": 7040,
+  "timestampMs": 6920,
   "confidence": null
  },
  {
   "text": " of",
-  "startMs": 57470,
-  "endMs": 57690,
-  "timestampMs": 57580,
+  "startMs": 7040,
+  "endMs": 7120,
+  "timestampMs": 7080,
+  "confidence": null
+ },
+ {
+  "text": " Spain.",
+  "startMs": 7120,
+  "endMs": 8080,
+  "timestampMs": 7600,
+  "confidence": null
+ },
+ {
+  "text": " His",
+  "startMs": 8080,
+  "endMs": 8330,
+  "timestampMs": 8205,
+  "confidence": null
+ },
+ {
+  "text": " mission?",
+  "startMs": 8330,
+  "endMs": 9080,
+  "timestampMs": 8705,
+  "confidence": null
+ },
+ {
+  "text": " Find",
+  "startMs": 9080,
+  "endMs": 9400,
+  "timestampMs": 9240,
+  "confidence": null
+ },
+ {
+  "text": " a",
+  "startMs": 9400,
+  "endMs": 9650,
+  "timestampMs": 9525,
+  "confidence": null
+ },
+ {
+  "text": " sea",
+  "startMs": 9650,
+  "endMs": 9730,
+  "timestampMs": 9690,
+  "confidence": null
+ },
+ {
+  "text": " route",
+  "startMs": 9730,
+  "endMs": 10140,
+  "timestampMs": 9935,
+  "confidence": null
+ },
+ {
+  "text": " to",
+  "startMs": 10140,
+  "endMs": 10300,
+  "timestampMs": 10220,
+  "confidence": null
+ },
+ {
+  "text": " the",
+  "startMs": 10300,
+  "endMs": 10840,
+  "timestampMs": 10570,
+  "confidence": null
+ },
+ {
+  "text": " Spice",
+  "startMs": 10840,
+  "endMs": 10960,
+  "timestampMs": 10900,
+  "confidence": null
+ },
+ {
+  "text": " Islands.",
+  "startMs": 10960,
+  "endMs": 11840,
+  "timestampMs": 11400,
+  "confidence": null
+ },
+ {
+  "text": " His",
+  "startMs": 11840,
+  "endMs": 12720,
+  "timestampMs": 12280,
+  "confidence": null
+ },
+ {
+  "text": " fleet",
+  "startMs": 12720,
+  "endMs": 12880,
+  "timestampMs": 12800,
+  "confidence": null
+ },
+ {
+  "text": " crossed",
+  "startMs": 12880,
+  "endMs": 13490,
+  "timestampMs": 13185,
+  "confidence": null
+ },
+ {
+  "text": " the",
+  "startMs": 13490,
+  "endMs": 13820,
+  "timestampMs": 13655,
+  "confidence": null
+ },
+ {
+  "text": " vast",
+  "startMs": 13820,
+  "endMs": 14260,
+  "timestampMs": 14040,
+  "confidence": null
+ },
+ {
+  "text": " Pacific,",
+  "startMs": 14260,
+  "endMs": 15040,
+  "timestampMs": 14650,
+  "confidence": null
+ },
+ {
+  "text": " starving",
+  "startMs": 15040,
+  "endMs": 15740,
+  "timestampMs": 15390,
+  "confidence": null
+ },
+ {
+  "text": " and",
+  "startMs": 15740,
+  "endMs": 15910,
+  "timestampMs": 15825,
+  "confidence": null
+ },
+ {
+  "text": " exhausted...",
+  "startMs": 15910,
+  "endMs": 17010,
+  "timestampMs": 16460,
+  "confidence": null
+ },
+ {
+  "text": " and",
+  "startMs": 17010,
+  "endMs": 17010,
+  "timestampMs": 17010,
+  "confidence": null
+ },
+ {
+  "text": " in",
+  "startMs": 17010,
+  "endMs": 17400,
+  "timestampMs": 17205,
+  "confidence": null
+ },
+ {
+  "text": " 1521,",
+  "startMs": 17400,
+  "endMs": 18120,
+  "timestampMs": 17760,
+  "confidence": null
+ },
+ {
+  "text": " they",
+  "startMs": 18120,
+  "endMs": 18440,
+  "timestampMs": 18280,
+  "confidence": null
+ },
+ {
+  "text": " reached",
+  "startMs": 18440,
+  "endMs": 19090,
+  "timestampMs": 18765,
+  "confidence": null
+ },
+ {
+  "text": " the",
+  "startMs": 19090,
+  "endMs": 19230,
+  "timestampMs": 19160,
+  "confidence": null
+ },
+ {
+  "text": " Philippines.",
+  "startMs": 19230,
+  "endMs": 20400,
+  "timestampMs": 19815,
+  "confidence": null
+ },
+ {
+  "text": " On",
+  "startMs": 20400,
+  "endMs": 20690,
+  "timestampMs": 20545,
+  "confidence": null
+ },
+ {
+  "text": " the",
+  "startMs": 20690,
+  "endMs": 21360,
+  "timestampMs": 21025,
+  "confidence": null
+ },
+ {
+  "text": " island",
+  "startMs": 21360,
+  "endMs": 22000,
+  "timestampMs": 21680,
+  "confidence": null
+ },
+ {
+  "text": " of",
+  "startMs": 22000,
+  "endMs": 22080,
+  "timestampMs": 22040,
+  "confidence": null
+ },
+ {
+  "text": " Mactan,",
+  "startMs": 22080,
+  "endMs": 22960,
+  "timestampMs": 22520,
+  "confidence": null
+ },
+ {
+  "text": " one",
+  "startMs": 22960,
+  "endMs": 23100,
+  "timestampMs": 23030,
+  "confidence": null
+ },
+ {
+  "text": " chieftain",
+  "startMs": 23100,
+  "endMs": 24000,
+  "timestampMs": 23550,
+  "confidence": null
+ },
+ {
+  "text": " refused",
+  "startMs": 24000,
+  "endMs": 24680,
+  "timestampMs": 24340,
+  "confidence": null
+ },
+ {
+  "text": " to",
+  "startMs": 24680,
+  "endMs": 25170,
+  "timestampMs": 24925,
+  "confidence": null
+ },
+ {
+  "text": " bow.",
+  "startMs": 25170,
+  "endMs": 25500,
+  "timestampMs": 25335,
+  "confidence": null
+ },
+ {
+  "text": " His",
+  "startMs": 25500,
+  "endMs": 25870,
+  "timestampMs": 25685,
+  "confidence": null
+ },
+ {
+  "text": " name",
+  "startMs": 25870,
+  "endMs": 26200,
+  "timestampMs": 26035,
+  "confidence": null
+ },
+ {
+  "text": " was",
+  "startMs": 26200,
+  "endMs": 26500,
+  "timestampMs": 26350,
+  "confidence": null
+ },
+ {
+  "text": " Lapulapu.",
+  "startMs": 26500,
+  "endMs": 27770,
+  "timestampMs": 27135,
+  "confidence": null
+ },
+ {
+  "text": " In",
+  "startMs": 27770,
+  "endMs": 27800,
+  "timestampMs": 27785,
+  "confidence": null
+ },
+ {
+  "text": " April",
+  "startMs": 27800,
+  "endMs": 28330,
+  "timestampMs": 28065,
+  "confidence": null
+ },
+ {
+  "text": " 1521,",
+  "startMs": 28330,
+  "endMs": 29680,
+  "timestampMs": 29005,
+  "confidence": null
+ },
+ {
+  "text": " Magellan",
+  "startMs": 29680,
+  "endMs": 30270,
+  "timestampMs": 29975,
+  "confidence": null
+ },
+ {
+  "text": " attacked",
+  "startMs": 30270,
+  "endMs": 30800,
+  "timestampMs": 30535,
+  "confidence": null
+ },
+ {
+  "text": " Mactan...",
+  "startMs": 30800,
+  "endMs": 31310,
+  "timestampMs": 31055,
+  "confidence": null
+ },
+ {
+  "text": " and",
+  "startMs": 31310,
+  "endMs": 31570,
+  "timestampMs": 31440,
+  "confidence": null
+ },
+ {
+  "text": " fell",
+  "startMs": 31570,
+  "endMs": 32090,
+  "timestampMs": 31830,
+  "confidence": null
+ },
+ {
+  "text": " in",
+  "startMs": 32090,
+  "endMs": 32150,
+  "timestampMs": 32120,
+  "confidence": null
+ },
+ {
+  "text": " the",
+  "startMs": 32150,
+  "endMs": 32390,
+  "timestampMs": 32270,
+  "confidence": null
+ },
+ {
+  "text": " shallows.",
+  "startMs": 32390,
+  "endMs": 33310,
+  "timestampMs": 32850,
+  "confidence": null
+ },
+ {
+  "text": " But",
+  "startMs": 33310,
+  "endMs": 33570,
+  "timestampMs": 33440,
+  "confidence": null
+ },
+ {
+  "text": " what",
+  "startMs": 33570,
+  "endMs": 33920,
+  "timestampMs": 33745,
+  "confidence": null
+ },
+ {
+  "text": " if",
+  "startMs": 33920,
+  "endMs": 34440,
+  "timestampMs": 34180,
+  "confidence": null
+ },
+ {
+  "text": " that",
+  "startMs": 34440,
+  "endMs": 34570,
+  "timestampMs": 34505,
+  "confidence": null
+ },
+ {
+  "text": " voyage",
+  "startMs": 34570,
+  "endMs": 35020,
+  "timestampMs": 34795,
+  "confidence": null
+ },
+ {
+  "text": " never",
+  "startMs": 35020,
+  "endMs": 35400,
+  "timestampMs": 35210,
+  "confidence": null
+ },
+ {
+  "text": " happened",
+  "startMs": 35400,
+  "endMs": 36100,
+  "timestampMs": 35750,
+  "confidence": null
+ },
+ {
+  "text": " at",
+  "startMs": 36100,
+  "endMs": 36270,
+  "timestampMs": 36185,
+  "confidence": null
+ },
+ {
+  "text": " all?",
+  "startMs": 36270,
+  "endMs": 36880,
+  "timestampMs": 36575,
+  "confidence": null
+ },
+ {
+  "text": " Imagine",
+  "startMs": 36880,
+  "endMs": 38690,
+  "timestampMs": 37785,
+  "confidence": null
+ },
+ {
+  "text": " the",
+  "startMs": 38690,
+  "endMs": 38720,
+  "timestampMs": 38705,
+  "confidence": null
+ },
+ {
+  "text": " king",
+  "startMs": 38720,
+  "endMs": 39120,
+  "timestampMs": 38920,
+  "confidence": null
+ },
+ {
+  "text": " says",
+  "startMs": 39120,
+  "endMs": 39440,
+  "timestampMs": 39280,
+  "confidence": null
+ },
+ {
+  "text": " *no*.",
+  "startMs": 39440,
+  "endMs": 40270,
+  "timestampMs": 39855,
+  "confidence": null
+ },
+ {
+  "text": " Magellan's",
+  "startMs": 40270,
+  "endMs": 40830,
+  "timestampMs": 40550,
+  "confidence": null
+ },
+ {
+  "text": " five",
+  "startMs": 40830,
+  "endMs": 41200,
+  "timestampMs": 41015,
+  "confidence": null
+ },
+ {
+  "text": " ships",
+  "startMs": 41200,
+  "endMs": 41680,
+  "timestampMs": 41440,
+  "confidence": null
+ },
+ {
+  "text": " never",
+  "startMs": 41680,
+  "endMs": 42140,
+  "timestampMs": 41910,
+  "confidence": null
+ },
+ {
+  "text": " leave",
+  "startMs": 42140,
+  "endMs": 42610,
+  "timestampMs": 42375,
+  "confidence": null
+ },
+ {
+  "text": " Seville.",
+  "startMs": 42610,
+  "endMs": 43720,
+  "timestampMs": 43165,
+  "confidence": null
+ },
+ {
+  "text": " No",
+  "startMs": 43720,
+  "endMs": 43740,
+  "timestampMs": 43730,
+  "confidence": null
+ },
+ {
+  "text": " expedition",
+  "startMs": 43740,
+  "endMs": 44680,
+  "timestampMs": 44210,
+  "confidence": null
+ },
+ {
+  "text": " means",
+  "startMs": 44680,
+  "endMs": 45150,
+  "timestampMs": 44915,
+  "confidence": null
+ },
+ {
+  "text": " no",
+  "startMs": 45150,
+  "endMs": 45340,
+  "timestampMs": 45245,
+  "confidence": null
+ },
+ {
+  "text": " Spanish",
+  "startMs": 45340,
+  "endMs": 46080,
+  "timestampMs": 45710,
+  "confidence": null
+ },
+ {
+  "text": " claim",
+  "startMs": 46080,
+  "endMs": 46370,
+  "timestampMs": 46225,
+  "confidence": null
+ },
+ {
+  "text": " to",
+  "startMs": 46370,
+  "endMs": 46490,
+  "timestampMs": 46430,
+  "confidence": null
+ },
+ {
+  "text": " these",
+  "startMs": 46490,
+  "endMs": 46800,
+  "timestampMs": 46645,
+  "confidence": null
+ },
+ {
+  "text": " islands...",
+  "startMs": 46800,
+  "endMs": 48150,
+  "timestampMs": 47475,
+  "confidence": null
+ },
+ {
+  "text": " at",
+  "startMs": 48150,
+  "endMs": 48220,
+  "timestampMs": 48185,
+  "confidence": null
+ },
+ {
+  "text": " least,",
+  "startMs": 48220,
+  "endMs": 48720,
+  "timestampMs": 48470,
+  "confidence": null
+ },
+ {
+  "text": " not",
+  "startMs": 48720,
+  "endMs": 49060,
+  "timestampMs": 48890,
+  "confidence": null
+ },
+ {
+  "text": " yet.",
+  "startMs": 49060,
+  "endMs": 49740,
+  "timestampMs": 49400,
+  "confidence": null
+ },
+ {
+  "text": " And",
+  "startMs": 49740,
+  "endMs": 50260,
+  "timestampMs": 50000,
+  "confidence": null
+ },
+ {
+  "text": " Lapulapu?",
+  "startMs": 50260,
+  "endMs": 51260,
+  "timestampMs": 50760,
+  "confidence": null
+ },
+ {
+  "text": " He'd",
+  "startMs": 51260,
+  "endMs": 52130,
+  "timestampMs": 51695,
+  "confidence": null
+ },
+ {
+  "text": " never",
+  "startMs": 52130,
+  "endMs": 52200,
+  "timestampMs": 52165,
+  "confidence": null
+ },
+ {
+  "text": " become",
+  "startMs": 52200,
+  "endMs": 52880,
+  "timestampMs": 52540,
+  "confidence": null
+ },
+ {
+  "text": " a",
+  "startMs": 52880,
+  "endMs": 52990,
+  "timestampMs": 52935,
+  "confidence": null
+ },
+ {
+  "text": " symbol",
+  "startMs": 52990,
+  "endMs": 53910,
+  "timestampMs": 53450,
+  "confidence": null
+ },
+ {
+  "text": " of",
+  "startMs": 53910,
+  "endMs": 53950,
+  "timestampMs": 53930,
+  "confidence": null
+ },
+ {
+  "text": " resistance.",
+  "startMs": 53950,
+  "endMs": 55120,
+  "timestampMs": 54535,
+  "confidence": null
+ },
+ {
+  "text": " Just",
+  "startMs": 55120,
+  "endMs": 55520,
+  "timestampMs": 55320,
+  "confidence": null
+ },
+ {
+  "text": " a",
+  "startMs": 55520,
+  "endMs": 55620,
+  "timestampMs": 55570,
+  "confidence": null
+ },
+ {
+  "text": " datu,",
+  "startMs": 55620,
+  "endMs": 56110,
+  "timestampMs": 55865,
+  "confidence": null
+ },
+ {
+  "text": " ruling",
+  "startMs": 56110,
+  "endMs": 56700,
+  "timestampMs": 56405,
+  "confidence": null
+ },
+ {
+  "text": " Mactan",
+  "startMs": 56700,
+  "endMs": 57280,
+  "timestampMs": 56990,
+  "confidence": null
+ },
+ {
+  "text": " in",
+  "startMs": 57280,
+  "endMs": 57480,
+  "timestampMs": 57380,
+  "confidence": null
+ },
+ {
+  "text": " peace.",
+  "startMs": 57480,
+  "endMs": 58560,
+  "timestampMs": 58020,
+  "confidence": null
+ },
+ {
+  "text": " One",
+  "startMs": 58560,
+  "endMs": 58700,
+  "timestampMs": 58630,
+  "confidence": null
+ },
+ {
+  "text": " voyage",
+  "startMs": 58700,
+  "endMs": 59150,
+  "timestampMs": 58925,
+  "confidence": null
+ },
+ {
+  "text": " that",
+  "startMs": 59150,
+  "endMs": 59550,
+  "timestampMs": 59350,
+  "confidence": null
+ },
+ {
+  "text": " never",
+  "startMs": 59550,
+  "endMs": 60040,
+  "timestampMs": 59795,
+  "confidence": null
+ },
+ {
+  "text": " sailed...",
+  "startMs": 60040,
+  "endMs": 60790,
+  "timestampMs": 60415,
+  "confidence": null
+ },
+ {
+  "text": " and",
+  "startMs": 60790,
+  "endMs": 61690,
+  "timestampMs": 61240,
+  "confidence": null
+ },
+ {
+  "text": " the",
+  "startMs": 61690,
+  "endMs": 61840,
+  "timestampMs": 61765,
+  "confidence": null
+ },
+ {
+  "text": " map",
+  "startMs": 61840,
+  "endMs": 62140,
+  "timestampMs": 61990,
+  "confidence": null
+ },
+ {
+  "text": " of",
+  "startMs": 62140,
+  "endMs": 62240,
+  "timestampMs": 62190,
   "confidence": null
  },
  {
   "text": " Asia",
-  "startMs": 57690,
-  "endMs": 57910,
-  "timestampMs": 57800,
+  "startMs": 62240,
+  "endMs": 62960,
+  "timestampMs": 62600,
   "confidence": null
  },
  {
-  "text": " changes.",
-  "startMs": 57910,
-  "endMs": 58610,
-  "timestampMs": 58260,
+  "text": " looks",
+  "startMs": 62960,
+  "endMs": 63330,
+  "timestampMs": 63145,
   "confidence": null
  },
  {
-  "text": " What",
-  "startMs": 58610,
-  "endMs": 59080,
-  "timestampMs": 58845,
+  "text": " completely",
+  "startMs": 63330,
+  "endMs": 63910,
+  "timestampMs": 63620,
+  "confidence": null
+ },
+ {
+  "text": " different.",
+  "startMs": 63910,
+  "endMs": 64790,
+  "timestampMs": 64350,
+  "confidence": null
+ },
+ {
+  "text": " So,",
+  "startMs": 64790,
+  "endMs": 64940,
+  "timestampMs": 64865,
+  "confidence": null
+ },
+ {
+  "text": " what",
+  "startMs": 64940,
+  "endMs": 65040,
+  "timestampMs": 64990,
   "confidence": null
  },
  {
   "text": " would",
-  "startMs": 59080,
-  "endMs": 59310,
-  "timestampMs": 59195,
+  "startMs": 65040,
+  "endMs": 65360,
+  "timestampMs": 65200,
   "confidence": null
  },
  {
   "text": " *you*",
-  "startMs": 59310,
-  "endMs": 59540,
-  "timestampMs": 59425,
+  "startMs": 65360,
+  "endMs": 65550,
+  "timestampMs": 65455,
   "confidence": null
  },
  {
   "text": " change?",
-  "startMs": 59540,
-  "endMs": 60320,
-  "timestampMs": 59930,
+  "startMs": 65550,
+  "endMs": 66160,
+  "timestampMs": 65855,
   "confidence": null
  }
 ]

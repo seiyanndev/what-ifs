@@ -34,7 +34,7 @@
     {
       "id": "voyage",
       "set": "GLOBE",
-      "narration": "In 1519, a Portuguese navigator sailing for Spain set out west, hunting for a sea route to the Spice Islands.",
+      "narration": "In 1519, Ferdinand Magellan sailed west for the King of Spain. His mission? Find a sea route to the Spice Islands.",
       "effects": {
         "yearStamp": {
           "text": "1519",
@@ -107,7 +107,7 @@
     {
       "id": "pacific",
       "set": "GLOBE",
-      "narration": "After crossing the vast Pacific, his starving fleet reached the Philippines in 1521.",
+      "narration": "His fleet crossed the vast Pacific, starving and exhausted... and in 1521, they reached the Philippines.",
       "geo": {
         "view": [
           -150,
@@ -174,7 +174,7 @@
       "id": "mactan",
       "set": "BEACH",
       "camera": "medium",
-      "narration": "On the island of Mactan, a chieftain named Lapulapu refused to bow to a foreign king.",
+      "narration": "On the island of Mactan, one chieftain refused to bow. His name was Lapulapu.",
       "characters": [
         {
           "preset": "lapulapu",
@@ -186,11 +186,11 @@
             },
             {
               "action": "shake_head",
-              "at": 1.6
+              "at": 1.2
             },
             {
               "action": "idle",
-              "at": 3.4,
+              "at": 2.8,
               "expression": "determined"
             }
           ]
@@ -202,7 +202,7 @@
       "set": "BEACH",
       "camera": "wide",
       "move": "push",
-      "narration": "In April 1521, Magellan attacked... and fell in the shallows of Mactan.",
+      "narration": "In April 1521, Magellan attacked Mactan... and fell in the shallows.",
       "effects": {
         "yearStamp": {
           "text": "1521",
@@ -306,7 +306,7 @@
       "id": "king-says-no",
       "set": "THRONE_ROOM",
       "camera": "medium",
-      "narration": "Picture it: the Spanish crown says *no*, and Magellan's five ships rot in Seville's harbor.",
+      "narration": "Imagine the king says *no*. Magellan's five ships never leave Seville.",
       "characters": [
         {
           "preset": "king",
@@ -317,7 +317,7 @@
             },
             {
               "action": "shake_head",
-              "at": 1.0
+              "at": 0.9
             }
           ]
         },
@@ -332,7 +332,7 @@
             },
             {
               "action": "facepalm",
-              "at": 3.2
+              "at": 2.4
             }
           ]
         }
@@ -341,7 +341,7 @@
     {
       "id": "no-claim",
       "set": "MAP_REGION",
-      "narration": "Without that expedition, Spain has no reason to claim these islands... at least for now.",
+      "narration": "No expedition means no Spanish claim to these islands... at least, not yet.",
       "geo": {
         "center": [
           122,
@@ -387,7 +387,7 @@
       "camera": "medium",
       "move": "orbitLeft",
       "transition": "ripple",
-      "narration": "Lapulapu would never become a symbol of resistance. He'd just be a datu, ruling Mactan in peace.",
+      "narration": "And Lapulapu? He'd never become a symbol of resistance. Just a datu{da-too}, ruling Mactan in peace.",
       "music": "triumphant",
       "effects": {
         "crowd": {
@@ -417,7 +417,7 @@
     {
       "id": "outro",
       "set": "GLOBE",
-      "narration": "One voyage that never sailed... and the whole map of Asia changes. What would *you* change?",
+      "narration": "One voyage that never sailed... and the map of Asia looks completely different. So, what would *you* change?",
       "tail": 1.6,
       "geo": {
         "view": [
