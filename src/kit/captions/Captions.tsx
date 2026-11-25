@@ -69,14 +69,14 @@ export const Captions: React.FC<Props> = ({ captions, names = [], y = 0.74, maxW
           const kind = kinds[i];
           const color = active ? C.current : kind ? C[kind] : C.text;
           const pop = spring({ frame: ((nowMs - t.fromMs) / 1000) * fps, fps, config: { damping: 10, stiffness: 300, mass: 0.4 } });
-          const scale = active ? 1 + 0.12 * (1 - Math.abs(1 - pop)) + 0.04 : 1;
+          const scale = active ? 1 + 0.08 * (1 - Math.abs(1 - pop)) + 0.04 : 1;
           const text = cleanWord(t.text);
           return (
             <span
               key={i}
               style={{
                 display: "inline-block",
-                margin: `0 ${fontSize * 0.13}px`,
+                margin: `0 ${fontSize * (active ? 0.26 : 0.16)}px`,
                 color,
                 WebkitTextStroke: `${fontSize * 0.2}px ${C.stroke}`,
                 paintOrder: "stroke",
