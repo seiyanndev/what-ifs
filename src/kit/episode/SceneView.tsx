@@ -97,7 +97,7 @@ export const SceneShot: React.FC<{ scene: ResolvedScene; captions: Caption[]; wh
     });
   });
   const pins = (g?.pins ?? []).map((p) => ({ at: p.at, color: p.color, pop: interpolate(frame, [(p.at_time ?? 0.3) * fps, (p.at_time ?? 0.3) * fps + 8], [0, 1], { ...clamp, easing: Easing.out(Easing.back(2)) }) }));
-  const labels = (g?.labels ?? []).map((l) => ({ at: l.at, text: l.text, style: l.style, opacity: interpolate(frame, [(l.from ?? 0.4) * fps, (l.from ?? 0.4) * fps + 10], [0, 1], clamp) }));
+  const labels = (g?.labels ?? []).map((l) => ({ at: l.at, text: l.text, style: l.style, size: l.size, opacity: interpolate(frame, [(l.from ?? 0.4) * fps, (l.from ?? 0.4) * fps + 10], [0, 1], clamp) }));
 
   let globe;
   let cameraOverride;
@@ -125,6 +125,10 @@ export const SceneShot: React.FC<{ scene: ResolvedScene; captions: Caption[]; wh
   }
 
   const chars = characters ?? scene.characters ?? [];
+  // plague fog: optional roll-in; the What If side of a split never has it
+  const fogSpec = side === "whatif" ? undefined : fx.plagueFog;
+  const fogFrom = typeof fogSpec === "object" ? Math.round((fogSpec.from ?? 0) * fps) : -1;
+  const fogAmt = !fogSpec ? 0 : fogFrom >= 0 ? interpolate(frame, [fogFrom, fogFrom + 55], [0, 1], { ...clamp, easing: Easing.out(Easing.quad) }) : 1;
   const impact = fx.asteroid ? Math.round((fx.asteroid.at ?? 1.6) * fps) : -1;
 
   return (
@@ -139,7 +143,7 @@ export const SceneShot: React.FC<{ scene: ResolvedScene; captions: Caption[]; wh
         duration={dur}
         globe={globe}
         map={map}
-        overlay={fx.plagueFog ? <PlagueTint /> : undefined}
+        overlay={fogAmt > 0 ? <PlagueTint amount={fogAmt} /> : undefined}
       >
         {chars.map((c, i) => (
           <CharacterView key={i} c={c} scene={scene} words={words} idx={i} side={side} />
@@ -149,9 +153,10 @@ export const SceneShot: React.FC<{ scene: ResolvedScene; captions: Caption[]; wh
         {(scene.dressing ?? []).map((d, i) => {
           const Item = DRESSING_ITEMS[d.item] as React.FC<Record<string, unknown>>;
           const at = typeof d.at === "string" ? markPos(scene, d.at) : d.at;
-          return <Item key={`dr${i}`} position={at} rotation={((d.rotation ?? 0) * Math.PI) / 180} scale={d.scale} text={d.text} style={d.style} color={d.color} height={d.height} />;
+          const shutters = d.closeAt !== undefined ? interpolate(frame, [d.closeAt * fps, d.closeAt * fps + 12], [0, 1], { ...clamp, easing: Easing.out(Easing.back(1.4)) }) : undefined;
+          return <Item key={`dr${i}`} position={at} rotation={((d.rotation ?? 0) * Math.PI) / 180} scale={d.scale} text={d.text} style={d.style} color={d.color} height={d.height} w={d.w} d={d.d} h={d.h} shutters={shutters} />;
         })}
-        {fx.plagueFog ? <PlagueFog /> : null}
+        {fogAmt > 0 ? <PlagueFog amount={fogAmt} position={[-(1 - fogAmt) * 4.5, 0, 0]} /> : null}
         {fx.statue ? <StatueFx spec={fx.statue} scene={scene} /> : null}
         {fx.shipFleet ? <ShipFleet count={fx.shipFleet.count ?? 7} formation={fx.shipFleet.formation ?? "v"} heading={fx.shipFleet.heading ?? 90} position={[-3.8, 0.06, -2.1]} speed={1.2} scale={1} spacing={1.25} /> : null}
         {fx.fallingScrolls ? <FallingScrolls position={[0, 0, -0.5]} area={[7, 4]} top={6} /> : null}

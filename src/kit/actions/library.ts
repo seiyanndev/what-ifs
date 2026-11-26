@@ -531,6 +531,37 @@ const shrug: ActionFn = (t, c) => ({
   expression: "thinking",
 });
 
+/** Big bored stretch-yawn: arms up and out, head back, then a slump. */
+const yawn: ActionFn = (t, c) => ({
+  pose: addPose(
+    keyed(t, [
+      { at: 0, pose: REST },
+      { at: 8, pose: pose({ ...symArms([-0.3, 0, 0.9], [0, 0, 0.6]), head: [-0.15, 0, 0] }, { stretch: 1.02 }), ease: "out" },
+      { at: 18, pose: pose({ ...symArms([-0.35, 0, 1.5], [0, 0, 1.0], [0, 0, 0.2]), head: [-0.35, 0, 0], neck: [-0.08, 0, 0], chest: [-0.12, 0, 0] }, { handL: "fist", handR: "fist", stretch: 1.06, rootOffset: [0, 0.02, 0] }), ease: "back" },
+      { at: 40, pose: pose({ ...symArms([-0.3, 0, 1.45], [0, 0, 0.95], [0, 0, 0.2]), head: [-0.3, 0, 0.05], neck: [-0.06, 0, 0], chest: [-0.1, 0, 0] }, { handL: "fist", handR: "fist", stretch: 1.05 }) },
+      { at: 54, pose: pose({ spine: [0.08, 0, 0], head: [0.12, 0, 0.08] }, { stretch: 0.97 }), ease: "smooth" },
+    ]),
+    idlePose(t, c, 0.3),
+  ),
+  look: [0, 0.4],
+  expression: t < 44 ? "yawning" : "bored",
+});
+
+/** Pull two shutters (or doors) closed: arms reach out wide, then sweep in together and hold. */
+const closeShutters: ActionFn = (t, c) => ({
+  pose: addPose(
+    keyed(t, [
+      { at: 0, pose: REST },
+      { at: 8, pose: pose({ ...symArms([-1.15, 0, 0.75], [-0.25, 0, 0]), spine: [0.08, 0, 0] }, { handL: "open", handR: "open" }), ease: "out" },
+      { at: 18, pose: pose({ ...symArms([-1.25, 0, -0.05], [-0.35, 0, 0]), spine: [0.14, 0, 0], head: [0.05, 0, 0] }, { handL: "open", handR: "open", rootOffset: [0, 0, 0.06] }), ease: "back" },
+      { at: 30, pose: pose({ ...symArms([-1.2, 0, -0.02], [-0.3, 0, 0]), spine: [0.1, 0, 0] }, { handL: "open", handR: "open", rootOffset: [0, 0, 0.04] }) },
+    ]),
+    idlePose(t, c, 0.25),
+  ),
+  look: [0, 0],
+  expression: "scared",
+});
+
 const facepalm: ActionFn = (t, c) => {
   const s = sec(t, c);
   const p = keyed(t, [
@@ -691,6 +722,8 @@ export const ACTIONS = {
   kneel,
   give_item: giveItem,
   sail_steer: sailSteer,
+  yawn,
+  close_shutters: closeShutters,
 } satisfies Record<string, ActionFn>;
 
 export type ActionName = keyof typeof ACTIONS;

@@ -42,7 +42,8 @@ export type GeoSpec = {
   pins?: { at: LonLat; color?: string; at_time?: number }[];
   /** MAP_REGION: little flags planted on the map, popping in at `at_time` (e.g. a power spreading). */
   flags?: { at: LonLat; color?: string; accent?: string; at_time?: number }[];
-  labels?: { at: LonLat; text: string; style?: "region" | "city" | "title"; from?: number }[];
+  /** `size`: text height in world units (globe radius is 1.6; use ~0.045 on a zoomed globe). */
+  labels?: { at: LonLat; text: string; style?: "region" | "city" | "title"; from?: number; size?: number }[];
 };
 
 export type EffectsSpec = {
@@ -51,7 +52,8 @@ export type EffectsSpec = {
   /** TIMELINE_SPLIT: REAL (left) vs WHAT IF (right), then WHAT IF takes over. Music drops here. Every later scene uses the What If grade. */
   timelineSplit?: { takeoverAt?: number; whatIfCharacters?: CharacterSpec[] };
   fire?: { mark?: string | [number, number, number]; scale?: number };
-  plagueFog?: boolean;
+  /** Plague fog + sickly tint. `{ from: 0.5 }` rolls it in from that second. It never shows on the What If side of a split (the plague never came). */
+  plagueFog?: boolean | { from?: number };
   shipFleet?: { count?: number; formation?: "v" | "line" | "grid"; heading?: number };
   fallingScrolls?: boolean;
   asteroid?: { at?: number; target?: [number, number, number] };
@@ -69,11 +71,17 @@ export type DressingSpec = {
   /** Rotation in degrees. */
   rotation?: number;
   scale?: number;
-  /** Sign only: text and style. */
+  /** Sign: text and style ("stone" | "neon" | "wood"). House: style ("medieval" | "tudor" | "ancient" | "modern"). */
   text?: string;
-  style?: "stone" | "neon" | "wood";
+  style?: string;
   color?: string;
   height?: number;
+  /** Size overrides for items that take them (House, Factory: w, d, h). */
+  w?: number;
+  d?: number;
+  h?: number;
+  /** House: open its window shutters, then swing them closed at this second. */
+  closeAt?: number;
 };
 
 export type SceneSpec = {

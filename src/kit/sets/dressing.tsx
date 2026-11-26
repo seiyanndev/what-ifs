@@ -176,7 +176,8 @@ export const Column: React.FC<At & { height?: number; broken?: boolean }> = ({ h
 
 export type HouseStyle = "ancient" | "medieval" | "modern" | "tudor";
 
-export const House: React.FC<At & { style?: HouseStyle; w?: number; d?: number; h?: number; wall?: string; roof?: string }> = ({ style = "medieval", w = 2, d = 1.8, h = 1.6, wall, roof, ...p }) => {
+/** `shutters`: wooden window shutters, 0 = swung open against the wall, 1 = closed (animate it to close them). */
+export const House: React.FC<At & { style?: HouseStyle; w?: number; d?: number; h?: number; wall?: string; roof?: string; shutters?: number }> = ({ style = "medieval", w = 2, d = 1.8, h = 1.6, wall, roof, shutters, ...p }) => {
   const { pal, night } = useSet();
   const wallC = wall ?? (style === "ancient" ? "#efe2c6" : style === "modern" ? "#e9eef5" : style === "tudor" ? "#f1e6cc" : "#d9c9a8");
   const roofC = roof ?? (style === "ancient" ? "#b5533c" : style === "modern" ? "#5a6a7a" : "#8e3b38");
@@ -196,6 +197,18 @@ export const House: React.FC<At & { style?: HouseStyle; w?: number; d?: number; 
       {(style === "modern" ? [-0.6, 0.6] : [-w * 0.3, w * 0.3]).map((x) => (
         <Part key={x} geometry={roundedBox(0.32, 0.32, 0.05, 0.03)} position={[x, h * 0.62, d / 2 + 0.02]} color={win} emissive={night ? "#ffb84a" : undefined} emissiveIntensity={night ? 0.8 : 0} ink={false} rim={0} />
       ))}
+      {shutters !== undefined && style !== "modern"
+        ? [-w * 0.3, w * 0.3].flatMap((x) =>
+            [-1, 1].map((side) => (
+              // hinge on the window's outer edge; open = folded flat against the wall
+              <group key={`${x}${side}`} position={[x + side * 0.19, h * 0.62, d / 2 + 0.05]} rotation={[0, side * (1 - Math.max(0, Math.min(1, shutters))) * Math.PI * 0.55, 0]}>
+                <Part geometry={roundedBox(0.19, 0.36, 0.035, 0.012)} position={[-side * 0.095, 0, 0]} color={pal.wood} ink="prop" />
+                <Part geometry={roundedBox(0.15, 0.03, 0.04, 0.008)} position={[-side * 0.095, 0.09, 0.012]} color="#4a3326" ink={false} />
+                <Part geometry={roundedBox(0.15, 0.03, 0.04, 0.008)} position={[-side * 0.095, -0.09, 0.012]} color="#4a3326" ink={false} />
+              </group>
+            )),
+          )
+        : null}
     </G>
   );
 };
@@ -690,6 +703,52 @@ export const Aeolipile: React.FC<At> = (p) => (
   </G>
 );
 
+/** Brick factory: sawtooth roof, two chimneys puffing smoke (frame-driven), lit windows at night. */
+export const Factory: React.FC<At & { w?: number; d?: number; h?: number; color?: string; smoke?: boolean }> = ({ w = 2.6, d = 1.6, h = 1.3, color = "#9a4e3c", smoke = true, ...p }) => {
+  const frame = useCurrentFrame();
+  const { night } = useSet();
+  const teeth = 3;
+  const win = night ? "#ffd27a" : "#3b4a6a";
+  const chimneys: [number, number][] = [
+    [-w * 0.28, 2.1],
+    [w * 0.12, 1.7],
+  ];
+  return (
+    <G {...p}>
+      <Part geometry={roundedBox(w, h, d, 0.05)} position={[0, h / 2, 0]} color={color} ink="set" />
+      {Array.from({ length: teeth }, (_, i) => (
+        <Part
+          key={i}
+          geometry={extruded(`saw-${w}-${teeth}`, [[0, 0], [w / teeth, 0], [w / teeth, 0.42]], d, 0.02)}
+          position={[-w / 2 + (i * w) / teeth, h, 0]}
+          color="#5f4a44"
+          ink="set"
+        />
+      ))}
+      {[-0.32, 0, 0.32].map((x) => (
+        <Part key={x} geometry={roundedBox(0.34, 0.42, 0.05, 0.03)} position={[x * w, h * 0.55, d / 2 + 0.02]} color={win} emissive={night ? "#ffb84a" : undefined} emissiveIntensity={night ? 0.8 : 0} ink={false} rim={0} />
+      ))}
+      {chimneys.map(([x, ch], k) => (
+        <group key={k} position={[x, h, -d * 0.15]}>
+          <Part geometry={lathe("chimney", [[0, 0], [0.17, 0], [0.13, 1], [0.16, 1.02], [0.16, 1.1], [0, 1.1]], 16)} scale={[1, ch, 1]} color="#7d3b2e" ink="set" />
+          {smoke
+            ? Array.from({ length: 6 }, (_, i) => {
+                const t = ((frame / 30) * 0.45 + i / 6 + k * 0.37) % 1;
+                const r = 0.14 + t * 0.32;
+                return (
+                  <mesh key={i} position={[t * 0.55, ch * 1.1 + t * 1.6, Math.sin(i * 2 + k) * 0.08]} scale={r}>
+                    <sphereGeometry args={[1, 12, 9]} />
+                    <ToonMaterial color={night ? "#5d5a68" : "#b9b4ae"} ramp="soft" rim={0.2} transparent opacity={0.75 * (1 - t) ** 0.7} depthWrite={false} />
+                  </mesh>
+                );
+              })
+            : null}
+        </group>
+      ))}
+    </G>
+  );
+};
+
 /** Name → component registry so episodes can place any dressing item by name ("dressing" in scenes.json). */
 export const DRESSING_ITEMS = {
   Column,
@@ -729,5 +788,6 @@ export const DRESSING_ITEMS = {
   Outrigger,
   Sign,
   Aeolipile,
+  Factory,
 } as const;
 export type DressingItem = keyof typeof DRESSING_ITEMS;

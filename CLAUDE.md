@@ -107,7 +107,7 @@ Code is in `src/kit/characters/Face/`: `params.ts` (shapes, presets, blending), 
 - **Visemes:** A, E, O, MBP, FV, rest.
 - **Extras:** blush (strong blush adds hatch lines), sweat drop, tear streams (animated), anger mark (pulsing).
 - **Facial hair** (2D): mustache `thin | full | walrus | curled`, beard `stubble | goatee | full`, plus `color`. Big 3D beards belong to costumes (3c).
-- **15 presets (`EXPRESSIONS`):** neutral, proud, happy, laughing, scared, shocked, angry, sad, crying, thinking, smirk, focused, wonder, determined, defeated.
+- **17 presets (`EXPRESSIONS`):** neutral, proud, happy, laughing, scared, shocked, angry, sad, crying, thinking, smirk, focused, wonder, determined, bored, yawning, defeated.
 - **Talk mode:** `talkFromWords(words, seconds)` takes word timings (`{word, start, end}`), maps letters to visemes, holds each shape about 60% of the time and glides to the next, and fades between words. `talkFromLevel(level, frame)` works from loudness instead. `applyTalk` keeps the expression's smile or frown while speaking.
 
 Review outputs: `Expressions` and `FaceParts` stills, plus the `FaceTalkTest` video, rendered to `out/char/`.
@@ -150,7 +150,7 @@ Code is in `src/kit/actions/`: `core.ts` (types, easing, keyframes, pose maths),
   - It turns smoothly to a cue's `heading` (degrees; 0 faces the camera, +Z).
   - It accumulates `travel` from walks and runs along each cue's heading (root motion).
   - Add `face={{ talk }}` for lip sync.
-- **The 26 actions** (`ACTIONS`): idle, walk (`speed`), run (`speed`), talk, point (`dir`: side, forward or up; `hand`), wave, cheer, bow, salute, sword_raise, fight_clash (looping, stylized, no gore), fall (backward, lands on its back), sit, write (`seated`), read_scroll, crank_machine, look_up, look_around, shrug, facepalm, celebrate_jump (`height`), nod, shake_head, kneel, give_item (`hands`: both or right), sail_steer. One-handed actions take `params: { hand: "left" }`, which mirrors the pose.
+- **The 28 actions** (`ACTIONS`): idle, walk (`speed`), run (`speed`), talk, point (`dir`: side, forward or up; `hand`), wave, cheer, bow, salute, sword_raise, fight_clash (looping, stylized, no gore), fall (backward, lands on its back), sit, write (`seated`), read_scroll, crank_machine, look_up, look_around, shrug, facepalm, celebrate_jump (`height`), nod, shake_head, kneel, give_item (`hands`: both or right), sail_steer, yawn (big bored stretch), close_shutters (reach out wide, pull two shutters or doors closed). One-handed actions take `params: { hand: "left" }`, which mirrors the pose.
 - **Sign conventions** (the character faces +Z and its left is +X):
   - shoulder X − raises the arm forward; shoulderL Z + / shoulderR Z − raise it out or up sideways
   - elbow X − bends the forearm forward; leg X − moves the thigh forward; knee X + bends the shin back
@@ -178,7 +178,7 @@ Code is in `src/kit/sets/`: `geo/` (data, projections, map painter, globe, map b
 `<SetScene set="PORT" era timeOfDay whatIf camera="wide|medium|close"|OrbitShot move="static|push|pull|orbitLeft|orbitRight" duration globe={...} map={...}>…characters…</SetScene>`
 It wires up the sky or background, painted backdrop, light rig, the diorama, the camera move over `duration` frames, and the grade. Put characters on `SETS[set].marks` (for example `<Performer position={SETS.PORT.marks.center} … />`).
 
-### The 12 sets (`SETS`)
+### The 14 sets (`SETS`)
 | Set | Default era / time | Special marks |
 |---|---|---|
 | GLOBE | ageOfSail / day | (uses `globe` props) |
@@ -194,6 +194,7 @@ It wires up the sky or background, painted backdrop, light rig, the diorama, the
 | JUNGLE_PREHISTORIC | ancient / day | pond |
 | BEACH | ageOfSail / sunset | shore |
 | TROPICAL_VILLAGE | ageOfSail / day | hutLeft, hutRight, shore (stilt huts, outrigger, palms, half sea) |
+| OLD_CITY | ageOfSail / sunset | street (a city a century behind: cobbles, timber townhouses, smoking factory, gas lamps) |
 
 - Every outdoor set also has the marks center, left, right, back, backLeft, backRight and front.
 - **Cameras:** wide 30 (outdoor) or 27 (interior), medium 19/18, close 9/8.5. In 9:16 a whole diorama needs about 30 units of distance to fit the width.
@@ -201,7 +202,7 @@ It wires up the sky or background, painted backdrop, light rig, the diorama, the
 
 ### Set dressing (`dressing.tsx`, reuse for new sets)
 - **Nature:** Cypress, RoundTree, PineTree, PalmTree, Bush, Fern, Rock, Volcano, Dino.
-- **Architecture:** Column, House (ancient, medieval, tudor or modern), Temple, Tower, Wall, Skyscraper.
+- **Architecture:** Column, House (ancient, medieval, tudor or modern; `shutters` 0 open → 1 closed), Temple, Tower, Wall, Skyscraper, Factory (sawtooth roof, chimneys puffing smoke).
 - **Signs and inventions:** `Sign` (canvas text on a board; `stone`, `neon` or `wood`; `posts`, post `height`; neon glows at night) and `Aeolipile` (Hero's steam engine, also a hand prop `aeolipile`).
 - **Tropical / island:** StiltHut (thatched, woven walls, ladder; generic Southeast Asian / Pacific) and Outrigger canoe.
 - **Furniture and props:** Table, Throne, Carpet, Banner, Bookshelf, Barrel, Crate, TorchStand, StreetLamp, Tent, Fence, Well, Dock, Cannon, Anvil, GearMachine, Statue, Car, Bench, Candle, Market.
@@ -278,6 +279,7 @@ Put the recording at `public/voice/<episode>/raw.wav` (.mp3, .m4a, .flac and .og
 2. **Word timestamps** come from **whisper.cpp running locally** (free and offline, through `@remotion/install-whisper-cpp`) with token-level timestamps. The result is `captions.json` (Remotion `Caption[]`) plus `voice.json` (duration and word count).
 3. **`--script`** aligns the transcript to the script text (Needleman–Wunsch on words). Captions then use the script's exact spelling, so "1519" stays "1519" even when spoken as "fifteen nineteen", `*emphasis*` marks survive, and names are fixed (whisper heard "Zenhira, Miptan, Lapilapu"). Script words that weren't heard get time borrowed from their neighbors, so every word stays visible and in order, and every word lasts at least 90 ms. **Always pass the script.**
 4. **Long voiceovers are transcribed in chunks** of at most 24 s, cut in the middle of pauses. Whisper's timestamps drift on long files (on Day 2 the last words piled up past the end of the audio), and chunking keeps them accurate.
+5. **Words are snapped to real pauses** (FFmpeg `silencedetect`, 0.3 s or longer). Whisper stretches the last words of a chunk or sentence across the following silence, which made the next scene's first word start late. Words before a pause are squeezed to end where the speech stops, and words after it start where the speech resumes.
 
 **One-time setup:** `npm run audio:setup` builds whisper.cpp 1.5.5 into `whisper.cpp/` (git-ignored) and downloads `ggml-base.en.bin`. Use `-- small.en` for better accuracy. If the model download fails behind a proxy, use `curl -L -o whisper.cpp/ggml-base.en.bin https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-base.en.bin`.
 
@@ -304,7 +306,7 @@ Uses **Kokoro**, a local neural TTS (Apache-2.0, so commercial use is fine; offl
 - Your own recording works too: put it at `raw.wav` and skip `npm run voice`.
 
 ### Sound library: `npm run sounds` (synthesized in code, no samples or licenses; deterministic; runs automatically after `npm install`, and the WAVs are git-ignored)
-- **`public/sfx/`:** stamp_slam, whoosh, ripple, war_drum, clash, waves (seamless 8 s loop), gong, crowd_cheer, rumble, impact, crackle (seamless 4 s fire loop), coins, page_flip, pop, sparkle, fanfare (royal brass call and held chord), wind (seamless 8 s loop), swell (orchestral crescendo into a hit), horn (epic low brass call), steam (hiss, seamless 4 s loop), hit (final orchestral hit) and synth_horn (synth pad plus horn).
+- **`public/sfx/`:** stamp_slam, whoosh, ripple, war_drum, clash, waves (seamless 8 s loop), gong, crowd_cheer, rumble, impact, crackle (seamless 4 s fire loop), coins, page_flip, pop, sparkle, fanfare (royal brass call and held chord), wind (seamless 8 s loop), swell (orchestral crescendo into a hit), horn (epic low brass call), steam (hiss, seamless 4 s loop), hit (final orchestral hit), synth_horn (synth pad plus horn) and choir (eerie "aah" choir cluster, 7.5 s).
 - **`public/music/`:** 8-bar seamless loops:
   - **epic_tense:** D minor, 100 bpm, drums, ostinato and brass
   - **mysterious:** A minor, 80 bpm, pad and celesta
@@ -411,9 +413,9 @@ Options: `--no-voice` (estimated timings and silent narration, for layout checks
   }]
 }
 ```
-- **Scene dressing:** `"dressing": [{ "item": "Sign", "at": [x,y,z], "rotation": 20, "scale": 1.3, "text": "SPQR", "style": "neon", "color": "#ff5ad8", "height": 1.75 }]` places any `DRESSING_ITEMS` piece (Column, Table, Aeolipile, Sign, Barrel…) in a scene.
+- **Scene dressing:** `"dressing": [{ "item": "Sign", "at": [x,y,z], "rotation": 20, "scale": 1.3, "text": "SPQR", "style": "neon", "color": "#ff5ad8", "height": 1.75 }]` places any `DRESSING_ITEMS` piece (Column, Table, Aeolipile, Sign, House, Factory, Barrel…) in a scene. Houses and factories take `w`, `d`, `h`, and a House with `"closeAt": 3.1` swings its window shutters shut at that second.
 - **More geo options:** a fill's `"shrink": true` makes the colour retreat (an empire breaking up), `"pulse": true` makes it glow, and `opacity` sets its strength. A route's `"ships": 3` sails a small fleet (extra ships have no trail) with `"sail"` colour.
-- **More scene options:** `"captions": "top"` moves a scene's captions up (use it when the action is low in frame, like a fall). `"musicDrop": true` cuts the music at the start of any scene and swells it back. A character's `"elder": true` gives the elder body plus grey hair and beard. `geo.flags` plants flags on a MAP_REGION that pop in at `at_time`. `effects.statue` adds a stone statue that vanishes and returns. Looping SFX in `sfx` (wind, waves, crackle) last until the scene ends.
+- **More scene options:** `"captions": "top"` moves a scene's captions up (use it when the action is low in frame, like a fall). `"musicDrop": true` cuts the music at the start of any scene and swells it back. A character's `"elder": true` gives the elder body plus grey hair and beard. `geo.flags` plants flags on a MAP_REGION that pop in at `at_time`. `effects.statue` adds a stone statue that vanishes and returns. `"plagueFog": { "from": 0.5 }` rolls the fog in from that second, and the fog never appears on the What If side of a split. Geo labels take `size` (about 0.024 on a zoomed-in globe, or the label overflows the frame). Looping SFX in `sfx` (wind, waves, crackle) last until the scene ends.
 - **Automatic SFX:** year stamp (stamp_slam), split (ripple plus the music drop), ripple transition (whoosh), asteroid (impact), fire (crackle loop), crowd cheer (crowd_cheer), and waves under PORT and BEACH scenes.
 - **Timing is in seconds relative to the scene.** Scene lengths come from the narration, so write about 8–20 words per scene. A 60–75 s episode is about 140–180 words.
 - **Narration markup:** `*emphasis*`, `word{spoken}` (no spaces inside the braces), and `...` for a pause. Years are read naturally.

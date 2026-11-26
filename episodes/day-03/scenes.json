@@ -1,0 +1,518 @@
+{
+  "title": "What if the Black Death never happened?",
+  "voice": "bm_george",
+  "names": [
+    "Black",
+    "Death",
+    "Europe",
+    "Europeans",
+    "Renaissance",
+    "Industrial",
+    "Revolution"
+  ],
+  "thumbnail": {
+    "left": {
+      "preset": "peasant",
+      "set": "MEDIEVAL_VILLAGE",
+      "timeOfDay": "day",
+      "expression": "scared",
+      "action": "look_around",
+      "heading": -15
+    },
+    "right": {
+      "preset": "peasant",
+      "set": "MEDIEVAL_VILLAGE",
+      "timeOfDay": "day",
+      "expression": "laughing",
+      "action": "cheer",
+      "heading": 15
+    },
+    "text": "No Black Death?",
+    "badge": "1347"
+  },
+  "scenes": [
+    {
+      "id": "hook",
+      "set": "MEDIEVAL_VILLAGE",
+      "timeOfDay": "night",
+      "camera": "wide",
+      "move": "push",
+      "narration": "What if the Black Death never happened?",
+      "titleCard": true,
+      "music": "mysterious",
+      "sfx": [
+        {
+          "name": "choir",
+          "at": 0.0
+        }
+      ],
+      "effects": {
+        "plagueFog": {
+          "from": 0.2
+        }
+      },
+      "characters": [
+        {
+          "preset": "peasant",
+          "mark": "center",
+          "expression": "scared",
+          "actions": [
+            {
+              "action": "idle"
+            },
+            {
+              "action": "look_around",
+              "at": 0.9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "plague-arrives",
+      "set": "MEDIEVAL_VILLAGE",
+      "timeOfDay": "sunset",
+      "camera": "medium",
+      "move": "static",
+      "narration": "In 1347, a plague swept into Europe. In just a few years, it killed somewhere between a third and half of all Europeans.",
+      "effects": {
+        "yearStamp": {
+          "text": "1347",
+          "subtitle": "The Black Death",
+          "at": 0.3
+        },
+        "plagueFog": {
+          "from": 1.2
+        }
+      },
+      "dressing": [
+        {
+          "item": "House",
+          "style": "medieval",
+          "at": [
+            -0.6,
+            0,
+            -1.9
+          ],
+          "w": 1.7,
+          "d": 1.3,
+          "h": 1.55,
+          "closeAt": 3.1
+        }
+      ],
+      "characters": [
+        {
+          "preset": "peasant",
+          "mark": [
+            1.0,
+            0,
+            -0.2
+          ],
+          "heading": -25,
+          "expression": "scared",
+          "actions": [
+            {
+              "action": "look_around"
+            },
+            {
+              "action": "close_shutters",
+              "at": 2.4,
+              "heading": -145
+            },
+            {
+              "action": "idle",
+              "at": 4.6,
+              "heading": -30,
+              "expression": "scared"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "survivors",
+      "set": "MEDIEVAL_VILLAGE",
+      "timeOfDay": "day",
+      "camera": "medium",
+      "move": "push",
+      "narration": "The survivors had a strange advantage. Workers were so rare that they could demand higher wages, and the old serf system started to crack.",
+      "sfx": [
+        {
+          "name": "coins",
+          "at": 6.6
+        }
+      ],
+      "characters": [
+        {
+          "preset": "peasant",
+          "mark": [
+            -1.0,
+            0,
+            0.7
+          ],
+          "heading": 45,
+          "expression": "smirk",
+          "actions": [
+            {
+              "action": "idle"
+            },
+            {
+              "action": "talk",
+              "at": 2.4
+            },
+            {
+              "action": "nod",
+              "at": 7.0,
+              "expression": "happy"
+            }
+          ]
+        },
+        {
+          "preset": "lord",
+          "mark": [
+            1.0,
+            0,
+            0.6
+          ],
+          "heading": -45,
+          "expression": "angry",
+          "actions": [
+            {
+              "action": "idle"
+            },
+            {
+              "action": "shake_head",
+              "at": 3.4
+            },
+            {
+              "action": "give_item",
+              "at": 6.0,
+              "params": {
+                "hands": "right"
+              },
+              "expression": "defeated"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "split",
+      "set": "MEDIEVAL_VILLAGE",
+      "timeOfDay": "day",
+      "camera": "medium",
+      "move": "orbitRight",
+      "narration": "So what if it *never* came?",
+      "effects": {
+        "plagueFog": true,
+        "timelineSplit": {
+          "takeoverAt": 1.7,
+          "whatIfCharacters": [
+            {
+              "preset": "peasant",
+              "mark": "center",
+              "expression": "happy",
+              "actions": [
+                {
+                  "action": "idle"
+                },
+                {
+                  "action": "cheer",
+                  "at": 0.5
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "characters": [
+        {
+          "preset": "peasant",
+          "mark": "center",
+          "expression": "sad",
+          "actions": [
+            {
+              "action": "idle"
+            },
+            {
+              "action": "shake_head",
+              "at": 0.4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "crowded",
+      "set": "MEDIEVAL_VILLAGE",
+      "timeOfDay": "day",
+      "camera": "wide",
+      "move": "push",
+      "music": "sad_strings",
+      "narration": "Europe stays crowded. Labor stays cheap. Peasants stay tied to the land for longer.",
+      "effects": {
+        "crowd": {
+          "count": 34,
+          "pool": "medieval",
+          "position": [
+            0,
+            0,
+            -3.0
+          ],
+          "area": [
+            10,
+            3.2
+          ]
+        }
+      },
+      "characters": [
+        {
+          "preset": "lord",
+          "mark": [
+            0,
+            0,
+            -0.7
+          ],
+          "expression": "proud",
+          "actions": [
+            {
+              "action": "idle"
+            },
+            {
+              "action": "nod",
+              "at": 2.4
+            }
+          ]
+        },
+        {
+          "preset": "peasant",
+          "mark": [
+            -1.25,
+            0,
+            1.4
+          ],
+          "heading": 160,
+          "expression": "sad",
+          "actions": [
+            {
+              "action": "idle"
+            },
+            {
+              "action": "bow",
+              "at": 0.6
+            }
+          ]
+        },
+        {
+          "preset": "peasant",
+          "mark": [
+            1.25,
+            0,
+            1.4
+          ],
+          "heading": -160,
+          "expression": "sad",
+          "actions": [
+            {
+              "action": "idle"
+            },
+            {
+              "action": "bow",
+              "at": 1.2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "no-machines",
+      "set": "WORKSHOP",
+      "era": "medieval",
+      "camera": "medium",
+      "move": "push",
+      "narration": "With cheap workers everywhere, there's less reason to invent labor-saving machines.",
+      "characters": [
+        {
+          "preset": "inventor",
+          "mark": [
+            0.3,
+            0,
+            0.5
+          ],
+          "heading": 25,
+          "actions": [
+            {
+              "action": "idle",
+              "expression": "bored"
+            },
+            {
+              "action": "yawn",
+              "at": 0.9
+            },
+            {
+              "action": "shrug",
+              "at": 3.4,
+              "expression": "bored"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "renaissance",
+      "set": "GLOBE",
+      "narration": "Some historians think the Renaissance and later the Industrial Revolution might have come later, or looked very different.",
+      "geo": {
+        "view": [
+          -40,
+          15
+        ],
+        "viewTo": [
+          10,
+          47
+        ],
+        "zoom": true,
+        "fills": [
+          {
+            "countries": [
+              "Italy",
+              "France",
+              "Germany",
+              "United Kingdom",
+              "Netherlands",
+              "Belgium",
+              "Switzerland",
+              "Austria",
+              "Spain",
+              "Portugal"
+            ],
+            "color": "#f2b134",
+            "from": 4.2,
+            "to": 7.5,
+            "pulse": true,
+            "opacity": 0.4,
+            "origin": [
+              11.2,
+              43.8
+            ]
+          }
+        ],
+        "labels": [
+          {
+            "at": [
+              11,
+              45
+            ],
+            "text": "Renaissance?",
+            "style": "title",
+            "from": 4.6,
+            "size": 0.024
+          }
+        ]
+      }
+    },
+    {
+      "id": "old-city",
+      "set": "OLD_CITY",
+      "timeOfDay": "sunset",
+      "camera": "medium",
+      "move": "push",
+      "transition": "ripple",
+      "music": "mysterious",
+      "narration": "A disaster that killed *millions* may also have helped push Europe into the modern world.",
+      "dressing": [
+        {
+          "item": "Sign",
+          "text": "TELEGRAPH",
+          "style": "wood",
+          "at": [
+            0.15,
+            0.07,
+            -0.95
+          ],
+          "scale": 1.0
+        }
+      ],
+      "characters": [
+        {
+          "preset": "inventor",
+          "mark": [
+            -1.35,
+            0.07,
+            0.9
+          ],
+          "heading": 20,
+          "expression": "wonder",
+          "actions": [
+            {
+              "action": "idle"
+            },
+            {
+              "action": "look_up",
+              "at": 0.8
+            }
+          ]
+        },
+        {
+          "preset": "peasant",
+          "mark": [
+            1.35,
+            0.07,
+            0.9
+          ],
+          "heading": -20,
+          "expression": "thinking",
+          "actions": [
+            {
+              "action": "idle"
+            },
+            {
+              "action": "look_around",
+              "at": 1.6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "outro",
+      "set": "MEDIEVAL_VILLAGE",
+      "timeOfDay": "day",
+      "camera": "close",
+      "move": "push",
+      "narration": "Dark, right? Which history event would you change? Comment below.",
+      "tail": 1.8,
+      "sfx": [
+        {
+          "name": "hit",
+          "at": 5.75
+        }
+      ],
+      "characters": [
+        {
+          "preset": "peasant",
+          "mark": "center",
+          "expression": "thinking",
+          "actions": [
+            {
+              "action": "idle"
+            },
+            {
+              "action": "shrug",
+              "at": 1.6,
+              "expression": "thinking"
+            },
+            {
+              "action": "point",
+              "at": 4.4,
+              "params": {
+                "dir": "forward"
+              },
+              "expression": "smirk"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

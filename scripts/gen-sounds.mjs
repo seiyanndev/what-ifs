@@ -425,6 +425,40 @@ const SFX = {
     reverb(b, 0.4, 1.5, 0.4);
     return b;
   },
+  /** Eerie choir: a slow "aah" cluster (diminished, drifting) with breath, washed in a big hall reverb. */
+  choir: () => {
+    const b = buf(7.5);
+    const voice = (note, at, dur, pan, seed, gain) => {
+      const f = midi(note);
+      const rnd = mulberry32(seed);
+      const det = [0, 0.006, -0.007, 0.011].map((d) => d + (rnd() - 0.5) * 0.004);
+      const f1 = new Biquad("bp", 780, 3.2);
+      const f2 = new Biquad("bp", 1150, 4);
+      const f3 = new Biquad("bp", 2600, 5);
+      const nz = noiseGen(seed + 7);
+      add(
+        b,
+        at,
+        dur,
+        (t) => {
+          const vib = 1 + 0.006 * Math.sin(TAU * 5.1 * t + seed) * Math.min(1, t / 1.5);
+          let x = 0;
+          for (const d of det) x += saw(f * (1 + d) * vib * t);
+          x = x / det.length + nz() * 0.08;
+          const e = Math.min(1, t / 1.6) * Math.min(1, (dur - t) / 1.4);
+          return (f1.run(x) * 1.0 + f2.run(x) * 0.6 + f3.run(x) * 0.18) * e * gain;
+        },
+        pan,
+      );
+    };
+    voice(45, 0, 7.2, -0.5, 301, 0.9);
+    voice(57, 0.2, 7.0, 0.4, 302, 0.75);
+    voice(60, 0.6, 6.6, -0.2, 303, 0.65);
+    voice(63, 1.4, 5.8, 0.55, 304, 0.6);
+    voice(62, 3.8, 3.4, -0.6, 305, 0.45);
+    reverb(b, 0.55, 1.8, 0.5);
+    return b;
+  },
   /** Synth + horn: modern saw-pad arpeggio under a heroic horn call ("Rome, but futuristic"). */
   synth_horn: () => {
     const b = buf(5.2);

@@ -89,7 +89,8 @@ ff("-i", voice, "-ar", "16000", "-ac", "1", "-c:a", "pcm_s16le", tmp16);
 // narrations. So: cut the voice at natural pauses into chunks of at most ~24 s, transcribe each one,
 // and offset the timings back. Cuts happen in the middle of silences, never inside a word.
 const totalSec = Number(execFileSync("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", tmp16]).toString());
-const quiet = [...execFileSync("sh", ["-c", `ffmpeg -hide_banner -i "${tmp16}" -af silencedetect=noise=-40dB:d=0.3 -f null - 2>&1 || true`], { encoding: "utf8" }).matchAll(/silence_start: ([\d.]+)[\s\S]*?silence_end: ([\d.]+)/g)].map((m) => (Number(m[1]) + Number(m[2])) / 2);
+const silences = [...execFileSync("sh", ["-c", `ffmpeg -hide_banner -i "${tmp16}" -af silencedetect=noise=-40dB:d=0.3 -f null - 2>&1 || true`], { encoding: "utf8" }).matchAll(/silence_start: ([\d.]+)[\s\S]*?silence_end: ([\d.]+)/g)].map((m) => [Number(m[1]), Number(m[2])]);
+const quiet = silences.map(([a, b]) => (a + b) / 2);
 const MAX_CHUNK = 24;
 const cuts = [0];
 for (const q of quiet) {
@@ -212,6 +213,49 @@ if (scriptFile) {
 }
 
 const dur = Number(execFileSync("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", voice]).toString());
+// No word may run into a real pause. Whisper stretches the last words of a chunk (and sometimes of a
+// sentence) across the following silence, which makes the next caption and mouth start late. For every
+// detected pause, squeeze the words before it to end where the speech stops, and the words after it
+// to start where the speech resumes (rescaling the run of words since/until the neighbouring pause).
+{
+  const P = silences.map(([a, b]) => [a * 1000, b * 1000]);
+  const rescale = (from, to, a0, a1, b0, b1) => {
+    const f = (x) => b0 + ((x - a0) / Math.max(1, a1 - a0)) * (b1 - b0);
+    for (let i = from; i <= to; i++) {
+      captions[i].startMs = f(captions[i].startMs);
+      captions[i].endMs = f(captions[i].endMs);
+    }
+  };
+  let snapped = 0;
+  for (let p = 0; p < P.length; p++) {
+    const [S, E] = P[p];
+    const mid = (S + E) / 2;
+    const prevEnd = p ? P[p - 1][1] : 0;
+    const nextStart = p + 1 < P.length ? P[p + 1][0] : Infinity;
+    const k = captions.findLastIndex((w) => (w.startMs + w.endMs) / 2 < mid);
+    if (k >= 0 && captions[k].endMs > S + 40) {
+      let i0 = k;
+      while (i0 > 0 && captions[i0 - 1].startMs >= prevEnd) i0--;
+      const a0 = Math.min(captions[i0].startMs, S - 60 * (k - i0 + 1));
+      rescale(i0, k, a0, captions[k].endMs, a0, S);
+      snapped++;
+    }
+    const j = k + 1;
+    if (j < captions.length && captions[j].startMs < E - 40) {
+      let m = j;
+      while (m + 1 < captions.length && captions[m + 1].startMs < nextStart) m++;
+      const b1 = Math.max(captions[m].endMs, E + 60 * (m - j + 1));
+      rescale(j, m, captions[j].startMs, captions[m].endMs, E, b1);
+      snapped++;
+    }
+  }
+  for (const w of captions) {
+    w.startMs = Math.round(w.startMs);
+    w.endMs = Math.round(w.endMs);
+    w.timestampMs = Math.round((w.startMs + w.endMs) / 2);
+  }
+  if (snapped) console.log(`snapped ${snapped} word run(s) to the pauses`);
+}
 // give every word at least ~90 ms (Whisper sometimes times tiny words at 20 ms; captions would only flash)
 for (let i = 0; i < captions.length; i++) {
   const w = captions[i];

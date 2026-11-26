@@ -1,0 +1,898 @@
+[
+ {
+  "text": "What",
+  "startMs": 100,
+  "endMs": 283,
+  "timestampMs": 192,
+  "confidence": null
+ },
+ {
+  "text": " if",
+  "startMs": 283,
+  "endMs": 412,
+  "timestampMs": 348,
+  "confidence": null
+ },
+ {
+  "text": " the",
+  "startMs": 412,
+  "endMs": 603,
+  "timestampMs": 508,
+  "confidence": null
+ },
+ {
+  "text": " Black",
+  "startMs": 603,
+  "endMs": 923,
+  "timestampMs": 763,
+  "confidence": null
+ },
+ {
+  "text": " Death",
+  "startMs": 923,
+  "endMs": 1243,
+  "timestampMs": 1083,
+  "confidence": null
+ },
+ {
+  "text": " never",
+  "startMs": 1243,
+  "endMs": 1562,
+  "timestampMs": 1403,
+  "confidence": null
+ },
+ {
+  "text": " happened?",
+  "startMs": 1562,
+  "endMs": 2309,
+  "timestampMs": 1936,
+  "confidence": null
+ },
+ {
+  "text": " In",
+  "startMs": 3161,
+  "endMs": 3320,
+  "timestampMs": 3241,
+  "confidence": null
+ },
+ {
+  "text": " 1347,",
+  "startMs": 3320,
+  "endMs": 4434,
+  "timestampMs": 3877,
+  "confidence": null
+ },
+ {
+  "text": " a",
+  "startMs": 4434,
+  "endMs": 4524,
+  "timestampMs": 4479,
+  "confidence": null
+ },
+ {
+  "text": " plague",
+  "startMs": 4524,
+  "endMs": 4991,
+  "timestampMs": 4752,
+  "confidence": null
+ },
+ {
+  "text": " swept",
+  "startMs": 4991,
+  "endMs": 5388,
+  "timestampMs": 5190,
+  "confidence": null
+ },
+ {
+  "text": " into",
+  "startMs": 5388,
+  "endMs": 5707,
+  "timestampMs": 5548,
+  "confidence": null
+ },
+ {
+  "text": " Europe.",
+  "startMs": 5707,
+  "endMs": 6432,
+  "timestampMs": 6070,
+  "confidence": null
+ },
+ {
+  "text": " In",
+  "startMs": 6824,
+  "endMs": 6951,
+  "timestampMs": 6888,
+  "confidence": null
+ },
+ {
+  "text": " just",
+  "startMs": 6951,
+  "endMs": 7212,
+  "timestampMs": 7082,
+  "confidence": null
+ },
+ {
+  "text": " a",
+  "startMs": 7212,
+  "endMs": 7302,
+  "timestampMs": 7257,
+  "confidence": null
+ },
+ {
+  "text": " few",
+  "startMs": 7302,
+  "endMs": 7467,
+  "timestampMs": 7375,
+  "confidence": null
+ },
+ {
+  "text": " years,",
+  "startMs": 7467,
+  "endMs": 7919,
+  "timestampMs": 7693,
+  "confidence": null
+ },
+ {
+  "text": " it",
+  "startMs": 8250,
+  "endMs": 8340,
+  "timestampMs": 8295,
+  "confidence": null
+ },
+ {
+  "text": " killed",
+  "startMs": 8340,
+  "endMs": 8637,
+  "timestampMs": 8484,
+  "confidence": null
+ },
+ {
+  "text": " somewhere",
+  "startMs": 8637,
+  "endMs": 9052,
+  "timestampMs": 8845,
+  "confidence": null
+ },
+ {
+  "text": " between",
+  "startMs": 9052,
+  "endMs": 9268,
+  "timestampMs": 9160,
+  "confidence": null
+ },
+ {
+  "text": " a",
+  "startMs": 9268,
+  "endMs": 9358,
+  "timestampMs": 9313,
+  "confidence": null
+ },
+ {
+  "text": " third",
+  "startMs": 9358,
+  "endMs": 9634,
+  "timestampMs": 9481,
+  "confidence": null
+ },
+ {
+  "text": " and",
+  "startMs": 9634,
+  "endMs": 9841,
+  "timestampMs": 9738,
+  "confidence": null
+ },
+ {
+  "text": " half",
+  "startMs": 9841,
+  "endMs": 10190,
+  "timestampMs": 10016,
+  "confidence": null
+ },
+ {
+  "text": " of",
+  "startMs": 10190,
+  "endMs": 10348,
+  "timestampMs": 10269,
+  "confidence": null
+ },
+ {
+  "text": " all",
+  "startMs": 10348,
+  "endMs": 10614,
+  "timestampMs": 10481,
+  "confidence": null
+ },
+ {
+  "text": " Europeans.",
+  "startMs": 10614,
+  "endMs": 11793,
+  "timestampMs": 11204,
+  "confidence": null
+ },
+ {
+  "text": " The",
+  "startMs": 12654,
+  "endMs": 12875,
+  "timestampMs": 12765,
+  "confidence": null
+ },
+ {
+  "text": " survivors",
+  "startMs": 12875,
+  "endMs": 13682,
+  "timestampMs": 13279,
+  "confidence": null
+ },
+ {
+  "text": " had",
+  "startMs": 13682,
+  "endMs": 13767,
+  "timestampMs": 13725,
+  "confidence": null
+ },
+ {
+  "text": " a",
+  "startMs": 13767,
+  "endMs": 13857,
+  "timestampMs": 13812,
+  "confidence": null
+ },
+ {
+  "text": " strange",
+  "startMs": 13857,
+  "endMs": 14353,
+  "timestampMs": 14094,
+  "confidence": null
+ },
+ {
+  "text": " advantage.",
+  "startMs": 14353,
+  "endMs": 15288,
+  "timestampMs": 14821,
+  "confidence": null
+ },
+ {
+  "text": " Workers",
+  "startMs": 15707,
+  "endMs": 16264,
+  "timestampMs": 15986,
+  "confidence": null
+ },
+ {
+  "text": " were",
+  "startMs": 16264,
+  "endMs": 16584,
+  "timestampMs": 16424,
+  "confidence": null
+ },
+ {
+  "text": " so",
+  "startMs": 16584,
+  "endMs": 16739,
+  "timestampMs": 16662,
+  "confidence": null
+ },
+ {
+  "text": " rare",
+  "startMs": 16739,
+  "endMs": 17196,
+  "timestampMs": 16968,
+  "confidence": null
+ },
+ {
+  "text": " that",
+  "startMs": 17196,
+  "endMs": 17351,
+  "timestampMs": 17274,
+  "confidence": null
+ },
+ {
+  "text": " they",
+  "startMs": 17351,
+  "endMs": 17625,
+  "timestampMs": 17488,
+  "confidence": null
+ },
+ {
+  "text": " could",
+  "startMs": 17625,
+  "endMs": 17972,
+  "timestampMs": 17799,
+  "confidence": null
+ },
+ {
+  "text": " demand",
+  "startMs": 17972,
+  "endMs": 18383,
+  "timestampMs": 18178,
+  "confidence": null
+ },
+ {
+  "text": " higher",
+  "startMs": 18383,
+  "endMs": 18794,
+  "timestampMs": 18589,
+  "confidence": null
+ },
+ {
+  "text": " wages,",
+  "startMs": 18794,
+  "endMs": 19178,
+  "timestampMs": 18986,
+  "confidence": null
+ },
+ {
+  "text": " and",
+  "startMs": 19536,
+  "endMs": 19748,
+  "timestampMs": 19642,
+  "confidence": null
+ },
+ {
+  "text": " the",
+  "startMs": 19748,
+  "endMs": 19960,
+  "timestampMs": 19854,
+  "confidence": null
+ },
+ {
+  "text": " old",
+  "startMs": 19960,
+  "endMs": 20172,
+  "timestampMs": 20066,
+  "confidence": null
+ },
+ {
+  "text": " serf",
+  "startMs": 20172,
+  "endMs": 20479,
+  "timestampMs": 20326,
+  "confidence": null
+ },
+ {
+  "text": " system",
+  "startMs": 20479,
+  "endMs": 20879,
+  "timestampMs": 20679,
+  "confidence": null
+ },
+ {
+  "text": " started",
+  "startMs": 20879,
+  "endMs": 21523,
+  "timestampMs": 21201,
+  "confidence": null
+ },
+ {
+  "text": " to",
+  "startMs": 21523,
+  "endMs": 21532,
+  "timestampMs": 21528,
+  "confidence": null
+ },
+ {
+  "text": " crack.",
+  "startMs": 21532,
+  "endMs": 21622,
+  "timestampMs": 21573,
+  "confidence": null
+ },
+ {
+  "text": " So",
+  "startMs": 22476,
+  "endMs": 22728,
+  "timestampMs": 22602,
+  "confidence": null
+ },
+ {
+  "text": " what",
+  "startMs": 22728,
+  "endMs": 22950,
+  "timestampMs": 22839,
+  "confidence": null
+ },
+ {
+  "text": " if",
+  "startMs": 22950,
+  "endMs": 23149,
+  "timestampMs": 23050,
+  "confidence": null
+ },
+ {
+  "text": " it",
+  "startMs": 23149,
+  "endMs": 23266,
+  "timestampMs": 23208,
+  "confidence": null
+ },
+ {
+  "text": " *never*",
+  "startMs": 23266,
+  "endMs": 23665,
+  "timestampMs": 23466,
+  "confidence": null
+ },
+ {
+  "text": " came?",
+  "startMs": 23665,
+  "endMs": 24279,
+  "timestampMs": 23972,
+  "confidence": null
+ },
+ {
+  "text": " Europe",
+  "startMs": 25129,
+  "endMs": 25439,
+  "timestampMs": 25284,
+  "confidence": null
+ },
+ {
+  "text": " stays",
+  "startMs": 25439,
+  "endMs": 25757,
+  "timestampMs": 25598,
+  "confidence": null
+ },
+ {
+  "text": " crowded.",
+  "startMs": 25757,
+  "endMs": 26478,
+  "timestampMs": 26118,
+  "confidence": null
+ },
+ {
+  "text": " Labor",
+  "startMs": 26869,
+  "endMs": 27189,
+  "timestampMs": 27029,
+  "confidence": null
+ },
+ {
+  "text": " stays",
+  "startMs": 27189,
+  "endMs": 27522,
+  "timestampMs": 27356,
+  "confidence": null
+ },
+ {
+  "text": " cheap.",
+  "startMs": 27522,
+  "endMs": 28239,
+  "timestampMs": 27881,
+  "confidence": null
+ },
+ {
+  "text": " Peasants",
+  "startMs": 28639,
+  "endMs": 28914,
+  "timestampMs": 28777,
+  "confidence": null
+ },
+ {
+  "text": " stay",
+  "startMs": 28914,
+  "endMs": 29062,
+  "timestampMs": 28988,
+  "confidence": null
+ },
+ {
+  "text": " tied",
+  "startMs": 29062,
+  "endMs": 29693,
+  "timestampMs": 29378,
+  "confidence": null
+ },
+ {
+  "text": " to",
+  "startMs": 29693,
+  "endMs": 29745,
+  "timestampMs": 29719,
+  "confidence": null
+ },
+ {
+  "text": " the",
+  "startMs": 29745,
+  "endMs": 29835,
+  "timestampMs": 29790,
+  "confidence": null
+ },
+ {
+  "text": " land",
+  "startMs": 29835,
+  "endMs": 30168,
+  "timestampMs": 29987,
+  "confidence": null
+ },
+ {
+  "text": " for",
+  "startMs": 30168,
+  "endMs": 30428,
+  "timestampMs": 30298,
+  "confidence": null
+ },
+ {
+  "text": " longer.",
+  "startMs": 30428,
+  "endMs": 31260,
+  "timestampMs": 30844,
+  "confidence": null
+ },
+ {
+  "text": " With",
+  "startMs": 32169,
+  "endMs": 32389,
+  "timestampMs": 32279,
+  "confidence": null
+ },
+ {
+  "text": " cheap",
+  "startMs": 32389,
+  "endMs": 32699,
+  "timestampMs": 32544,
+  "confidence": null
+ },
+ {
+  "text": " workers",
+  "startMs": 32699,
+  "endMs": 33041,
+  "timestampMs": 32870,
+  "confidence": null
+ },
+ {
+  "text": " everywhere,",
+  "startMs": 33041,
+  "endMs": 33742,
+  "timestampMs": 33392,
+  "confidence": null
+ },
+ {
+  "text": " there's",
+  "startMs": 34099,
+  "endMs": 34394,
+  "timestampMs": 34247,
+  "confidence": null
+ },
+ {
+  "text": " less",
+  "startMs": 34394,
+  "endMs": 34593,
+  "timestampMs": 34494,
+  "confidence": null
+ },
+ {
+  "text": " reason",
+  "startMs": 34593,
+  "endMs": 34887,
+  "timestampMs": 34740,
+  "confidence": null
+ },
+ {
+  "text": " to",
+  "startMs": 34887,
+  "endMs": 34983,
+  "timestampMs": 34935,
+  "confidence": null
+ },
+ {
+  "text": " invent",
+  "startMs": 34983,
+  "endMs": 35278,
+  "timestampMs": 35131,
+  "confidence": null
+ },
+ {
+  "text": " labor-saving",
+  "startMs": 35278,
+  "endMs": 35978,
+  "timestampMs": 35628,
+  "confidence": null
+ },
+ {
+  "text": " machines.",
+  "startMs": 35978,
+  "endMs": 36980,
+  "timestampMs": 36479,
+  "confidence": null
+ },
+ {
+  "text": " Some",
+  "startMs": 38009,
+  "endMs": 38264,
+  "timestampMs": 38137,
+  "confidence": null
+ },
+ {
+  "text": " historians",
+  "startMs": 38264,
+  "endMs": 38810,
+  "timestampMs": 38537,
+  "confidence": null
+ },
+ {
+  "text": " think",
+  "startMs": 38810,
+  "endMs": 39039,
+  "timestampMs": 38925,
+  "confidence": null
+ },
+ {
+  "text": " the",
+  "startMs": 39039,
+  "endMs": 39201,
+  "timestampMs": 39120,
+  "confidence": null
+ },
+ {
+  "text": " Renaissance",
+  "startMs": 39201,
+  "endMs": 39993,
+  "timestampMs": 39597,
+  "confidence": null
+ },
+ {
+  "text": " and",
+  "startMs": 40339,
+  "endMs": 40442,
+  "timestampMs": 40391,
+  "confidence": null
+ },
+ {
+  "text": " later",
+  "startMs": 40442,
+  "endMs": 40723,
+  "timestampMs": 40583,
+  "confidence": null
+ },
+ {
+  "text": " the",
+  "startMs": 40723,
+  "endMs": 40892,
+  "timestampMs": 40808,
+  "confidence": null
+ },
+ {
+  "text": " Industrial",
+  "startMs": 40892,
+  "endMs": 41464,
+  "timestampMs": 41178,
+  "confidence": null
+ },
+ {
+  "text": " Revolution",
+  "startMs": 41464,
+  "endMs": 42036,
+  "timestampMs": 41750,
+  "confidence": null
+ },
+ {
+  "text": " might",
+  "startMs": 42036,
+  "endMs": 42354,
+  "timestampMs": 42195,
+  "confidence": null
+ },
+ {
+  "text": " have",
+  "startMs": 42354,
+  "endMs": 42617,
+  "timestampMs": 42486,
+  "confidence": null
+ },
+ {
+  "text": " come",
+  "startMs": 42617,
+  "endMs": 42879,
+  "timestampMs": 42748,
+  "confidence": null
+ },
+ {
+  "text": " later,",
+  "startMs": 42879,
+  "endMs": 43348,
+  "timestampMs": 43114,
+  "confidence": null
+ },
+ {
+  "text": " or",
+  "startMs": 43701,
+  "endMs": 43833,
+  "timestampMs": 43767,
+  "confidence": null
+ },
+ {
+  "text": " looked",
+  "startMs": 43833,
+  "endMs": 44139,
+  "timestampMs": 43986,
+  "confidence": null
+ },
+ {
+  "text": " very",
+  "startMs": 44139,
+  "endMs": 44322,
+  "timestampMs": 44231,
+  "confidence": null
+ },
+ {
+  "text": " different.",
+  "startMs": 44322,
+  "endMs": 45118,
+  "timestampMs": 44720,
+  "confidence": null
+ },
+ {
+  "text": " A",
+  "startMs": 45968,
+  "endMs": 46274,
+  "timestampMs": 46121,
+  "confidence": null
+ },
+ {
+  "text": " disaster",
+  "startMs": 46274,
+  "endMs": 46579,
+  "timestampMs": 46427,
+  "confidence": null
+ },
+ {
+  "text": " that",
+  "startMs": 46579,
+  "endMs": 46920,
+  "timestampMs": 46750,
+  "confidence": null
+ },
+ {
+  "text": " killed",
+  "startMs": 46920,
+  "endMs": 47254,
+  "timestampMs": 47087,
+  "confidence": null
+ },
+ {
+  "text": " *millions*",
+  "startMs": 47254,
+  "endMs": 47894,
+  "timestampMs": 47574,
+  "confidence": null
+ },
+ {
+  "text": " may",
+  "startMs": 48193,
+  "endMs": 48283,
+  "timestampMs": 48238,
+  "confidence": null
+ },
+ {
+  "text": " also",
+  "startMs": 48283,
+  "endMs": 48469,
+  "timestampMs": 48376,
+  "confidence": null
+ },
+ {
+  "text": " have",
+  "startMs": 48469,
+  "endMs": 48655,
+  "timestampMs": 48562,
+  "confidence": null
+ },
+ {
+  "text": " helped",
+  "startMs": 48655,
+  "endMs": 49027,
+  "timestampMs": 48841,
+  "confidence": null
+ },
+ {
+  "text": " push",
+  "startMs": 49027,
+  "endMs": 49206,
+  "timestampMs": 49117,
+  "confidence": null
+ },
+ {
+  "text": " Europe",
+  "startMs": 49206,
+  "endMs": 49671,
+  "timestampMs": 49439,
+  "confidence": null
+ },
+ {
+  "text": " into",
+  "startMs": 49671,
+  "endMs": 49760,
+  "timestampMs": 49716,
+  "confidence": null
+ },
+ {
+  "text": " the",
+  "startMs": 49760,
+  "endMs": 49850,
+  "timestampMs": 49784,
+  "confidence": null
+ },
+ {
+  "text": " modern",
+  "startMs": 49850,
+  "endMs": 50113,
+  "timestampMs": 49982,
+  "confidence": null
+ },
+ {
+  "text": " world.",
+  "startMs": 50113,
+  "endMs": 51044,
+  "timestampMs": 50579,
+  "confidence": null
+ },
+ {
+  "text": " Dark,",
+  "startMs": 51903,
+  "endMs": 52280,
+  "timestampMs": 52092,
+  "confidence": null
+ },
+ {
+  "text": " right?",
+  "startMs": 52280,
+  "endMs": 52852,
+  "timestampMs": 52566,
+  "confidence": null
+ },
+ {
+  "text": " Which",
+  "startMs": 53503,
+  "endMs": 53849,
+  "timestampMs": 53676,
+  "confidence": null
+ },
+ {
+  "text": " history",
+  "startMs": 53849,
+  "endMs": 54300,
+  "timestampMs": 54075,
+  "confidence": null
+ },
+ {
+  "text": " event",
+  "startMs": 54300,
+  "endMs": 54629,
+  "timestampMs": 54465,
+  "confidence": null
+ },
+ {
+  "text": " would",
+  "startMs": 54629,
+  "endMs": 54959,
+  "timestampMs": 54794,
+  "confidence": null
+ },
+ {
+  "text": " you",
+  "startMs": 54959,
+  "endMs": 55136,
+  "timestampMs": 55048,
+  "confidence": null
+ },
+ {
+  "text": " change?",
+  "startMs": 55136,
+  "endMs": 55788,
+  "timestampMs": 55462,
+  "confidence": null
+ },
+ {
+  "text": " Comment",
+  "startMs": 56343,
+  "endMs": 56923,
+  "timestampMs": 56633,
+  "confidence": null
+ },
+ {
+  "text": " below.",
+  "startMs": 56923,
+  "endMs": 57343,
+  "timestampMs": 57133,
+  "confidence": null
+ }
+]

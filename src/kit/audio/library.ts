@@ -25,6 +25,7 @@ export const SFX_NAMES = [
   "steam",
   "hit",
   "synth_horn",
+  "choir",
 ] as const;
 export type SfxName = (typeof SFX_NAMES)[number];
 
@@ -48,6 +49,7 @@ export const SFX_GAIN: Partial<Record<SfxName, number>> = {
   steam: 0.25,
   hit: 0.75,
   synth_horn: 0.55,
+  choir: 0.55,
   wind: 0.3,
   swell: 0.6,
   stamp_slam: 0.68,

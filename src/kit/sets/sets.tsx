@@ -18,6 +18,7 @@ import {
   Cypress,
   Dino,
   Dock,
+  Factory,
   Fence,
   Fern,
   GearMachine,
@@ -229,6 +230,24 @@ const ModernCity: React.FC = () => (
   </group>
 );
 
+/** A city running a century behind: cobbles, tall timber townhouses, a smoking factory, gas lamps. */
+const OldCity: React.FC = () => (
+  <group>
+    <DioramaBase ground="paving" seed="oc" />
+    <Factory position={[-1.3, 0.07, -2.7]} w={2.8} h={1.4} />
+    <House style="tudor" position={[2.0, 0.07, -2.3]} rotation={-0.35} w={1.7} d={1.5} h={2.5} />
+    <House style="medieval" position={[-3.25, 0.07, -0.5]} rotation={0.95} w={1.7} d={1.5} h={2.1} roof="#6b4a32" />
+    <House style="tudor" position={[3.25, 0.07, -0.2]} rotation={-1.0} w={1.6} d={1.4} h={1.9} />
+    <StreetLamp position={[-1.8, 0.07, 2.2]} />
+    <StreetLamp position={[1.8, 0.07, 2.2]} />
+    <Barrel position={[2.5, 0.07, 1.1]} />
+    <Barrel position={[2.85, 0.07, 1.45]} scale={0.85} />
+    <Crate position={[-2.6, 0.07, 1.3]} />
+    <Crate position={[-2.95, 0.07, 1.7]} size={0.5} />
+    <Fence position={[0.4, 0.07, -1.25]} length={1.6} />
+  </group>
+);
+
 const JunglePrehistoric: React.FC = () => (
   <group>
     <DioramaBase ground="grass" seed="jp" rimColor="#6b5a4a" />
@@ -355,6 +374,7 @@ export type SetName =
   | "MEDIEVAL_VILLAGE"
   | "WORKSHOP"
   | "MODERN_CITY"
+  | "OLD_CITY"
   | "JUNGLE_PREHISTORIC"
   | "BEACH"
   | "TROPICAL_VILLAGE";
@@ -395,6 +415,7 @@ export const SETS: Record<SetName, SetInfo> = {
   MEDIEVAL_VILLAGE: { label: "Medieval village", component: MedievalVillage, era: "medieval", timeOfDay: "dawn", floorY: 0, marks: { ...OUTDOOR_MARKS(0), well: [-1.3, 0, 1.5], market: [1.9, 0, 1.8] }, camera: { target: [0, 1.0, -0.6], wide: 30, medium: 19, close: 9 } },
   WORKSHOP: { label: "Workshop", component: Workshop, era: "modern", timeOfDay: "day", interior: true, floorY: 0, marks: { ...OUTDOOR_MARKS(0), bench: [1.3, 0, -1.7], machine: [-1.9, 0, -1.6], anvil: [1.6, 0, 1.1] }, camera: { target: [0, 1.2, -0.7], wide: 27, medium: 18, close: 8.5 } },
   MODERN_CITY: { label: "Modern city", component: ModernCity, era: "modern", timeOfDay: "night", floorY: 0.08, marks: { center: [0, 0.08, 2.4], left: [-1.6, 0.08, 2.5], right: [1.6, 0.08, 2.5], street: [0.5, 0.0, 0.9], back: [0, 0.0, -0.4] }, camera: { target: [0, 1.6, -0.6], wide: 30, medium: 19, close: 9 } },
+  OLD_CITY: { label: "Old city", component: OldCity, era: "ageOfSail", timeOfDay: "sunset", floorY: 0.07, marks: { ...OUTDOOR_MARKS(0.07), street: [0, 0.07, 0.2] }, camera: { target: [0, 1.3, -0.6], wide: 30, medium: 19, close: 9 } },
   JUNGLE_PREHISTORIC: { label: "Prehistoric jungle", component: JunglePrehistoric, era: "ancient", timeOfDay: "day", floorY: 0, marks: { ...OUTDOOR_MARKS(0), pond: [1.9, 0, 2.0] }, camera: { target: [0, 1.2, -0.6], wide: 30, medium: 19, close: 9 } },
   TROPICAL_VILLAGE: { label: "Tropical village", component: TropicalVillage, era: "ageOfSail", timeOfDay: "day", floorY: 0, marks: { center: [0, 0, 1.9], left: [-1.4, 0, 2.2], right: [1.5, 0, 2.3], front: [0, 0, 3.0], hutLeft: [-2.0, 0, 1.7], hutRight: [2.1, 0, 1.9], shore: [0.4, 0, 0.3] }, camera: { target: [0, 1.0, -0.2], wide: 30, medium: 19, close: 9 } },
   BEACH: { label: "Beach", component: Beach, era: "ageOfSail", timeOfDay: "sunset", floorY: 0, marks: { center: [0, 0, 1.4], left: [-1.6, 0, 1.6], right: [1.4, 0, 1.9], shore: [0, 0, 0.4], front: [0, 0, 2.8] }, camera: { target: [0, 1.0, -0.4], wide: 30, medium: 19, close: 9 } },
