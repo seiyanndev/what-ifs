@@ -610,3 +610,124 @@ export const Outrigger: React.FC<At & { color?: string }> = ({ color = "#9a6a45"
     <Part geo={<capsuleGeometry args={[0.06, 1.3, 4, 10]} />} position={[1.15, 0.1, 0]} rotation={[Math.PI / 2, 0, 0]} color="#c9a96b" ink="set" />
   </G>
 );
+
+// ---------------------------------------------------------------------------
+// Sign board with custom text (Latin inscriptions, shop signs, neon) — canvas-textured, cached per text.
+// ---------------------------------------------------------------------------
+export const Sign: React.FC<At & { text: string; style?: "stone" | "neon" | "wood"; w?: number; h?: number; posts?: boolean; color?: string; /** Post height (default 1). */ height?: number }> = ({
+  text,
+  height = 1,
+  style = "stone",
+  w = 1.8,
+  h = 0.55,
+  posts = true,
+  color,
+  ...p
+}) => {
+  const { night } = useSet();
+  const tex = useMemo(() => {
+    const c = document.createElement("canvas");
+    c.width = 768;
+    c.height = Math.round((768 * h) / w);
+    const ctx = c.getContext("2d")!;
+    const bg = style === "stone" ? "#e9dcc0" : style === "wood" ? "#8a5a3b" : "#1b1430";
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, c.width, c.height);
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    const size = Math.min(c.height * 0.62, (c.width * 1.5) / Math.max(4, text.length));
+    ctx.font = `${style === "neon" ? 700 : 600} ${size}px ${style === "stone" ? "Georgia, 'Times New Roman', serif" : "Helvetica, Arial, sans-serif"}`;
+    if (style === "neon") {
+      const glow = color ?? "#ff5ad8";
+      ctx.shadowColor = glow;
+      ctx.shadowBlur = 28;
+      ctx.fillStyle = "#fff4fb";
+      ctx.fillText(text, c.width / 2, c.height / 2 + 4);
+      ctx.shadowBlur = 12;
+      ctx.fillText(text, c.width / 2, c.height / 2 + 4);
+      ctx.strokeStyle = glow;
+      ctx.lineWidth = 6;
+      ctx.strokeRect(10, 10, c.width - 20, c.height - 20);
+    } else {
+      // carved: dark inset letters with a light bevel
+      ctx.fillStyle = style === "stone" ? "#ffffff" : "#b58456";
+      ctx.fillText(text, c.width / 2 + 2, c.height / 2 + 6);
+      ctx.fillStyle = style === "stone" ? "#5a4636" : "#3a2418";
+      ctx.fillText(text, c.width / 2, c.height / 2 + 4);
+      ctx.strokeStyle = style === "stone" ? "#b89f78" : "#5a3d28";
+      ctx.lineWidth = 8;
+      ctx.strokeRect(12, 12, c.width - 24, c.height - 24);
+    }
+    const t = new THREE.CanvasTexture(c);
+    t.colorSpace = THREE.SRGBColorSpace;
+    t.anisotropy = 4;
+    return t;
+  }, [text, style, w, h, color]);
+  const lift = posts ? height : 0;
+  const glowing = style === "neon";
+  return (
+    <G {...p}>
+      {posts
+        ? [-1, 1].map((s) => <Part key={s} geometry={roundedBox(0.08, lift + h / 2, 0.08, 0.02)} position={[s * (w / 2 - 0.12), (lift + h / 2) / 2, -0.04]} color={style === "neon" ? "#3a3f4a" : "#6b4a32"} ink="set" />)
+        : null}
+      <mesh position={[0, lift + h / 2, 0]} castShadow>
+        <boxGeometry args={[w + 0.08, h + 0.08, 0.06]} />
+        <ToonMaterial color={style === "neon" ? "#2a2236" : style === "wood" ? "#5a3d28" : "#c9b48e"} />
+      </mesh>
+      <mesh position={[0, lift + h / 2, 0.032]}>
+        <planeGeometry args={[w, h]} />
+        {glowing ? <meshBasicMaterial map={tex} toneMapped={false} /> : <ToonMaterial color="#ffffff" map={tex} rim={0} />}
+      </mesh>
+      {glowing && night ? <pointLight position={[0, lift + h / 2, 0.5]} intensity={3} distance={4} color={color ?? "#ff5ad8"} /> : null}
+    </G>
+  );
+};
+
+/** Hero's aeolipile as a set piece (put it on a table: at = table top). */
+export const Aeolipile: React.FC<At> = (p) => (
+  <G {...p}>
+    <Prop type="aeolipile" />
+  </G>
+);
+
+/** Name → component registry so episodes can place any dressing item by name ("dressing" in scenes.json). */
+export const DRESSING_ITEMS = {
+  Column,
+  Statue,
+  House,
+  Temple,
+  Tower,
+  Wall,
+  Skyscraper,
+  Cypress,
+  RoundTree,
+  PineTree,
+  PalmTree,
+  Bush,
+  Fern,
+  Rock,
+  Table,
+  Throne,
+  Carpet,
+  Banner,
+  Bookshelf,
+  Barrel,
+  Crate,
+  TorchStand,
+  StreetLamp,
+  Tent,
+  Fence,
+  Well,
+  Cannon,
+  Anvil,
+  GearMachine,
+  Car,
+  Bench,
+  Candle,
+  Market,
+  StiltHut,
+  Outrigger,
+  Sign,
+  Aeolipile,
+} as const;
+export type DressingItem = keyof typeof DRESSING_ITEMS;

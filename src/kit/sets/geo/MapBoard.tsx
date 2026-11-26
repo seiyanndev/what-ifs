@@ -48,7 +48,7 @@ export const MapBoard: React.FC<MapBoardProps> = ({ bounds: b, width: w = 6, sty
     t.anisotropy = 8;
     return { canvas: c, texture: t, memo: { key: "" } };
   }, [texW, texH]);
-  const key = JSON.stringify([b, style, decor, fills.map((f) => [f.countries, f.color, Math.round((f.progress ?? 1) * 200), f.origin])]);
+  const key = JSON.stringify([b, style, decor, fills.map((f) => [f.countries, f.color, Math.round((f.progress ?? 1) * 200), f.origin, Math.round((f.opacity ?? 0.85) * 40)])]);
   useLayoutEffect(() => {
     if (memo.key === key) return;
     memo.key = key;
@@ -116,7 +116,7 @@ export const MapBoard: React.FC<MapBoardProps> = ({ bounds: b, width: w = 6, sty
           p.y = 0.03 + Math.sin(Math.PI * t) * arc * 0.15;
           return p;
         };
-        return <Route key={i} at={at} upAt={() => new THREE.Vector3(0, 1, 0)} progress={rt.progress} color={rt.color} icon={rt.icon} iconScale={w * 0.07} dotSize={w * 0.0045} dashes={70} />;
+        return <Route key={i} at={at} upAt={() => new THREE.Vector3(0, 1, 0)} progress={rt.progress} color={rt.color} icon={rt.icon} sail={rt.sail} trail={rt.trail} iconScale={w * 0.07} dotSize={w * 0.0045} dashes={70} />;
       })}
       {flags.map((f, i) => (
         <group key={`f${i}`} position={toBoard(f.at)} scale={w * 0.075 * Math.max(0.0001, f.pop ?? 1)} rotation={[0, -0.5, 0]}>

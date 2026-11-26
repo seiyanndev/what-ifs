@@ -3,7 +3,7 @@ import { ACTION_NAMES, type ActionName } from "../actions";
 import { MUSIC_MOODS, SFX_NAMES, type MusicMood, type SfxName } from "../audio";
 import { EXPRESSIONS, PRESETS, type ExpressionName, type PresetId } from "../characters";
 import type { Era, TimeOfDay } from "../look";
-import { SETS, type CameraMove, type CameraName, type SetName, type LonLat } from "../sets";
+import { DRESSING_ITEMS, SETS, type CameraMove, type CameraName, type SetName, type LonLat } from "../sets";
 
 // ---------------------------------------------------------------------------
 // scenes.json — one file per episode (episodes/<name>/scenes.json). Times are SECONDS relative to the
@@ -35,8 +35,10 @@ export type GeoSpec = {
   /** MAP_REGION window: centre + span in degrees of latitude. */
   center?: LonLat;
   span?: number;
-  fills?: { countries?: string[]; polygon?: LonLat[]; color: string; from?: number; to?: number; origin?: LonLat }[];
-  routes?: { path: LonLat[]; icon?: "ship" | "army" | "none"; color?: string; from?: number; to?: number }[];
+  /** `shrink: true` starts full and recedes (an empire breaking apart); `pulse: true` glows on and off. */
+  fills?: { countries?: string[]; polygon?: LonLat[]; color: string; from?: number; to?: number; origin?: LonLat; shrink?: boolean; pulse?: boolean; opacity?: number }[];
+  /** `ships: 3` sails a small fleet along the route (staggered, side by side); `sail` colours the sails. */
+  routes?: { path: LonLat[]; icon?: "ship" | "army" | "none"; color?: string; from?: number; to?: number; ships?: number; sail?: string }[];
   pins?: { at: LonLat; color?: string; at_time?: number }[];
   /** MAP_REGION: little flags planted on the map, popping in at `at_time` (e.g. a power spreading). */
   flags?: { at: LonLat; color?: string; accent?: string; at_time?: number }[];
@@ -59,6 +61,21 @@ export type EffectsSpec = {
   crowd?: { count?: number; pool?: string; cheerAt?: number; area?: [number, number]; position?: [number, number, number]; flanks?: boolean; scale?: number };
 };
 
+/** Place any set-dressing item by name (see DRESSING_ITEMS): columns, statues, signs with text… */
+export type DressingSpec = {
+  item: import("../sets").DressingItem;
+  /** A set mark or [x, y, z]. */
+  at: string | [number, number, number];
+  /** Rotation in degrees. */
+  rotation?: number;
+  scale?: number;
+  /** Sign only: text and style. */
+  text?: string;
+  style?: "stone" | "neon" | "wood";
+  color?: string;
+  height?: number;
+};
+
 export type SceneSpec = {
   id?: string;
   set: SetName;
@@ -73,6 +90,8 @@ export type SceneSpec = {
   /** Transition INTO this scene. */
   transition?: "cut" | "ripple";
   characters?: CharacterSpec[];
+  /** Extra set pieces for this scene only. */
+  dressing?: DressingSpec[];
   effects?: EffectsSpec;
   /** GLOBE / MAP_REGION data. */
   geo?: GeoSpec;
@@ -163,6 +182,11 @@ export const validateEpisode = (spec: EpisodeSpec): string[] => {
       }
     }
     if (s.effects?.timelineSplit) splits++;
+    for (const d of s.dressing ?? []) {
+      check(d.item in DRESSING_ITEMS, `${where}: unknown dressing item "${d.item}".${suggest(String(d.item), Object.keys(DRESSING_ITEMS))}`);
+      if (typeof d.at === "string" && s.set in SETS) check(d.at in SETS[s.set].marks, `${where}: dressing mark "${d.at}" doesn't exist on ${s.set}.`);
+      if (d.item === "Sign") check(Boolean(d.text), `${where}: a Sign needs "text".`);
+    }
     if ((s.set === "GLOBE" || s.set === "MAP_REGION") && !s.geo) errs.push(`${where}: ${s.set} needs a "geo" block.`);
     if (s.set === "MAP_REGION" && s.geo && !s.geo.center) errs.push(`${where}: MAP_REGION needs geo.center (and optionally geo.span).`);
   });

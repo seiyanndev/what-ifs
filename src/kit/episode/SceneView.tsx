@@ -5,7 +5,7 @@ import { captionsToWords, TitleCard } from "../captions";
 import { BODY_TYPES, HAIR_COLORS, PRESETS, PresetCharacter, talkFromWords } from "../characters";
 import { Asteroid, Burst, Crowd, FallingScrolls, Fire, ImpactFlash, PlagueFog, PlagueTint, Shake, ShipFleet, STAMP_IMPACT, YearStamp } from "../effects";
 import { STONE, StoneContext, ToonMaterial } from "../look";
-import { boundsAround, mixView, SETS, SetScene, type GeoBounds, type LonLat } from "../sets";
+import { boundsAround, DRESSING_ITEMS, mixView, SETS, SetScene, type GeoBounds, type LonLat } from "../sets";
 import type { CharacterSpec, ResolvedScene } from "./spec";
 
 const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
@@ -72,8 +72,30 @@ export const SceneShot: React.FC<{ scene: ResolvedScene; captions: Caption[]; wh
   const g = scene.geo;
 
   // ---- geo (GLOBE / MAP_REGION) ----
-  const fills = (g?.fills ?? []).map((f) => ({ countries: f.countries, polygon: f.polygon, color: f.color, origin: f.origin, progress: window01(frame, fps, dur, f.from ?? 0.2, f.to ?? (f.from ?? 0.2) + 1.4) }));
-  const routes = (g?.routes ?? []).map((r) => ({ from: r.path[0], via: r.path.slice(1, -1), to: r.path[r.path.length - 1], icon: r.icon ?? "ship", color: r.color ?? "#c0392b", progress: window01(frame, fps, dur, r.from ?? 0.3, r.to) }));
+  const fills = (g?.fills ?? []).map((f) => {
+    const p = window01(frame, fps, dur, f.from ?? 0.2, f.to ?? (f.from ?? 0.2) + 1.4);
+    const pulse = f.pulse ? 0.55 + 0.3 * (0.5 + 0.5 * Math.sin((frame / fps) * Math.PI * 1.6)) : undefined;
+    return { countries: f.countries, polygon: f.polygon, color: f.color, origin: f.origin, progress: f.shrink ? 1 - p : p, opacity: pulse ?? f.opacity };
+  });
+  const routes = (g?.routes ?? []).flatMap((r) => {
+    const n = Math.max(1, r.ships ?? 1);
+    // a fleet: n copies side by side (offset perpendicular-ish in lat/lon), each a little behind the last
+    return Array.from({ length: n }, (_, k) => {
+      const off = n === 1 ? 0 : (k - (n - 1) / 2) * 1.6;
+      const path = r.path.map(([lon, lat], i, arr) => (i === 0 || i === arr.length - 1 ? [lon + off * 0.3, lat + off * 0.3] : [lon + off * 0.4, lat + off]) as LonLat);
+      const from = (r.from ?? 0.3) + k * 0.25;
+      return {
+        from: path[0],
+        via: path.slice(1, -1),
+        to: path[path.length - 1],
+        icon: r.icon ?? "ship",
+        color: r.color ?? "#c0392b",
+        trail: k === 0,
+        sail: r.sail,
+        progress: window01(frame, fps, dur, from, r.to !== undefined ? r.to + k * 0.25 : undefined),
+      };
+    });
+  });
   const pins = (g?.pins ?? []).map((p) => ({ at: p.at, color: p.color, pop: interpolate(frame, [(p.at_time ?? 0.3) * fps, (p.at_time ?? 0.3) * fps + 8], [0, 1], { ...clamp, easing: Easing.out(Easing.back(2)) }) }));
   const labels = (g?.labels ?? []).map((l) => ({ at: l.at, text: l.text, style: l.style, opacity: interpolate(frame, [(l.from ?? 0.4) * fps, (l.from ?? 0.4) * fps + 10], [0, 1], clamp) }));
 
@@ -124,6 +146,11 @@ export const SceneShot: React.FC<{ scene: ResolvedScene; captions: Caption[]; wh
         ))}
         {fx.fire ? <Fire position={markPos(scene, fx.fire.mark ?? "back")} scale={fx.fire.scale ?? 1.4} /> : null}
         {fx.fire ? <Burst position={markPos(scene, fx.fire.mark ?? "back")} at={10} kind="sparks" count={24} /> : null}
+        {(scene.dressing ?? []).map((d, i) => {
+          const Item = DRESSING_ITEMS[d.item] as React.FC<Record<string, unknown>>;
+          const at = typeof d.at === "string" ? markPos(scene, d.at) : d.at;
+          return <Item key={`dr${i}`} position={at} rotation={((d.rotation ?? 0) * Math.PI) / 180} scale={d.scale} text={d.text} style={d.style} color={d.color} height={d.height} />;
+        })}
         {fx.plagueFog ? <PlagueFog /> : null}
         {fx.statue ? <StatueFx spec={fx.statue} scene={scene} /> : null}
         {fx.shipFleet ? <ShipFleet count={fx.shipFleet.count ?? 7} formation={fx.shipFleet.formation ?? "v"} heading={fx.shipFleet.heading ?? 90} position={[-3.8, 0.06, -2.1]} speed={1.2} scale={1} spacing={1.25} /> : null}

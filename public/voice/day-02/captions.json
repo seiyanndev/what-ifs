@@ -1,0 +1,807 @@
+[
+ {
+  "text": "What",
+  "startMs": 100,
+  "endMs": 420,
+  "timestampMs": 260,
+  "confidence": null
+ },
+ {
+  "text": " if",
+  "startMs": 420,
+  "endMs": 630,
+  "timestampMs": 525,
+  "confidence": null
+ },
+ {
+  "text": " the",
+  "startMs": 630,
+  "endMs": 940,
+  "timestampMs": 785,
+  "confidence": null
+ },
+ {
+  "text": " Roman",
+  "startMs": 940,
+  "endMs": 1460,
+  "timestampMs": 1200,
+  "confidence": null
+ },
+ {
+  "text": " Empire",
+  "startMs": 1460,
+  "endMs": 2080,
+  "timestampMs": 1770,
+  "confidence": null
+ },
+ {
+  "text": " never",
+  "startMs": 2080,
+  "endMs": 3020,
+  "timestampMs": 2550,
+  "confidence": null
+ },
+ {
+  "text": " fell?",
+  "startMs": 3020,
+  "endMs": 3380,
+  "timestampMs": 3200,
+  "confidence": null
+ },
+ {
+  "text": " In",
+  "startMs": 3380,
+  "endMs": 3660,
+  "timestampMs": 3520,
+  "confidence": null
+ },
+ {
+  "text": " 476",
+  "startMs": 3660,
+  "endMs": 5000,
+  "timestampMs": 4330,
+  "confidence": null
+ },
+ {
+  "text": " AD,",
+  "startMs": 5000,
+  "endMs": 5900,
+  "timestampMs": 5450,
+  "confidence": null
+ },
+ {
+  "text": " the",
+  "startMs": 5900,
+  "endMs": 6040,
+  "timestampMs": 5970,
+  "confidence": null
+ },
+ {
+  "text": " last",
+  "startMs": 6040,
+  "endMs": 6290,
+  "timestampMs": 6165,
+  "confidence": null
+ },
+ {
+  "text": " emperor",
+  "startMs": 6290,
+  "endMs": 6600,
+  "timestampMs": 6445,
+  "confidence": null
+ },
+ {
+  "text": " in",
+  "startMs": 6600,
+  "endMs": 6720,
+  "timestampMs": 6660,
+  "confidence": null
+ },
+ {
+  "text": " the",
+  "startMs": 6720,
+  "endMs": 6810,
+  "timestampMs": 6765,
+  "confidence": null
+ },
+ {
+  "text": " West",
+  "startMs": 6810,
+  "endMs": 7490,
+  "timestampMs": 7145,
+  "confidence": null
+ },
+ {
+  "text": " was",
+  "startMs": 7490,
+  "endMs": 7600,
+  "timestampMs": 7545,
+  "confidence": null
+ },
+ {
+  "text": " removed",
+  "startMs": 7600,
+  "endMs": 8070,
+  "timestampMs": 7835,
+  "confidence": null
+ },
+ {
+  "text": " from",
+  "startMs": 8070,
+  "endMs": 8320,
+  "timestampMs": 8195,
+  "confidence": null
+ },
+ {
+  "text": " power,",
+  "startMs": 8320,
+  "endMs": 9040,
+  "timestampMs": 8680,
+  "confidence": null
+ },
+ {
+  "text": " and",
+  "startMs": 9040,
+  "endMs": 9300,
+  "timestampMs": 9170,
+  "confidence": null
+ },
+ {
+  "text": " Western",
+  "startMs": 9300,
+  "endMs": 9920,
+  "timestampMs": 9610,
+  "confidence": null
+ },
+ {
+  "text": " Rome",
+  "startMs": 9920,
+  "endMs": 10270,
+  "timestampMs": 10095,
+  "confidence": null
+ },
+ {
+  "text": " broke",
+  "startMs": 10270,
+  "endMs": 10710,
+  "timestampMs": 10490,
+  "confidence": null
+ },
+ {
+  "text": " apart.",
+  "startMs": 10710,
+  "endMs": 11670,
+  "timestampMs": 11190,
+  "confidence": null
+ },
+ {
+  "text": " The",
+  "startMs": 11670,
+  "endMs": 11810,
+  "timestampMs": 11740,
+  "confidence": null
+ },
+ {
+  "text": " Eastern",
+  "startMs": 11810,
+  "endMs": 12290,
+  "timestampMs": 12050,
+  "confidence": null
+ },
+ {
+  "text": " half,",
+  "startMs": 12290,
+  "endMs": 12990,
+  "timestampMs": 12640,
+  "confidence": null
+ },
+ {
+  "text": " the",
+  "startMs": 12990,
+  "endMs": 13080,
+  "timestampMs": 13035,
+  "confidence": null
+ },
+ {
+  "text": " Byzantine",
+  "startMs": 13080,
+  "endMs": 13870,
+  "timestampMs": 13470,
+  "confidence": null
+ },
+ {
+  "text": " Empire,",
+  "startMs": 13870,
+  "endMs": 14560,
+  "timestampMs": 14215,
+  "confidence": null
+ },
+ {
+  "text": " lasted",
+  "startMs": 14560,
+  "endMs": 15000,
+  "timestampMs": 14780,
+  "confidence": null
+ },
+ {
+  "text": " almost",
+  "startMs": 15000,
+  "endMs": 15380,
+  "timestampMs": 15190,
+  "confidence": null
+ },
+ {
+  "text": " a",
+  "startMs": 15380,
+  "endMs": 15470,
+  "timestampMs": 15425,
+  "confidence": null
+ },
+ {
+  "text": " thousand",
+  "startMs": 15470,
+  "endMs": 15920,
+  "timestampMs": 15680,
+  "confidence": null
+ },
+ {
+  "text": " more",
+  "startMs": 15920,
+  "endMs": 16330,
+  "timestampMs": 16125,
+  "confidence": null
+ },
+ {
+  "text": " years,",
+  "startMs": 16330,
+  "endMs": 17040,
+  "timestampMs": 16685,
+  "confidence": null
+ },
+ {
+  "text": " until",
+  "startMs": 17040,
+  "endMs": 17460,
+  "timestampMs": 17250,
+  "confidence": null
+ },
+ {
+  "text": " 1453.",
+  "startMs": 17460,
+  "endMs": 18920,
+  "timestampMs": 18190,
+  "confidence": null
+ },
+ {
+  "text": " But",
+  "startMs": 18920,
+  "endMs": 19410,
+  "timestampMs": 19165,
+  "confidence": null
+ },
+ {
+  "text": " imagine",
+  "startMs": 19410,
+  "endMs": 19960,
+  "timestampMs": 19685,
+  "confidence": null
+ },
+ {
+  "text": " Rome",
+  "startMs": 19960,
+  "endMs": 20370,
+  "timestampMs": 20165,
+  "confidence": null
+ },
+ {
+  "text": " holding",
+  "startMs": 20370,
+  "endMs": 21100,
+  "timestampMs": 20735,
+  "confidence": null
+ },
+ {
+  "text": " together.",
+  "startMs": 21100,
+  "endMs": 22061,
+  "timestampMs": 21581,
+  "confidence": null
+ },
+ {
+  "text": " Europe",
+  "startMs": 22481,
+  "endMs": 22571,
+  "timestampMs": 22526,
+  "confidence": null
+ },
+ {
+  "text": " might",
+  "startMs": 22571,
+  "endMs": 22931,
+  "timestampMs": 22731,
+  "confidence": null
+ },
+ {
+  "text": " never",
+  "startMs": 22931,
+  "endMs": 23331,
+  "timestampMs": 23131,
+  "confidence": null
+ },
+ {
+  "text": " have",
+  "startMs": 23331,
+  "endMs": 23651,
+  "timestampMs": 23491,
+  "confidence": null
+ },
+ {
+  "text": " split",
+  "startMs": 23651,
+  "endMs": 24051,
+  "timestampMs": 23851,
+  "confidence": null
+ },
+ {
+  "text": " into",
+  "startMs": 24051,
+  "endMs": 24371,
+  "timestampMs": 24211,
+  "confidence": null
+ },
+ {
+  "text": " dozens",
+  "startMs": 24371,
+  "endMs": 24911,
+  "timestampMs": 24641,
+  "confidence": null
+ },
+ {
+  "text": " of",
+  "startMs": 24911,
+  "endMs": 25001,
+  "timestampMs": 24956,
+  "confidence": null
+ },
+ {
+  "text": " kingdoms.",
+  "startMs": 25001,
+  "endMs": 25681,
+  "timestampMs": 25341,
+  "confidence": null
+ },
+ {
+  "text": " One",
+  "startMs": 25681,
+  "endMs": 25971,
+  "timestampMs": 25826,
+  "confidence": null
+ },
+ {
+  "text": " empire,",
+  "startMs": 25971,
+  "endMs": 26941,
+  "timestampMs": 26456,
+  "confidence": null
+ },
+ {
+  "text": " one",
+  "startMs": 26941,
+  "endMs": 27031,
+  "timestampMs": 26986,
+  "confidence": null
+ },
+ {
+  "text": " law,",
+  "startMs": 27031,
+  "endMs": 27591,
+  "timestampMs": 27311,
+  "confidence": null
+ },
+ {
+  "text": " one",
+  "startMs": 27591,
+  "endMs": 27771,
+  "timestampMs": 27681,
+  "confidence": null
+ },
+ {
+  "text": " main",
+  "startMs": 27771,
+  "endMs": 28131,
+  "timestampMs": 27951,
+  "confidence": null
+ },
+ {
+  "text": " language:",
+  "startMs": 28131,
+  "endMs": 28901,
+  "timestampMs": 28516,
+  "confidence": null
+ },
+ {
+  "text": " Latin.",
+  "startMs": 28901,
+  "endMs": 30181,
+  "timestampMs": 29541,
+  "confidence": null
+ },
+ {
+  "text": " Rome",
+  "startMs": 30181,
+  "endMs": 30621,
+  "timestampMs": 30401,
+  "confidence": null
+ },
+ {
+  "text": " already",
+  "startMs": 30621,
+  "endMs": 31201,
+  "timestampMs": 30911,
+  "confidence": null
+ },
+ {
+  "text": " had",
+  "startMs": 31201,
+  "endMs": 31481,
+  "timestampMs": 31341,
+  "confidence": null
+ },
+ {
+  "text": " a",
+  "startMs": 31481,
+  "endMs": 31571,
+  "timestampMs": 31526,
+  "confidence": null
+ },
+ {
+  "text": " simple",
+  "startMs": 31571,
+  "endMs": 32131,
+  "timestampMs": 31851,
+  "confidence": null
+ },
+ {
+  "text": " steam",
+  "startMs": 32131,
+  "endMs": 32591,
+  "timestampMs": 32361,
+  "confidence": null
+ },
+ {
+  "text": " device,",
+  "startMs": 32591,
+  "endMs": 33361,
+  "timestampMs": 32976,
+  "confidence": null
+ },
+ {
+  "text": " built",
+  "startMs": 33361,
+  "endMs": 33461,
+  "timestampMs": 33411,
+  "confidence": null
+ },
+ {
+  "text": " by",
+  "startMs": 33461,
+  "endMs": 33781,
+  "timestampMs": 33621,
+  "confidence": null
+ },
+ {
+  "text": " Hero",
+  "startMs": 33781,
+  "endMs": 34481,
+  "timestampMs": 34131,
+  "confidence": null
+ },
+ {
+  "text": " of",
+  "startMs": 34481,
+  "endMs": 34571,
+  "timestampMs": 34526,
+  "confidence": null
+ },
+ {
+  "text": " Alexandria.",
+  "startMs": 34571,
+  "endMs": 35541,
+  "timestampMs": 35021,
+  "confidence": null
+ },
+ {
+  "text": " Some",
+  "startMs": 35541,
+  "endMs": 35911,
+  "timestampMs": 35726,
+  "confidence": null
+ },
+ {
+  "text": " historians",
+  "startMs": 35911,
+  "endMs": 36841,
+  "timestampMs": 36376,
+  "confidence": null
+ },
+ {
+  "text": " wonder",
+  "startMs": 36841,
+  "endMs": 37561,
+  "timestampMs": 37201,
+  "confidence": null
+ },
+ {
+  "text": " if",
+  "startMs": 37561,
+  "endMs": 37591,
+  "timestampMs": 37576,
+  "confidence": null
+ },
+ {
+  "text": " a",
+  "startMs": 37591,
+  "endMs": 37681,
+  "timestampMs": 37636,
+  "confidence": null
+ },
+ {
+  "text": " stable",
+  "startMs": 37681,
+  "endMs": 38201,
+  "timestampMs": 37936,
+  "confidence": null
+ },
+ {
+  "text": " Rome",
+  "startMs": 38201,
+  "endMs": 38571,
+  "timestampMs": 38386,
+  "confidence": null
+ },
+ {
+  "text": " could",
+  "startMs": 38571,
+  "endMs": 38931,
+  "timestampMs": 38751,
+  "confidence": null
+ },
+ {
+  "text": " have",
+  "startMs": 38931,
+  "endMs": 39241,
+  "timestampMs": 39086,
+  "confidence": null
+ },
+ {
+  "text": " built",
+  "startMs": 39241,
+  "endMs": 39561,
+  "timestampMs": 39401,
+  "confidence": null
+ },
+ {
+  "text": " on",
+  "startMs": 39561,
+  "endMs": 39701,
+  "timestampMs": 39631,
+  "confidence": null
+ },
+ {
+  "text": " ideas",
+  "startMs": 39701,
+  "endMs": 40051,
+  "timestampMs": 39876,
+  "confidence": null
+ },
+ {
+  "text": " like",
+  "startMs": 40051,
+  "endMs": 40401,
+  "timestampMs": 40226,
+  "confidence": null
+ },
+ {
+  "text": " that.",
+  "startMs": 40401,
+  "endMs": 40861,
+  "timestampMs": 40631,
+  "confidence": null
+ },
+ {
+  "text": " Roman",
+  "startMs": 41531,
+  "endMs": 41621,
+  "timestampMs": 41576,
+  "confidence": null
+ },
+ {
+  "text": " ships",
+  "startMs": 41621,
+  "endMs": 41931,
+  "timestampMs": 41746,
+  "confidence": null
+ },
+ {
+  "text": " might",
+  "startMs": 41931,
+  "endMs": 42331,
+  "timestampMs": 42131,
+  "confidence": null
+ },
+ {
+  "text": " have",
+  "startMs": 42331,
+  "endMs": 42651,
+  "timestampMs": 42491,
+  "confidence": null
+ },
+ {
+  "text": " reached",
+  "startMs": 42651,
+  "endMs": 43251,
+  "timestampMs": 42951,
+  "confidence": null
+ },
+ {
+  "text": " the",
+  "startMs": 43251,
+  "endMs": 43451,
+  "timestampMs": 43351,
+  "confidence": null
+ },
+ {
+  "text": " Americas",
+  "startMs": 43451,
+  "endMs": 44241,
+  "timestampMs": 43846,
+  "confidence": null
+ },
+ {
+  "text": " instead",
+  "startMs": 44241,
+  "endMs": 44711,
+  "timestampMs": 44476,
+  "confidence": null
+ },
+ {
+  "text": " of",
+  "startMs": 44711,
+  "endMs": 44871,
+  "timestampMs": 44791,
+  "confidence": null
+ },
+ {
+  "text": " Spanish",
+  "startMs": 44871,
+  "endMs": 45451,
+  "timestampMs": 45161,
+  "confidence": null
+ },
+ {
+  "text": " ones.",
+  "startMs": 45451,
+  "endMs": 46191,
+  "timestampMs": 45821,
+  "confidence": null
+ },
+ {
+  "text": " Today,",
+  "startMs": 46191,
+  "endMs": 46701,
+  "timestampMs": 46446,
+  "confidence": null
+ },
+ {
+  "text": " you",
+  "startMs": 46701,
+  "endMs": 47061,
+  "timestampMs": 46881,
+  "confidence": null
+ },
+ {
+  "text": " might",
+  "startMs": 47061,
+  "endMs": 47511,
+  "timestampMs": 47286,
+  "confidence": null
+ },
+ {
+  "text": " be",
+  "startMs": 47511,
+  "endMs": 47711,
+  "timestampMs": 47611,
+  "confidence": null
+ },
+ {
+  "text": " reading",
+  "startMs": 47711,
+  "endMs": 48521,
+  "timestampMs": 48116,
+  "confidence": null
+ },
+ {
+  "text": " this",
+  "startMs": 48521,
+  "endMs": 48851,
+  "timestampMs": 48686,
+  "confidence": null
+ },
+ {
+  "text": " in",
+  "startMs": 48851,
+  "endMs": 49031,
+  "timestampMs": 48941,
+  "confidence": null
+ },
+ {
+  "text": " Latin.",
+  "startMs": 49031,
+  "endMs": 49711,
+  "timestampMs": 49371,
+  "confidence": null
+ },
+ {
+  "text": " Would",
+  "startMs": 49711,
+  "endMs": 50151,
+  "timestampMs": 49931,
+  "confidence": null
+ },
+ {
+  "text": " the",
+  "startMs": 50151,
+  "endMs": 50411,
+  "timestampMs": 50281,
+  "confidence": null
+ },
+ {
+  "text": " world",
+  "startMs": 50411,
+  "endMs": 50851,
+  "timestampMs": 50631,
+  "confidence": null
+ },
+ {
+  "text": " be",
+  "startMs": 50851,
+  "endMs": 51021,
+  "timestampMs": 50936,
+  "confidence": null
+ },
+ {
+  "text": " better",
+  "startMs": 51021,
+  "endMs": 51551,
+  "timestampMs": 51286,
+  "confidence": null
+ },
+ {
+  "text": " or",
+  "startMs": 51551,
+  "endMs": 51721,
+  "timestampMs": 51636,
+  "confidence": null
+ },
+ {
+  "text": " worse?",
+  "startMs": 51721,
+  "endMs": 52791,
+  "timestampMs": 52256,
+  "confidence": null
+ },
+ {
+  "text": " Comment",
+  "startMs": 52791,
+  "endMs": 53301,
+  "timestampMs": 53046,
+  "confidence": null
+ },
+ {
+  "text": " below.",
+  "startMs": 53301,
+  "endMs": 54131,
+  "timestampMs": 53716,
+  "confidence": null
+ }
+]

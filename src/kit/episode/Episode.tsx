@@ -153,6 +153,10 @@ export const Episode: React.FC<EpisodeProps> = (props) => {
       </QualityContext.Provider>
     );
   }
+  return <EpisodeBody {...props} />;
+};
+
+const EpisodeBody: React.FC<EpisodeProps> = (props) => {
   const { fps } = useVideoConfig();
   const { scenes, captions, durationInFrames, spec } = props;
 

@@ -9,7 +9,7 @@ import { faceRotation, lonLatToVec3, slerpLonLat, WORLD, type GeoBounds } from "
 
 export type GeoPin = { at: LonLat; color?: string; pop?: number };
 export type GeoLabel = { at: LonLat; text: string; style?: LabelStyle; size?: number; opacity?: number };
-export type GeoRoute = { from: LonLat; to: LonLat; via?: LonLat[]; progress: number; color?: string; icon?: RouteIcon; arc?: number };
+export type GeoRoute = { from: LonLat; to: LonLat; via?: LonLat[]; progress: number; color?: string; icon?: RouteIcon; arc?: number; sail?: string; trail?: boolean };
 
 /** Waypoint path → parametric point by arc length (great circles on the globe). */
 export const pathFn = (pts: LonLat[]) => {
@@ -79,7 +79,7 @@ export const Globe: React.FC<GlobeProps> = ({
   clouds = true,
 }) => {
   const frame = useCurrentFrame();
-  const fillKey = JSON.stringify([style, fills.map((f) => [f.countries, f.polygon?.length, f.color, Math.round((f.progress ?? 1) * 200), f.origin])]);
+  const fillKey = JSON.stringify([style, fills.map((f) => [f.countries, f.polygon?.length, f.color, Math.round((f.progress ?? 1) * 200), f.origin, Math.round((f.opacity ?? 0.85) * 40)])]);
   const texture = usePaintedTexture(4096, 2048, fillKey, (ctx) => paintMap(ctx, { bounds: WORLD, width: 4096, height: 2048, style, fills }));
 
   // detail patch
@@ -156,6 +156,8 @@ export const Globe: React.FC<GlobeProps> = ({
               progress={rt.progress}
               color={rt.color}
               icon={rt.icon}
+              sail={rt.sail}
+              trail={rt.trail}
               iconScale={r * 0.2}
               iconUp={screenUp}
               iconLift={r * 0.035}

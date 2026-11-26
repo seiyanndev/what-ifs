@@ -190,7 +190,11 @@ export const Route: React.FC<{
   iconUp?: THREE.Vector3;
   /** Lift the icon off the surface along its normal. */
   iconLift?: number;
-}> = ({ at, upAt, progress, color = "#c0392b", icon = "ship", iconScale = 0.35, dashes = 44, dotSize = 0.03, iconUp, iconLift = 0 }) => {
+  /** Sail colour for ship icons. */
+  sail?: string;
+  /** Draw the dotted trail + arrowhead (false for extra ships in a fleet). */
+  trail?: boolean;
+}> = ({ at, upAt, progress, color = "#c0392b", icon = "ship", iconScale = 0.35, dashes = 44, dotSize = 0.03, iconUp, iconLift = 0, sail, trail = true }) => {
   const p = Math.max(0, Math.min(1, progress));
   const dots = useMemo(() => Array.from({ length: dashes }, (_, i) => (i + 0.5) / dashes), [dashes]);
   const head = at(p);
@@ -212,7 +216,7 @@ export const Route: React.FC<{
   const endQ = new THREE.Quaternion().setFromUnitVectors(UP, endTan.normalize());
   return (
     <group>
-      {dots
+      {(trail ? dots : [])
         .filter((t) => t <= p)
         .map((t) => {
           const pos = at(t);
@@ -226,7 +230,7 @@ export const Route: React.FC<{
             </mesh>
           );
         })}
-      {p > 0.97 ? (
+      {trail && p > 0.97 ? (
         <mesh position={end} quaternion={endQ} scale={Math.min(1, (p - 0.97) / 0.03)}>
           <coneGeometry args={[dotSize * 2.4, dotSize * 5, 14]} />
           <meshBasicMaterial color={color} />
@@ -234,7 +238,7 @@ export const Route: React.FC<{
       ) : null}
       {icon !== "none" && p > 0 && p < 0.995 ? (
         <group position={iconPos} quaternion={q}>
-          {icon === "ship" ? <ToyShip scale={iconScale} /> : <ArmyToken scale={iconScale} />}
+          {icon === "ship" ? <ToyShip scale={iconScale} sail={sail} /> : <ArmyToken scale={iconScale} />}
         </group>
       ) : null}
     </group>

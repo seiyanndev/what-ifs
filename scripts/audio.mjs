@@ -84,17 +84,38 @@ if (!existsSync(path.join(WHISPER, `ggml-${model}.bin`))) {
 }
 const tmp16 = path.join(dir, ".voice16k.wav");
 ff("-i", voice, "-ar", "16000", "-ac", "1", "-c:a", "pcm_s16le", tmp16);
-const out = await transcribe({
-  inputPath: tmp16,
-  whisperPath: WHISPER,
-  whisperCppVersion: "1.5.5",
-  model,
-  tokenLevelTimestamps: true,
-  splitOnWord: true,
-  printOutput: false,
-});
-let { captions } = toCaptions({ whisperCppOutput: out });
-captions = captions.filter((c) => c.text.trim().length > 0);
+
+// Whisper works in 30 s windows and its word times drift (even pile up at the file end) on longer
+// narrations. So: cut the voice at natural pauses into chunks of at most ~24 s, transcribe each one,
+// and offset the timings back. Cuts happen in the middle of silences, never inside a word.
+const totalSec = Number(execFileSync("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", tmp16]).toString());
+const quiet = [...execFileSync("sh", ["-c", `ffmpeg -hide_banner -i "${tmp16}" -af silencedetect=noise=-40dB:d=0.3 -f null - 2>&1 || true`], { encoding: "utf8" }).matchAll(/silence_start: ([\d.]+)[\s\S]*?silence_end: ([\d.]+)/g)].map((m) => (Number(m[1]) + Number(m[2])) / 2);
+const MAX_CHUNK = 24;
+const cuts = [0];
+for (const q of quiet) {
+  if (q - cuts[cuts.length - 1] > MAX_CHUNK * 0.6 && q < totalSec - 2) {
+    // take the last pause that still keeps the chunk under MAX_CHUNK
+    const next = quiet.find((x) => x > q && x - cuts[cuts.length - 1] <= MAX_CHUNK);
+    if (!next || q - cuts[cuts.length - 1] >= MAX_CHUNK * 0.9) cuts.push(q);
+  }
+}
+cuts.push(totalSec);
+let captions = [];
+for (let i = 0; i < cuts.length - 1; i++) {
+  const a = cuts[i];
+  const b = cuts[i + 1];
+  const part = path.join(dir, `.chunk${i}.wav`);
+  ff("-ss", String(a), "-to", String(b), "-i", tmp16, "-c:a", "pcm_s16le", part);
+  const out = await transcribe({ inputPath: part, whisperPath: WHISPER, whisperCppVersion: "1.5.5", model, tokenLevelTimestamps: true, splitOnWord: true, printOutput: false });
+  const offset = Math.round(a * 1000);
+  const limit = Math.round(b * 1000);
+  for (const c of toCaptions({ whisperCppOutput: out }).captions) {
+    if (!c.text.trim()) continue;
+    captions.push({ ...c, startMs: Math.min(limit, c.startMs + offset), endMs: Math.min(limit, c.endMs + offset), timestampMs: c.timestampMs === null ? null : Math.min(limit, c.timestampMs + offset) });
+  }
+  execFileSync("rm", ["-f", part]);
+}
+if (cuts.length > 2) console.log(`transcribed in ${cuts.length - 1} chunks (cut at pauses: ${cuts.slice(1, -1).map((c) => c.toFixed(1) + "s").join(", ")})`);
 
 // ---------------------------------------------------------------------------
 // 3. Fix spelling against the script (keeps whisper's timings, uses the script's words)
@@ -191,6 +212,17 @@ if (scriptFile) {
 }
 
 const dur = Number(execFileSync("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", voice]).toString());
+// give every word at least ~90 ms (Whisper sometimes times tiny words at 20 ms; captions would only flash)
+for (let i = 0; i < captions.length; i++) {
+  const w = captions[i];
+  const next = captions[i + 1];
+  if (w.endMs - w.startMs >= 90) continue;
+  const want = w.startMs + 90;
+  const room = next ? Math.max(w.endMs, Math.min(want, next.endMs - 90)) : want;
+  w.endMs = Math.max(w.endMs, room);
+  if (next && next.startMs < w.endMs) next.startMs = w.endMs;
+  w.timestampMs = Math.round((w.startMs + w.endMs) / 2);
+}
 writeFileSync(path.join(dir, "captions.json"), JSON.stringify(captions, null, 1));
 writeFileSync(path.join(dir, "voice.json"), JSON.stringify({ durationSec: Math.round(dur * 1000) / 1000, words: captions.length, model }, null, 1));
 execFileSync("rm", ["-f", tmp16]);

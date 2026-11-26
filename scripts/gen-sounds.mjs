@@ -387,6 +387,62 @@ const SFX = {
     });
     return b;
   },
+  /** Epic horn: a long, low brass call (Roman cornu) with a rising second note and a hall tail. */
+  horn: () => {
+    const b = buf(4.2);
+    ensemble(b, 0, 1.3, 43, { brass: true, voices: 4, attack: 0.18, release: 0.5, cutoff: 1800, vibrato: 0.004, gain: 0.42, seed: 91 });
+    ensemble(b, 0, 1.3, 31, { brass: true, voices: 3, attack: 0.22, release: 0.5, cutoff: 900, gain: 0.3, seed: 92 });
+    ensemble(b, 1.25, 1.9, 50, { brass: true, voices: 4, attack: 0.12, release: 0.9, cutoff: 2200, vibrato: 0.005, gain: 0.42, seed: 93 });
+    ensemble(b, 1.25, 1.9, 38, { brass: true, voices: 3, attack: 0.15, release: 0.9, cutoff: 1000, gain: 0.3, seed: 94 });
+    drum(b, 1.25, { f0: 90, f1: 45, decay: 0.8, noise: 0.3, gain: 0.7, len: 2, seed: 95 });
+    reverb(b, 0.45, 1.5, 0.35);
+    return b;
+  },
+  /** Steam hiss (seamless 4 s loop): pressurised hiss with puffs. */
+  steam: () =>
+    loopRender(
+      4,
+      (b) => {
+        const nz = noiseGen(101);
+        const hp = new Biquad("hp", 2500);
+        const bp = new Biquad("bp", 5500, 0.9);
+        add(b, 0, 9, (t) => {
+          const puff = 0.55 + 0.45 * Math.max(0, Math.sin(TAU * 1.5 * t)) ** 3;
+          const x = nz();
+          return (hp.run(x) * 0.5 + bp.run(x) * 0.9) * puff;
+        });
+      },
+      0.5,
+    ),
+  /** Final hit: a cinematic stinger (sub boom + orchestral stab + cymbal). */
+  hit: () => {
+    const b = buf(3.4);
+    drum(b, 0, { f0: 70, f1: 30, decay: 1.1, noise: 0.8, gain: 1.2, len: 3, seed: 111 });
+    [38, 45, 50, 57, 62].forEach((n, i) => ensemble(b, 0, 0.22, n, { brass: true, attack: 0.005, release: 0.6, cutoff: 3000, gain: 0.16, pan: (i - 2) * 0.3, seed: 112 + i }));
+    const nz = noiseGen(118);
+    const hp = new Biquad("hp", 4000);
+    add(b, 0, 2.8, (t) => hp.run(nz()) * Math.exp(-t * 1.6) * 0.5);
+    reverb(b, 0.4, 1.5, 0.4);
+    return b;
+  },
+  /** Synth + horn: modern saw-pad arpeggio under a heroic horn call ("Rome, but futuristic"). */
+  synth_horn: () => {
+    const b = buf(5.2);
+    const arp = [57, 60, 64, 69, 64, 60];
+    for (let i = 0; i < 24; i++) {
+      const n = arp[i % arp.length];
+      const f = midi(n + 12);
+      const lp = new Biquad("lp", 2400, 2);
+      add(b, i * 0.15, 0.4, (t) => lp.run(saw(f * t) * 0.6 + saw(f * 1.005 * t) * 0.4) * Math.exp(-t * 7) * 0.32, (i % 2 ? 1 : -1) * 0.4);
+    }
+    [45, 52, 57, 60].forEach((n, i) => ensemble(b, 0, 3.6, n, { voices: 5, attack: 0.6, release: 1.2, cutoff: 1500, gain: 0.07, pan: (i - 1.5) * 0.4, seed: 120 + i }));
+    ensemble(b, 1.2, 0.8, 57, { brass: true, attack: 0.1, release: 0.4, cutoff: 2200, gain: 0.3, seed: 125 });
+    ensemble(b, 2.0, 1.8, 64, { brass: true, attack: 0.1, release: 0.9, cutoff: 2400, vibrato: 0.005, gain: 0.32, seed: 126 });
+    drum(b, 0, { f0: 120, f1: 50, decay: 0.35, noise: 0.2, gain: 0.7, seed: 127 });
+    drum(b, 2.0, { f0: 120, f1: 50, decay: 0.35, noise: 0.2, gain: 0.7, seed: 128 });
+    reverb(b, 0.35, 1.3, 0.4);
+    return b;
+  },
   /** Royal brass fanfare: two rising calls then a held major chord with a timpani roll. */
   fanfare: () => {
     const b = buf(3.6);

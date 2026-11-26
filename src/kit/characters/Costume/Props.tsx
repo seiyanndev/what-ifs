@@ -25,7 +25,8 @@ export type PropType =
   | "coinBag"
   | "crownPillow"
   | "axe"
-  | "scepter";
+  | "scepter"
+  | "aeolipile";
 
 export const PROP_TYPES: PropType[] = [
   "scroll",
@@ -46,6 +47,7 @@ export const PROP_TYPES: PropType[] = [
   "crownPillow",
   "axe",
   "scepter",
+  "aeolipile",
 ];
 
 /** How a prop is carried: in the fist, or strapped to the forearm (shields). */
@@ -332,6 +334,42 @@ export const Prop: React.FC<{ type: PropType; color?: string; accent?: string }>
           <Part geo={<torusGeometry args={[0.035, 0.01, 6, 14]} />} position={[0, -0.12, 0]} rotation={[Math.PI / 2, 0, 0]} color={color ?? METAL.gold} ink={false} />
         </group>
       );
+    case "aeolipile": {
+      // Hero of Alexandria's steam ball: cauldron on a stand, a sphere on two pipes, spun by two bent jets
+      const spin = frame * 0.32;
+      return (
+        <group>
+          <Part geometry={lathe("aeo-cauldron", [[0, 0], [0.16, 0], [0.2, 0.08], [0.19, 0.18], [0.12, 0.22], [0, 0.22]], 20)} color={accent ?? METAL.bronze} ink="prop" />
+          <group position={[0, -0.02, 0]} scale={0.55}>
+            <Flame />
+          </group>
+          {[-1, 1].map((sx) => (
+            <Part key={sx} geo={<cylinderGeometry args={[0.014, 0.014, 0.36, 8]} />} position={[sx * 0.15, 0.36, 0]} color={accent ?? METAL.bronze} ink={false} />
+          ))}
+          <group position={[0, 0.5, 0]} rotation={[0, 0, Math.PI / 2]}>
+            <group rotation={[spin, 0, 0]}>
+              <Part geo={Sphere(20)} scale={0.11} color={color ?? METAL.bronze} ink="prop" />
+              {[-1, 1].map((s2) => (
+                <group key={s2} position={[0, 0, s2 * 0.1]} rotation={[s2 * Math.PI / 2, 0, 0]}>
+                  <Part geo={<cylinderGeometry args={[0.013, 0.013, 0.08, 6]} />} position={[0, 0.04, 0]} color={color ?? METAL.bronze} ink={false} />
+                  <Part geo={<cylinderGeometry args={[0.013, 0.013, 0.06, 6]} />} position={[0.025, 0.08, 0]} rotation={[0, 0, Math.PI / 2]} color={color ?? METAL.bronze} ink={false} />
+                </group>
+              ))}
+            </group>
+          </group>
+          {/* steam puffs drifting up */}
+          {[0, 1, 2, 3].map((k) => {
+            const t = ((frame / 26 + k / 4) % 1 + 1) % 1;
+            return (
+              <mesh key={k} position={[Math.sin(k * 2.1 + frame * 0.05) * 0.1 * t, 0.6 + t * 0.6, Math.cos(k * 1.7) * 0.08 * t]} scale={0.04 + t * 0.12}>
+                <sphereGeometry args={[1, 10, 8]} />
+                <ToonMaterial color="#f4f1ea" ramp="soft" rim={0} transparent opacity={0.7 * (1 - t)} depthWrite={false} />
+              </mesh>
+            );
+          })}
+        </group>
+      );
+    }
     default:
       return null;
   }

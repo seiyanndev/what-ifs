@@ -202,6 +202,7 @@ It wires up the sky or background, painted backdrop, light rig, the diorama, the
 ### Set dressing (`dressing.tsx`, reuse for new sets)
 - **Nature:** Cypress, RoundTree, PineTree, PalmTree, Bush, Fern, Rock, Volcano, Dino.
 - **Architecture:** Column, House (ancient, medieval, tudor or modern), Temple, Tower, Wall, Skyscraper.
+- **Signs and inventions:** `Sign` (canvas text on a board; `stone`, `neon` or `wood`; `posts`, post `height`; neon glows at night) and `Aeolipile` (Hero's steam engine, also a hand prop `aeolipile`).
 - **Tropical / island:** StiltHut (thatched, woven walls, ladder; generic Southeast Asian / Pacific) and Outrigger canoe.
 - **Furniture and props:** Table, Throne, Carpet, Banner, Bookshelf, Barrel, Crate, TorchStand, StreetLamp, Tent, Fence, Well, Dock, Cannon, Anvil, GearMachine, Statue, Car, Bench, Candle, Market.
 - **Grounds and bases** (`ground.tsx`): `DioramaBase ground="paving|grass|sand|dirt|planks|asphalt"`, `Water`, `RoomBase`, and HalfSea for PORT and BEACH.
@@ -275,7 +276,8 @@ Put the recording at `public/voice/<episode>/raw.wav` (.mp3, .m4a, .flac and .og
    - **Mic chain** for real recordings (`--mic`). It adds a light `afftdn=nf=-40` and `deesser=i=0.25` before the same tone stage.
    - **Both** then trim silence (pauses capped at about 0.7 s) and run `loudnorm` to −14 LUFS / −1 dB true peak. The result is `voice.wav` (48 kHz mono).
 2. **Word timestamps** come from **whisper.cpp running locally** (free and offline, through `@remotion/install-whisper-cpp`) with token-level timestamps. The result is `captions.json` (Remotion `Caption[]`) plus `voice.json` (duration and word count).
-3. **`--script`** aligns the transcript to the script text (Needleman–Wunsch on words). Captions then use the script's exact spelling, so "1519" stays "1519" even when spoken as "fifteen nineteen", `*emphasis*` marks survive, and names are fixed (whisper heard "Zenhira, Miptan, Lapilapu"). Script words that weren't heard get time borrowed from their neighbors, so every word stays visible and in order. **Always pass the script.**
+3. **`--script`** aligns the transcript to the script text (Needleman–Wunsch on words). Captions then use the script's exact spelling, so "1519" stays "1519" even when spoken as "fifteen nineteen", `*emphasis*` marks survive, and names are fixed (whisper heard "Zenhira, Miptan, Lapilapu"). Script words that weren't heard get time borrowed from their neighbors, so every word stays visible and in order, and every word lasts at least 90 ms. **Always pass the script.**
+4. **Long voiceovers are transcribed in chunks** of at most 24 s, cut in the middle of pauses. Whisper's timestamps drift on long files (on Day 2 the last words piled up past the end of the audio), and chunking keeps them accurate.
 
 **One-time setup:** `npm run audio:setup` builds whisper.cpp 1.5.5 into `whisper.cpp/` (git-ignored) and downloads `ggml-base.en.bin`. Use `-- small.en` for better accuracy. If the model download fails behind a proxy, use `curl -L -o whisper.cpp/ggml-base.en.bin https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-base.en.bin`.
 
@@ -302,7 +304,7 @@ Uses **Kokoro**, a local neural TTS (Apache-2.0, so commercial use is fine; offl
 - Your own recording works too: put it at `raw.wav` and skip `npm run voice`.
 
 ### Sound library: `npm run sounds` (synthesized in code, no samples or licenses; deterministic; runs automatically after `npm install`, and the WAVs are git-ignored)
-- **`public/sfx/`:** stamp_slam, whoosh, ripple, war_drum, clash, waves (seamless 8 s loop), gong, crowd_cheer, rumble, impact, crackle (seamless 4 s fire loop), coins, page_flip, pop, sparkle, fanfare (royal brass call and held chord), wind (seamless 8 s loop) and swell (orchestral crescendo into a hit).
+- **`public/sfx/`:** stamp_slam, whoosh, ripple, war_drum, clash, waves (seamless 8 s loop), gong, crowd_cheer, rumble, impact, crackle (seamless 4 s fire loop), coins, page_flip, pop, sparkle, fanfare (royal brass call and held chord), wind (seamless 8 s loop), swell (orchestral crescendo into a hit), horn (epic low brass call), steam (hiss, seamless 4 s loop), hit (final orchestral hit) and synth_horn (synth pad plus horn).
 - **`public/music/`:** 8-bar seamless loops:
   - **epic_tense:** D minor, 100 bpm, drums, ostinato and brass
   - **mysterious:** A minor, 80 bpm, pad and celesta
@@ -409,6 +411,8 @@ Options: `--no-voice` (estimated timings and silent narration, for layout checks
   }]
 }
 ```
+- **Scene dressing:** `"dressing": [{ "item": "Sign", "at": [x,y,z], "rotation": 20, "scale": 1.3, "text": "SPQR", "style": "neon", "color": "#ff5ad8", "height": 1.75 }]` places any `DRESSING_ITEMS` piece (Column, Table, Aeolipile, Sign, Barrel…) in a scene.
+- **More geo options:** a fill's `"shrink": true` makes the colour retreat (an empire breaking up), `"pulse": true` makes it glow, and `opacity` sets its strength. A route's `"ships": 3` sails a small fleet (extra ships have no trail) with `"sail"` colour.
 - **More scene options:** `"captions": "top"` moves a scene's captions up (use it when the action is low in frame, like a fall). `"musicDrop": true` cuts the music at the start of any scene and swells it back. A character's `"elder": true` gives the elder body plus grey hair and beard. `geo.flags` plants flags on a MAP_REGION that pop in at `at_time`. `effects.statue` adds a stone statue that vanishes and returns. Looping SFX in `sfx` (wind, waves, crackle) last until the scene ends.
 - **Automatic SFX:** year stamp (stamp_slam), split (ripple plus the music drop), ripple transition (whoosh), asteroid (impact), fire (crackle loop), crowd cheer (crowd_cheer), and waves under PORT and BEACH scenes.
 - **Timing is in seconds relative to the scene.** Scene lengths come from the narration, so write about 8–20 words per scene. A 60–75 s episode is about 140–180 words.
