@@ -21,6 +21,30 @@ type Props = {
  * Word-by-word captions: big bold white text with a thick dark outline in the lower third.
  * The word being spoken turns gold and pops; years and names get their own colours.
  */
+/**
+ * Split a page into one or two lines with balanced lengths (no lone word on the second line).
+ * Short pages (about 15 characters) stay on one line. Returns [start, end) token ranges.
+ */
+export const balancedLines = (words: string[], oneLine = 15): [number, number][] => {
+  const len = (a: number, b: number) => words.slice(a, b).reduce((n, w) => n + w.length, 0) + Math.max(0, b - a - 1);
+  const n = words.length;
+  if (n < 2 || len(0, n) <= oneLine) return [[0, n]];
+  let best = 1;
+  let bestCost = Infinity;
+  for (let k = 1; k < n; k++) {
+    // prefer a slightly longer first line (reads naturally), never a much longer one
+    const cost = Math.max(len(0, k), len(k, n) * 1.06);
+    if (cost < bestCost) {
+      bestCost = cost;
+      best = k;
+    }
+  }
+  return [
+    [0, best],
+    [best, n],
+  ];
+};
+
 export const Captions: React.FC<Props> = ({ captions, names = [], y = 0.74, maxWords = 4, fontSize = 92, offsetMs = 0 }) => {
   const frame = useCurrentFrame();
   const { fps, width } = useVideoConfig();
@@ -53,8 +77,8 @@ export const Captions: React.FC<Props> = ({ captions, names = [], y = 0.74, maxW
           opacity: 1 - exit,
           textAlign: "center",
           display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "center",
+          flexDirection: "column",
+          alignItems: "center",
           rowGap: fontSize * 0.08,
           fontFamily: FONT_DISPLAY,
           fontSize,
@@ -63,7 +87,10 @@ export const Captions: React.FC<Props> = ({ captions, names = [], y = 0.74, maxW
           letterSpacing: 1,
         }}
       >
-        {page.tokens.map((t, i) => {
+        {balancedLines(page.tokens.map((t) => cleanWord(t.text).trim())).map(([a, b], line) => (
+          <div key={line} style={{ display: "flex", flexWrap: "nowrap", justifyContent: "center" }}>
+        {page.tokens.slice(a, b).map((t, j) => {
+          const i = a + j;
           const active = nowMs >= t.fromMs && nowMs < t.toMs;
           const spoken = nowMs >= t.fromMs;
           const kind = kinds[i];
@@ -89,6 +116,8 @@ export const Captions: React.FC<Props> = ({ captions, names = [], y = 0.74, maxW
             </span>
           );
         })}
+          </div>
+        ))}
       </div>
     </AbsoluteFill>
   );

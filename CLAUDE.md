@@ -70,7 +70,7 @@ Always pull colors from the palette by name instead of writing new hex values in
 
 ### Camera (`<OrbitCamera>`)
 - Declarative: target, distance, azimuth, elevation, fov and tilt as props, driven by `interpolate(frame)`. Never set the camera inside effects.
-- House framing: `fov` 30 (telephoto, which gives the "toy" compression), `elevation` 10–20°, `tilt` 3–5° so the horizon and sky stay in the top third. Keep the bottom 30% free of key action for captions.
+- House framing: `fov` 30 (telephoto, which gives the "toy" compression), `elevation` 10–20°, `tilt` 4° on wide shots so the horizon and sky stay in the top third. Medium shots use `tilt` 1.6° and close shots −0.5°, which lifts characters about 8% so they sit above the caption band. Keep the bottom 30% free of key action for captions.
 - Wide establishing shot of a whole diorama: about `distance` 23 with target at the base centre.
 
 ### Determinism notes
@@ -255,6 +255,7 @@ Code is in `src/kit/captions/`: `timing.ts`, `highlight.ts`, `Captions.tsx`, `Ti
 - **`estimateTimings(text, startSec, wordsPerSec≈2.7)`** fakes plausible narration timings: longer words take longer, and punctuation adds pauses. Use it for previews before a voiceover exists.
 - **`<Captions captions names y=0.74 maxWords=4 fontSize=92 offsetMs />`:**
   - Pages come from `createTikTokStyleCaptions`, and `withPageBreaks` also breaks after sentence ends, every 4 words and at about 22 characters.
+  - `balancedLines` lays out each page: one line up to about 15 characters, otherwise two lines of balanced length, so a word never sits alone on the second line.
   - The style is Lilita One in uppercase: white with a thick dark outline (`#1e1428`) and a drop shadow, wrapping to two lines. The word being spoken turns gold (`#ffd23f`), pops, lifts and tilts slightly.
   - Pages spring in and fade out before the next page.
 - **Auto-highlighting** (`classify`, colors in `CAPTION_COLORS`):

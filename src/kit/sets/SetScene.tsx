@@ -38,7 +38,7 @@ export const setCamera = (set: SetName, cam: CameraName | OrbitShot, move: Camer
   const dist = move === "push" ? base * (1 - 0.14 * e) : move === "pull" ? base * (0.88 + 0.12 * e) : base;
   const az = move === "orbitLeft" ? -14 + 28 * e : move === "orbitRight" ? 14 - 28 * e : 0;
   const target: [number, number, number] = cam === "close" ? [info.target[0], info.target[1] + 0.35, info.target[2] + 0.9] : info.target;
-  return { target, distance: dist, azimuth: az, elevation: el, fov: FOV, tilt: set === "MAP_REGION" ? 6 : cam === "close" ? 2 : 4 };
+  return { target, distance: dist, azimuth: az, elevation: el, fov: FOV, tilt: set === "MAP_REGION" ? 6 : cam === "close" ? -0.5 : cam === "medium" ? 1.6 : 4 };
 };
 
 /**
