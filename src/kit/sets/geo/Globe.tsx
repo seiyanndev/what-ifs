@@ -166,9 +166,13 @@ export const Globe: React.FC<GlobeProps> = ({
             />
           );
         })}
-        {labels.map((l, i) => (
-          <Label3D key={i} text={l.text} position={lonLatToVec3(l.at, r * 1.06)} size={l.size ?? r * 0.07} style={l.style} opacity={l.opacity ?? 1} />
-        ))}
+        {labels.map((l, i) => {
+          // drawn on top of the globe (no depth test), so fade it out as it turns away to the far side
+          const pos = lonLatToVec3(l.at, r * 1.06);
+          const facing = pos.clone().applyEuler(new THREE.Euler(...rot)).z / (r * 1.06);
+          const vis = Math.max(0, Math.min(1, (facing - 0.12) / 0.2));
+          return vis > 0.001 ? <Label3D key={i} text={l.text} position={pos} size={l.size ?? r * 0.07} style={l.style} opacity={(l.opacity ?? 1) * vis} depthTest={false} /> : null;
+        })}
       </group>
       {atmosphere ? (
         <mesh scale={1.075}>

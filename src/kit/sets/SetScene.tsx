@@ -1,7 +1,7 @@
 import { Easing, interpolate, useCurrentFrame } from "remotion";
 import { ERA_PALETTES, horizonY, OrbitCamera, PaintedBackdrop, SoftShadow, Stage, type Era, type OrbitShot, type TimeOfDay } from "../look";
 import { SetContext, makeSetCtx } from "./context";
-import { Globe, MapBoard, type GlobeProps, type MapBoardProps, ERA_MAP_STYLE } from "./geo";
+import { Globe, MapBoard, ShipStyleContext, type GlobeProps, type MapBoardProps, type ShipStyle, ERA_MAP_STYLE } from "./geo";
 import { SETS, type SetName } from "./sets";
 import { Candle } from "./dressing";
 
@@ -23,6 +23,8 @@ export type SetSceneProps = {
   /** MAP_REGION options (bounds required for MAP_REGION). */
   map?: MapBoardProps;
   overlay?: React.ReactNode;
+  /** Ship style for the port's ships, fleets and globe/map route icons ("junk" for a Chinese fleet). */
+  ships?: ShipStyle;
   children?: React.ReactNode;
 };
 
@@ -45,7 +47,7 @@ export const setCamera = (set: SetName, cam: CameraName | OrbitShot, move: Camer
  * A complete 3D shot on one of the 12 sets: sky/backdrop, lights, diorama, camera move and grade.
  * Characters go in `children` (place them on SETS[set].marks).
  */
-export const SetScene: React.FC<SetSceneProps> = ({ set, era, timeOfDay, whatIf = 0, camera = "wide", move = "push", duration = 120, globe, map, overlay, children }) => {
+export const SetScene: React.FC<SetSceneProps> = ({ set, era, timeOfDay, whatIf = 0, camera = "wide", move = "push", duration = 120, globe, map, overlay, ships = "galleon", children }) => {
   const frame = useCurrentFrame();
   const info = SETS[set];
   const e = era ?? info.era;
@@ -78,6 +80,7 @@ export const SetScene: React.FC<SetSceneProps> = ({ set, era, timeOfDay, whatIf 
       }
     >
       <SetContext.Provider value={makeSetCtx(e, tod)}>
+       <ShipStyleContext.Provider value={ships}>
         <OrbitCamera {...shot} />
         {set === "GLOBE" ? <Globe view={globe?.view ?? [0, 20]} style={globe?.style ?? ERA_MAP_STYLE[e] ?? "storybook"} {...globe} /> : null}
         {set === "MAP_REGION" && map ? (
@@ -93,6 +96,7 @@ export const SetScene: React.FC<SetSceneProps> = ({ set, era, timeOfDay, whatIf 
           </group>
         ) : null}
         {children}
+       </ShipStyleContext.Provider>
       </SetContext.Provider>
     </Stage>
   );

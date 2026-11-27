@@ -22,6 +22,7 @@ Script markup (captions keep the written form, the narrator says the spoken form
   datu{da-too}     say something different from what's written (no spaces inside the braces)
 """
 import argparse
+import json
 import os
 import re
 import subprocess
@@ -33,7 +34,7 @@ import soundfile as sf
 from kokoro_onnx import Kokoro
 
 ROOT = Path(__file__).resolve().parent.parent
-TTS_VERSION = "4"  # bump when the reading logic changes (invalidates the episode voice cache)
+TTS_VERSION = "5"  # bump when the reading logic changes (invalidates the episode voice cache)
 
 PAUSE = {".": 0.36, "!": 0.36, "?": 0.52, ":": 0.32, "—": 0.32, "...": 0.70, "para": 0.80}
 
@@ -162,6 +163,8 @@ def main():
 
     sr = 24000
     chunks = []
+    segments = []  # where each spoken phrase sits in raw.wav — lets `npm run audio` pin captions exactly
+    cursor = int(sr * 0.3)  # lead silence below
     paragraphs = [p for p in re.split(r"\n\s*\n", script) if p.strip()]
     for pi, para in enumerate(paragraphs):
         units = pieces(para)
@@ -180,16 +183,20 @@ def main():
                 short = words <= 4
                 audio = lift_question(audio, sr, a.question_lift * (1 if short else 0.6), 0.45 if short else 0.72)
             chunks.append(audio)
+            segments.append({"start": round(cursor / sr, 4), "end": round((cursor + len(audio)) / sr, 4), "words": [w for w in text.split() if re.search(r"[A-Za-z0-9]", w)]})
+            cursor += len(audio)
             last = ui == len(units) - 1
             gap = PAUSE["para"] if (last and pi < len(paragraphs) - 1) else (0 if last else pause)
             if last and pi < len(paragraphs) - 1:
                 gap = max(gap, pause)
             if gap:
                 chunks.append(np.zeros(int(sr * gap), dtype=np.float32))
+                cursor += int(sr * gap)
     lead = np.zeros(int(sr * 0.3), dtype=np.float32)
     tail = np.zeros(int(sr * 0.6), dtype=np.float32)
     audio = np.concatenate([lead, *chunks, tail])
     sf.write(d / "raw.wav", audio, sr)
+    (d / "segments.json").write_text(json.dumps(segments, indent=1))
     (d / ".tts").write_text(f"{a.voice} v{TTS_VERSION}")  # tells `npm run audio` to use the studio chain
     print(f"voice {a.voice} → public/voice/{a.episode}/raw.wav ({len(audio) / sr:.1f}s, {sum(len(pieces(p)) for p in paragraphs)} phrases)")
 

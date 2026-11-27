@@ -1,0 +1,742 @@
+{
+  "title": "What if China had discovered America first?",
+  "voice": "bm_george",
+  "names": [
+    "China",
+    "Chinese",
+    "Zheng",
+    "He",
+    "Columbus",
+    "Columbus's",
+    "Ming",
+    "Americas",
+    "Pacific",
+    "Atlantic",
+    "Asia",
+    "India",
+    "Arabia",
+    "Africa"
+  ],
+  "thumbnail": {
+    "left": {
+      "preset": "zheng_he",
+      "set": "BEACH",
+      "timeOfDay": "day",
+      "expression": "sad",
+      "action": "shake_head",
+      "heading": -15
+    },
+    "right": {
+      "preset": "zheng_he",
+      "set": "BEACH",
+      "timeOfDay": "day",
+      "expression": "laughing",
+      "action": "cheer",
+      "heading": 15
+    },
+    "text": "China finds America?",
+    "badge": "1405"
+  },
+  "scenes": [
+    {
+      "id": "hook",
+      "set": "PORT",
+      "ships": "junk",
+      "timeOfDay": "sunset",
+      "camera": "wide",
+      "move": "push",
+      "narration": "What if China had discovered America first?",
+      "titleCard": true,
+      "music": "epic_tense",
+      "sfx": [
+        {
+          "name": "gong",
+          "at": 0.05
+        },
+        {
+          "name": "war_drum",
+          "at": 0.5
+        }
+      ],
+      "characters": [
+        {
+          "preset": "zheng_he",
+          "mark": "center",
+          "expression": "proud",
+          "actions": [
+            {
+              "action": "idle"
+            },
+            {
+              "action": "point",
+              "at": 1.0,
+              "params": {
+                "dir": "side"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fleet-1405",
+      "set": "PORT",
+      "ships": "junk",
+      "timeOfDay": "day",
+      "camera": "wide",
+      "move": "orbitRight",
+      "narration": "In 1405, Admiral Zheng{Jung} He{Huh} set sail with one of the largest fleets the world had ever seen. Hundreds of ships, some reported to be several times bigger than Columbus's.",
+      "effects": {
+        "yearStamp": {
+          "text": "1405",
+          "subtitle": "Zheng He sets sail",
+          "at": 0.3
+        },
+        "shipFleet": {
+          "count": 6,
+          "formation": "line",
+          "heading": 90,
+          "speed": 0.5,
+          "position": [
+            -3.4,
+            0.06,
+            -3.7
+          ],
+          "scale": 1.6
+        }
+      },
+      "characters": [
+        {
+          "preset": "zheng_he",
+          "mark": [
+            0.4,
+            0.07,
+            1.1
+          ],
+          "heading": -25,
+          "expression": "proud",
+          "actions": [
+            {
+              "action": "idle"
+            },
+            {
+              "action": "point",
+              "at": 2.2,
+              "params": {
+                "dir": "side",
+                "hand": "left"
+              }
+            },
+            {
+              "action": "nod",
+              "at": 7.5
+            }
+          ]
+        },
+        {
+          "preset": "ming_sailor",
+          "mark": [
+            -1.3,
+            0.07,
+            1.4
+          ],
+          "heading": 30,
+          "expression": "wonder",
+          "actions": [
+            {
+              "action": "idle"
+            },
+            {
+              "action": "look_up",
+              "at": 3.0
+            },
+            {
+              "action": "cheer",
+              "at": 8.0,
+              "expression": "happy"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "voyages",
+      "set": "GLOBE",
+      "ships": "junk",
+      "narration": "Over seven voyages, his fleet reached Southeast Asia, India, Arabia and East Africa.",
+      "geo": {
+        "view": [
+          112,
+          14
+        ],
+        "viewTo": [
+          75,
+          10
+        ],
+        "routes": [
+          {
+            "path": [
+              [
+                118.8,
+                32
+              ],
+              [
+                122.5,
+                28
+              ],
+              [
+                117,
+                21
+              ],
+              [
+                110,
+                12
+              ],
+              [
+                105,
+                3
+              ],
+              [
+                103.8,
+                1.3
+              ],
+              [
+                98.5,
+                4.5
+              ],
+              [
+                95,
+                6
+              ],
+              [
+                81,
+                5.5
+              ],
+              [
+                76.3,
+                9.5
+              ],
+              [
+                75.8,
+                11.2
+              ]
+            ],
+            "icon": "ship",
+            "from": 0.3,
+            "to": 3.9
+          },
+          {
+            "path": [
+              [
+                75.8,
+                11.2
+              ],
+              [
+                68,
+                17
+              ],
+              [
+                60,
+                22.5
+              ],
+              [
+                56.8,
+                25.8
+              ]
+            ],
+            "icon": "ship",
+            "from": 3.9,
+            "to": 4.8
+          },
+          {
+            "path": [
+              [
+                75.8,
+                11.2
+              ],
+              [
+                65,
+                6
+              ],
+              [
+                52,
+                1
+              ],
+              [
+                40.4,
+                -3.2
+              ]
+            ],
+            "icon": "ship",
+            "from": 4.4,
+            "to": 5.8
+          }
+        ],
+        "pins": [
+          {
+            "at": [
+              118.8,
+              32
+            ],
+            "at_time": 0.2
+          },
+          {
+            "at": [
+              75.8,
+              11.2
+            ],
+            "at_time": 3.85
+          },
+          {
+            "at": [
+              56.8,
+              25.8
+            ],
+            "at_time": 4.75
+          },
+          {
+            "at": [
+              40.4,
+              -3.2
+            ],
+            "at_time": 5.75
+          }
+        ],
+        "labels": [
+          {
+            "at": [
+              103,
+              17
+            ],
+            "text": "SE Asia",
+            "style": "region",
+            "from": 2.6
+          },
+          {
+            "at": [
+              78,
+              21
+            ],
+            "text": "India",
+            "style": "region",
+            "from": 3.9
+          },
+          {
+            "at": [
+              50,
+              22
+            ],
+            "text": "Arabia",
+            "style": "region",
+            "from": 4.4
+          },
+          {
+            "at": [
+              47,
+              -6
+            ],
+            "text": "East Africa",
+            "style": "region",
+            "from": 5.1,
+            "size": 0.08
+          }
+        ]
+      }
+    },
+    {
+      "id": "court-stops",
+      "set": "THRONE_ROOM",
+      "era": "ageOfSail",
+      "camera": "medium",
+      "move": "push",
+      "musicDrop": true,
+      "music": "sad_strings",
+      "narration": "Then, after 1433, the Ming court stopped the voyages. China turned inward.",
+      "characters": [
+        {
+          "preset": "ming_emperor",
+          "mark": [
+            0,
+            0,
+            -1.2
+          ],
+          "expression": "stern",
+          "actions": [
+            {
+              "action": "idle"
+            },
+            {
+              "action": "point",
+              "at": 2.2,
+              "params": {
+                "dir": "forward"
+              }
+            },
+            {
+              "action": "shake_head",
+              "at": 4.6
+            }
+          ]
+        },
+        {
+          "preset": "zheng_he",
+          "mark": [
+            1.15,
+            0,
+            0.6
+          ],
+          "heading": -140,
+          "expression": "sad",
+          "actions": [
+            {
+              "action": "idle"
+            },
+            {
+              "action": "bow",
+              "at": 2.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "split",
+      "set": "PORT",
+      "ships": "junk",
+      "timeOfDay": "day",
+      "camera": "medium",
+      "move": "orbitRight",
+      "narration": "But what if they *kept* sailing east?",
+      "effects": {
+        "timelineSplit": {
+          "takeoverAt": 1.8,
+          "whatIfCharacters": [
+            {
+              "preset": "zheng_he",
+              "mark": "center",
+              "expression": "determined",
+              "actions": [
+                {
+                  "action": "idle"
+                },
+                {
+                  "action": "point",
+                  "at": 0.4,
+                  "params": {
+                    "dir": "side"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "characters": [
+        {
+          "preset": "zheng_he",
+          "mark": "center",
+          "expression": "sad",
+          "actions": [
+            {
+              "action": "idle"
+            },
+            {
+              "action": "shake_head",
+              "at": 0.4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pacific",
+      "set": "GLOBE",
+      "ships": "junk",
+      "music": "triumphant",
+      "narration": "A Chinese fleet could have reached the Americas decades before Columbus.",
+      "effects": {
+        "yearStamp": {
+          "text": "~1450",
+          "subtitle": "Across the Pacific",
+          "at": 0.3
+        }
+      },
+      "geo": {
+        "view": [
+          140,
+          28
+        ],
+        "viewTo": [
+          -135,
+          32
+        ],
+        "routes": [
+          {
+            "path": [
+              [
+                118.8,
+                32
+              ],
+              [
+                132,
+                33
+              ],
+              [
+                150,
+                39
+              ],
+              [
+                180,
+                43
+              ],
+              [
+                -160,
+                43
+              ],
+              [
+                -140,
+                40
+              ],
+              [
+                -123.5,
+                38
+              ]
+            ],
+            "icon": "ship",
+            "from": 0.6,
+            "to": 4.6,
+            "ships": 3,
+            "color": "#c0392b"
+          }
+        ],
+        "pins": [
+          {
+            "at": [
+              -123.5,
+              38
+            ],
+            "at_time": 4.6,
+            "color": "#d8a531"
+          }
+        ],
+        "labels": [
+          {
+            "at": [
+              -104,
+              30
+            ],
+            "text": "Americas",
+            "style": "region",
+            "from": 1.9,
+            "size": 0.09
+          }
+        ]
+      }
+    },
+    {
+      "id": "first-contact",
+      "set": "BEACH",
+      "ships": "junk",
+      "timeOfDay": "day",
+      "camera": "medium",
+      "move": "push",
+      "narration": "Zheng{Jung} He's{Huhs} voyages were mostly about trade and showing power. First contact might have looked very different.",
+      "effects": {
+        "shipFleet": {
+          "count": 3,
+          "formation": "line",
+          "heading": 90,
+          "speed": 0.12,
+          "position": [
+            -1.5,
+            0.06,
+            -2.4
+          ]
+        }
+      },
+      "sfx": [
+        {
+          "name": "coins",
+          "at": 3.4
+        }
+      ],
+      "characters": [
+        {
+          "preset": "zheng_he",
+          "mark": [
+            -0.85,
+            0,
+            1.5
+          ],
+          "heading": 50,
+          "expression": "happy",
+          "actions": [
+            {
+              "action": "idle"
+            },
+            {
+              "action": "bow",
+              "at": 0.5
+            },
+            {
+              "action": "give_item",
+              "at": 2.8
+            }
+          ]
+        },
+        {
+          "preset": "native_leader",
+          "mark": [
+            0.85,
+            0,
+            1.5
+          ],
+          "heading": -50,
+          "expression": "wonder",
+          "actions": [
+            {
+              "action": "idle"
+            },
+            {
+              "action": "nod",
+              "at": 1.6,
+              "expression": "happy"
+            },
+            {
+              "action": "give_item",
+              "at": 3.3,
+              "expression": "happy"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pacific-city",
+      "set": "MODERN_CITY",
+      "timeOfDay": "night",
+      "camera": "medium",
+      "move": "push",
+      "transition": "ripple",
+      "sfx": [
+        {
+          "name": "synth_horn",
+          "at": 0.4
+        }
+      ],
+      "narration": "The Americas might speak Chinese today, and world trade might revolve around the Pacific, not the Atlantic.",
+      "dressing": [
+        {
+          "item": "Pagoda",
+          "at": [
+            -1.75,
+            0.08,
+            -0.6
+          ],
+          "scale": 0.8
+        },
+        {
+          "item": "StepPyramid",
+          "at": [
+            1.45,
+            0.08,
+            -1.25
+          ],
+          "scale": 0.6
+        },
+        {
+          "item": "Lanterns",
+          "at": [
+            0,
+            0.08,
+            0.45
+          ],
+          "scale": 1,
+          "w": 2.6
+        }
+      ],
+      "characters": [
+        {
+          "preset": "modern_adult",
+          "mark": [
+            -0.7,
+            0.08,
+            1.5
+          ],
+          "heading": 20,
+          "expression": "happy",
+          "actions": [
+            {
+              "action": "idle"
+            },
+            {
+              "action": "look_up",
+              "at": 1.0,
+              "expression": "wonder"
+            }
+          ]
+        },
+        {
+          "preset": "modern_kid",
+          "mark": [
+            0.7,
+            0.08,
+            1.5
+          ],
+          "heading": -20,
+          "expression": "happy",
+          "actions": [
+            {
+              "action": "idle"
+            },
+            {
+              "action": "wave",
+              "at": 2.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "outro",
+      "set": "PORT",
+      "ships": "junk",
+      "timeOfDay": "day",
+      "camera": "close",
+      "move": "push",
+      "narration": "One decision to stop sailing changed the world. Would you have kept going?",
+      "tail": 1.8,
+      "sfx": [
+        {
+          "name": "hit",
+          "at": 5.1
+        }
+      ],
+      "characters": [
+        {
+          "preset": "zheng_he",
+          "mark": "center",
+          "expression": "smirk",
+          "actions": [
+            {
+              "action": "idle"
+            },
+            {
+              "action": "shrug",
+              "at": 1.2,
+              "expression": "thinking"
+            },
+            {
+              "action": "point",
+              "at": 3.6,
+              "params": {
+                "dir": "forward"
+              },
+              "expression": "smirk"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -144,6 +144,7 @@ export const SceneShot: React.FC<{ scene: ResolvedScene; captions: Caption[]; wh
         globe={globe}
         map={map}
         overlay={fogAmt > 0 ? <PlagueTint amount={fogAmt} /> : undefined}
+        ships={scene.ships}
       >
         {chars.map((c, i) => (
           <CharacterView key={i} c={c} scene={scene} words={words} idx={i} side={side} />
@@ -158,7 +159,7 @@ export const SceneShot: React.FC<{ scene: ResolvedScene; captions: Caption[]; wh
         })}
         {fogAmt > 0 ? <PlagueFog amount={fogAmt} position={[-(1 - fogAmt) * 4.5, 0, 0]} /> : null}
         {fx.statue ? <StatueFx spec={fx.statue} scene={scene} /> : null}
-        {fx.shipFleet ? <ShipFleet count={fx.shipFleet.count ?? 7} formation={fx.shipFleet.formation ?? "v"} heading={fx.shipFleet.heading ?? 90} position={[-3.8, 0.06, -2.1]} speed={1.2} scale={1} spacing={1.25} /> : null}
+        {fx.shipFleet ? <ShipFleet count={fx.shipFleet.count ?? 7} formation={fx.shipFleet.formation ?? "v"} heading={fx.shipFleet.heading ?? 90} position={fx.shipFleet.position ?? [-3.8, 0.06, -2.1]} speed={fx.shipFleet.speed ?? 1.2} scale={fx.shipFleet.scale ?? 1} spacing={1.25} /> : null}
         {fx.fallingScrolls ? <FallingScrolls position={[0, 0, -0.5]} area={[7, 4]} top={6} /> : null}
         {fx.asteroid ? <Asteroid impactAt={impact} start={Math.max(0, impact - 44)} from={[-5.5, 10.5, -7]} to={fx.asteroid.target ?? [1.6, 0, -2.2]} /> : null}
         {fx.crowd

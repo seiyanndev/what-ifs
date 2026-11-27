@@ -54,7 +54,8 @@ export type EffectsSpec = {
   fire?: { mark?: string | [number, number, number]; scale?: number };
   /** Plague fog + sickly tint. `{ from: 0.5 }` rolls it in from that second. It never shows on the What If side of a split (the plague never came). */
   plagueFog?: boolean | { from?: number };
-  shipFleet?: { count?: number; formation?: "v" | "line" | "grid"; heading?: number };
+  /** `speed` in units per second (default 1.2; lower it for long scenes so the fleet stays in frame). */
+  shipFleet?: { count?: number; formation?: "v" | "line" | "grid"; heading?: number; speed?: number; position?: [number, number, number]; scale?: number };
   fallingScrolls?: boolean;
   asteroid?: { at?: number; target?: [number, number, number] };
   /** `flanks: true` splits it into two groups left and right that frame the action instead of covering it. */
@@ -98,6 +99,8 @@ export type SceneSpec = {
   /** Transition INTO this scene. */
   transition?: "cut" | "ripple";
   characters?: CharacterSpec[];
+  /** Ship style for this scene's port ships, fleets and route icons ("junk" = Chinese treasure junks). */
+  ships?: "galleon" | "junk";
   /** Extra set pieces for this scene only. */
   dressing?: DressingSpec[];
   effects?: EffectsSpec;

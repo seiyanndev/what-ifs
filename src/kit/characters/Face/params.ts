@@ -194,6 +194,7 @@ export const EXPRESSIONS = {
   focused: ex({ eyes: eye({ open: 0.62, lidTilt: 0.22 }), brows: brow({ y: 0.26, angle: -0.25 }), mouth: mouth({ w: 0.14, curve: -0.05 }), extras: { blush: 0.2 } }),
   wonder: ex({ eyes: eye({ size: 1.12, iris: 1.05, sparkle: 1 }), brows: BROWS.raised, mouth: mouth({ w: 0.12, open: 0.1, round: 1, curve: 0.2 }), extras: { blush: 0.65 }, look: [0, 0.35] }),
   determined: ex({ eyes: eye({ open: 0.78, lidTilt: 0.32 }), brows: BROWS.angry, mouth: mouth({ w: 0.24, curve: 0.15, asym: 0.25 }), extras: { blush: 0.3 } }),
+  stern: ex({ eyes: eye({ open: 0.68, lidTilt: 0.28 }), brows: brow({ y: 0.25, angle: -0.32, curve: 0 }), mouth: mouth({ w: 0.22, curve: -0.4 }), extras: { blush: 0.1 } }),
   bored: ex({
     eyes: eye({ open: 0.42, lidTilt: -0.05 }),
     brows: brow({ y: 0.24, angle: 0.02, curve: 0 }),

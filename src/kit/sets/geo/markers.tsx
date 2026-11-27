@@ -1,4 +1,4 @@
-import { useLayoutEffect, useMemo } from "react";
+import { createContext, useContext, useLayoutEffect, useMemo } from "react";
 import { useCurrentFrame } from "remotion";
 import * as THREE from "three";
 import { extruded, lathe, roundedBox, Ink, ToonMaterial } from "../../look";
@@ -22,7 +22,9 @@ export const Label3D: React.FC<{
   style?: LabelStyle;
   opacity?: number;
   color?: string;
-}> = ({ text, position, size = 0.22, style = "city", opacity = 1, color }) => {
+  /** false = always drawn on top (globe labels: the curved surface would otherwise hide part of the text). */
+  depthTest?: boolean;
+}> = ({ text, position, size = 0.22, style = "city", opacity = 1, color, depthTest = true }) => {
   const st = LABEL_STYLE[style];
   const { texture, aspect } = useMemo(() => {
     const c = document.createElement("canvas");
@@ -61,7 +63,7 @@ export const Label3D: React.FC<{
   }, [text, style, color, st]);
   return (
     <sprite position={position} scale={[size * aspect * (190 / 120), size * (190 / 120), 1]} renderOrder={10}>
-      <spriteMaterial map={texture} transparent opacity={opacity} depthWrite={false} toneMapped={false} />
+      <spriteMaterial map={texture} transparent opacity={opacity} depthWrite={false} depthTest={depthTest} toneMapped={false} />
     </sprite>
   );
 };
@@ -95,7 +97,101 @@ export const Pin: React.FC<{ position: THREE.Vector3; up?: THREE.Vector3; color?
 // ---------------------------------------------------------------------------
 // Toy ship & army token (route icons; the ship is reused by PORT / SHIP_FLEET)
 // ---------------------------------------------------------------------------
-export const ToyShip: React.FC<{ scale?: number; sail?: string; hull?: string; flag?: string; bob?: boolean; seed?: number }> = ({
+export type ShipStyle = "galleon" | "junk";
+/** Default ship style for everything inside (set by SetScene `ships`): ports, fleets and route icons follow it. */
+export const ShipStyleContext = createContext<ShipStyle>("galleon");
+
+export const ToyShip: React.FC<{ scale?: number; sail?: string; hull?: string; flag?: string; bob?: boolean; seed?: number; style?: ShipStyle }> = (props) => {
+  const ctx = useContext(ShipStyleContext);
+  return (props.style ?? ctx) === "junk" ? <ToyJunk {...props} /> : <ToyGalleon {...props} />;
+};
+
+/**
+ * Chinese treasure junk (generic, Ming-era silhouette): flat sheer with a high stern castle, painted bow eyes,
+ * three masts with battened sails set fore-and-aft (so they read from the side). Bow toward +Z.
+ */
+export const ToyJunk: React.FC<{ scale?: number; sail?: string; hull?: string; flag?: string; bob?: boolean; seed?: number }> = ({
+  scale = 1,
+  sail,
+  hull = "#6b3a26",
+  flag = "#d8a531",
+  bob = true,
+  seed = 0,
+}) => {
+  const frame = useCurrentFrame();
+  const roll = bob ? Math.sin(frame * 0.08 + seed) * 0.05 : 0;
+  const pitch = bob ? Math.sin(frame * 0.06 + seed * 2) * 0.035 : 0;
+  // galleon-white defaults read as a European ship; junks get rust-red battened sails
+  const sailC = !sail || sail === "#f6efe0" || sail === "#e8dcc0" ? "#b5463c" : sail;
+  const masts: [number, number, number][] = [
+    // z, height, sail width
+    [0.3, 0.62, 0.3],
+    [0.04, 0.82, 0.4],
+    [-0.24, 0.6, 0.3],
+  ];
+  return (
+    <group scale={scale} rotation={[pitch, 0, roll]}>
+      <mesh geometry={extruded("junk-hull", [[-0.52, 0.34], [-0.48, 0.06], [-0.34, 0.0], [0.34, 0.0], [0.5, 0.14], [0.55, 0.26], [0.42, 0.24], [0.3, 0.17], [-0.3, 0.17], [-0.38, 0.3], [-0.46, 0.38]], 0.34, 0.03)} rotation={[0, -Math.PI / 2, 0]} castShadow>
+        <ToonMaterial color={hull} />
+        <Ink weight="prop" />
+      </mesh>
+      {/* gold rail stripe + deck */}
+      <mesh geometry={roundedBox(0.36, 0.025, 0.74, 0.01)} position={[0, 0.115, 0.02]}>
+        <ToonMaterial color="#d8a531" />
+      </mesh>
+      <mesh geometry={roundedBox(0.3, 0.03, 0.7, 0.01)} position={[0, 0.17, 0.02]}>
+        <ToonMaterial color="#b08a5a" />
+      </mesh>
+      {/* stern castle with a little roof */}
+      <mesh geometry={roundedBox(0.3, 0.14, 0.18, 0.02)} position={[0, 0.3, -0.36]} castShadow>
+        <ToonMaterial color="#8e3b38" />
+        <Ink weight="prop" />
+      </mesh>
+      <mesh geometry={roundedBox(0.36, 0.03, 0.24, 0.012)} position={[0, 0.385, -0.36]}>
+        <ToonMaterial color="#2f4a3e" />
+      </mesh>
+      {/* painted eyes on the bow */}
+      {[-1, 1].map((side) => (
+        <group key={side} position={[side * 0.172, 0.15, 0.4]} rotation={[0, side * Math.PI / 2, 0]}>
+          <mesh>
+            <circleGeometry args={[0.035, 16]} />
+            <meshBasicMaterial color="#f6efe0" />
+          </mesh>
+          <mesh position={[0.008, 0, 0.002]}>
+            <circleGeometry args={[0.018, 12]} />
+            <meshBasicMaterial color="#1e1428" />
+          </mesh>
+        </group>
+      ))}
+      {masts.map(([z, h, w], i) => (
+        <group key={i} position={[0, 0.17, z]}>
+          <mesh position={[0, h / 2 + 0.05, 0]}>
+            <cylinderGeometry args={[0.012, 0.016, h + 0.1, 8]} />
+            <ToonMaterial color="#5a3d28" />
+          </mesh>
+          {/* battened lug sail, fore-and-aft, a little ahead of the mast */}
+          <group position={[0, 0.12 + h * 0.5, w * 0.12]} rotation={[0.06, 0, 0]}>
+            <mesh geometry={roundedBox(0.016, h * 0.82, w, 0.006)} castShadow>
+              <ToonMaterial color={sailC} side={THREE.DoubleSide} />
+              <Ink weight="prop" />
+            </mesh>
+            {Array.from({ length: 5 }, (_, k) => (
+              <mesh key={k} geometry={roundedBox(0.026, 0.012, w * 1.02, 0.004)} position={[0, -h * 0.41 + ((k + 0.5) * h * 0.82) / 5, 0]}>
+                <ToonMaterial color="#4a2b20" />
+              </mesh>
+            ))}
+          </group>
+        </group>
+      ))}
+      <mesh position={[0, 1.08, 0.05]}>
+        <boxGeometry args={[0.01, 0.07, 0.12]} />
+        <meshBasicMaterial color={flag} />
+      </mesh>
+    </group>
+  );
+};
+
+const ToyGalleon: React.FC<{ scale?: number; sail?: string; hull?: string; flag?: string; bob?: boolean; seed?: number }> = ({
   scale = 1,
   sail = "#f6efe0",
   hull = "#7a4d2e",

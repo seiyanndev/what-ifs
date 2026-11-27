@@ -1,0 +1,891 @@
+[
+ {
+  "text": "What",
+  "startMs": 65,
+  "endMs": 325,
+  "timestampMs": 195,
+  "confidence": null
+ },
+ {
+  "text": " if",
+  "startMs": 325,
+  "endMs": 446,
+  "timestampMs": 386,
+  "confidence": null
+ },
+ {
+  "text": " China",
+  "startMs": 446,
+  "endMs": 933,
+  "timestampMs": 690,
+  "confidence": null
+ },
+ {
+  "text": " had",
+  "startMs": 933,
+  "endMs": 1055,
+  "timestampMs": 994,
+  "confidence": null
+ },
+ {
+  "text": " discovered",
+  "startMs": 1055,
+  "endMs": 1784,
+  "timestampMs": 1420,
+  "confidence": null
+ },
+ {
+  "text": " America",
+  "startMs": 1784,
+  "endMs": 2255,
+  "timestampMs": 2020,
+  "confidence": null
+ },
+ {
+  "text": " first?",
+  "startMs": 2255,
+  "endMs": 2960,
+  "timestampMs": 2608,
+  "confidence": null
+ },
+ {
+  "text": " In",
+  "startMs": 3760,
+  "endMs": 3940,
+  "timestampMs": 3850,
+  "confidence": null
+ },
+ {
+  "text": " 1405,",
+  "startMs": 3940,
+  "endMs": 4839,
+  "timestampMs": 4390,
+  "confidence": null
+ },
+ {
+  "text": " Admiral",
+  "startMs": 4839,
+  "endMs": 5408,
+  "timestampMs": 5124,
+  "confidence": null
+ },
+ {
+  "text": " Zheng",
+  "startMs": 5408,
+  "endMs": 5768,
+  "timestampMs": 5588,
+  "confidence": null
+ },
+ {
+  "text": " He",
+  "startMs": 5768,
+  "endMs": 6038,
+  "timestampMs": 5903,
+  "confidence": null
+ },
+ {
+  "text": " set",
+  "startMs": 6038,
+  "endMs": 6307,
+  "timestampMs": 6173,
+  "confidence": null
+ },
+ {
+  "text": " sail",
+  "startMs": 6307,
+  "endMs": 6707,
+  "timestampMs": 6507,
+  "confidence": null
+ },
+ {
+  "text": " with",
+  "startMs": 6707,
+  "endMs": 6956,
+  "timestampMs": 6832,
+  "confidence": null
+ },
+ {
+  "text": " one",
+  "startMs": 6956,
+  "endMs": 7146,
+  "timestampMs": 7051,
+  "confidence": null
+ },
+ {
+  "text": " of",
+  "startMs": 7146,
+  "endMs": 7266,
+  "timestampMs": 7206,
+  "confidence": null
+ },
+ {
+  "text": " the",
+  "startMs": 7266,
+  "endMs": 7456,
+  "timestampMs": 7361,
+  "confidence": null
+ },
+ {
+  "text": " largest",
+  "startMs": 7456,
+  "endMs": 7895,
+  "timestampMs": 7676,
+  "confidence": null
+ },
+ {
+  "text": " fleets",
+  "startMs": 7895,
+  "endMs": 8365,
+  "timestampMs": 8130,
+  "confidence": null
+ },
+ {
+  "text": " the",
+  "startMs": 8365,
+  "endMs": 8555,
+  "timestampMs": 8460,
+  "confidence": null
+ },
+ {
+  "text": " world",
+  "startMs": 8555,
+  "endMs": 8974,
+  "timestampMs": 8765,
+  "confidence": null
+ },
+ {
+  "text": " had",
+  "startMs": 8974,
+  "endMs": 9214,
+  "timestampMs": 9094,
+  "confidence": null
+ },
+ {
+  "text": " ever",
+  "startMs": 9214,
+  "endMs": 9903,
+  "timestampMs": 9559,
+  "confidence": null
+ },
+ {
+  "text": " seen.",
+  "startMs": 9903,
+  "endMs": 9993,
+  "timestampMs": 9948,
+  "confidence": null
+ },
+ {
+  "text": " Hundreds",
+  "startMs": 10343,
+  "endMs": 10908,
+  "timestampMs": 10626,
+  "confidence": null
+ },
+ {
+  "text": " of",
+  "startMs": 10908,
+  "endMs": 11049,
+  "timestampMs": 10979,
+  "confidence": null
+ },
+ {
+  "text": " ships,",
+  "startMs": 11049,
+  "endMs": 11614,
+  "timestampMs": 11332,
+  "confidence": null
+ },
+ {
+  "text": " some",
+  "startMs": 11614,
+  "endMs": 11811,
+  "timestampMs": 11713,
+  "confidence": null
+ },
+ {
+  "text": " reported",
+  "startMs": 11811,
+  "endMs": 12339,
+  "timestampMs": 12075,
+  "confidence": null
+ },
+ {
+  "text": " to",
+  "startMs": 12339,
+  "endMs": 12470,
+  "timestampMs": 12405,
+  "confidence": null
+ },
+ {
+  "text": " be",
+  "startMs": 12470,
+  "endMs": 12602,
+  "timestampMs": 12536,
+  "confidence": null
+ },
+ {
+  "text": " several",
+  "startMs": 12602,
+  "endMs": 13035,
+  "timestampMs": 12819,
+  "confidence": null
+ },
+ {
+  "text": " times",
+  "startMs": 13035,
+  "endMs": 13430,
+  "timestampMs": 13233,
+  "confidence": null
+ },
+ {
+  "text": " bigger",
+  "startMs": 13430,
+  "endMs": 13920,
+  "timestampMs": 13675,
+  "confidence": null
+ },
+ {
+  "text": " than",
+  "startMs": 13920,
+  "endMs": 14315,
+  "timestampMs": 14118,
+  "confidence": null
+ },
+ {
+  "text": " Columbus's.",
+  "startMs": 14315,
+  "endMs": 15162,
+  "timestampMs": 14739,
+  "confidence": null
+ },
+ {
+  "text": " Over",
+  "startMs": 15962,
+  "endMs": 16310,
+  "timestampMs": 16136,
+  "confidence": null
+ },
+ {
+  "text": " seven",
+  "startMs": 16310,
+  "endMs": 16752,
+  "timestampMs": 16531,
+  "confidence": null
+ },
+ {
+  "text": " voyages,",
+  "startMs": 16752,
+  "endMs": 17657,
+  "timestampMs": 17205,
+  "confidence": null
+ },
+ {
+  "text": " his",
+  "startMs": 17657,
+  "endMs": 17752,
+  "timestampMs": 17705,
+  "confidence": null
+ },
+ {
+  "text": " fleet",
+  "startMs": 17752,
+  "endMs": 18068,
+  "timestampMs": 17910,
+  "confidence": null
+ },
+ {
+  "text": " reached",
+  "startMs": 18068,
+  "endMs": 18531,
+  "timestampMs": 18300,
+  "confidence": null
+ },
+ {
+  "text": " Southeast",
+  "startMs": 18531,
+  "endMs": 19152,
+  "timestampMs": 18842,
+  "confidence": null
+ },
+ {
+  "text": " Asia,",
+  "startMs": 19152,
+  "endMs": 19837,
+  "timestampMs": 19495,
+  "confidence": null
+ },
+ {
+  "text": " India,",
+  "startMs": 19837,
+  "endMs": 20300,
+  "timestampMs": 20069,
+  "confidence": null
+ },
+ {
+  "text": " Arabia",
+  "startMs": 20300,
+  "endMs": 20826,
+  "timestampMs": 20563,
+  "confidence": null
+ },
+ {
+  "text": " and",
+  "startMs": 20826,
+  "endMs": 21026,
+  "timestampMs": 20926,
+  "confidence": null
+ },
+ {
+  "text": " East",
+  "startMs": 21026,
+  "endMs": 21321,
+  "timestampMs": 21174,
+  "confidence": null
+ },
+ {
+  "text": " Africa.",
+  "startMs": 21321,
+  "endMs": 21942,
+  "timestampMs": 21632,
+  "confidence": null
+ },
+ {
+  "text": " Then,",
+  "startMs": 22742,
+  "endMs": 22903,
+  "timestampMs": 22823,
+  "confidence": null
+ },
+ {
+  "text": " after",
+  "startMs": 22903,
+  "endMs": 23310,
+  "timestampMs": 23107,
+  "confidence": null
+ },
+ {
+  "text": " 1433,",
+  "startMs": 23310,
+  "endMs": 24161,
+  "timestampMs": 23736,
+  "confidence": null
+ },
+ {
+  "text": " the",
+  "startMs": 24161,
+  "endMs": 24539,
+  "timestampMs": 24350,
+  "confidence": null
+ },
+ {
+  "text": " Ming",
+  "startMs": 24539,
+  "endMs": 24738,
+  "timestampMs": 24639,
+  "confidence": null
+ },
+ {
+  "text": " court",
+  "startMs": 24738,
+  "endMs": 25144,
+  "timestampMs": 24941,
+  "confidence": null
+ },
+ {
+  "text": " stopped",
+  "startMs": 25144,
+  "endMs": 25721,
+  "timestampMs": 25433,
+  "confidence": null
+ },
+ {
+  "text": " the",
+  "startMs": 25721,
+  "endMs": 25967,
+  "timestampMs": 25844,
+  "confidence": null
+ },
+ {
+  "text": " voyages.",
+  "startMs": 25967,
+  "endMs": 26818,
+  "timestampMs": 26393,
+  "confidence": null
+ },
+ {
+  "text": " China",
+  "startMs": 27178,
+  "endMs": 27553,
+  "timestampMs": 27366,
+  "confidence": null
+ },
+ {
+  "text": " turned",
+  "startMs": 27553,
+  "endMs": 28024,
+  "timestampMs": 27789,
+  "confidence": null
+ },
+ {
+  "text": " inward.",
+  "startMs": 28024,
+  "endMs": 28713,
+  "timestampMs": 28369,
+  "confidence": null
+ },
+ {
+  "text": " But",
+  "startMs": 29513,
+  "endMs": 30037,
+  "timestampMs": 29775,
+  "confidence": null
+ },
+ {
+  "text": " what",
+  "startMs": 30037,
+  "endMs": 30177,
+  "timestampMs": 30107,
+  "confidence": null
+ },
+ {
+  "text": " if",
+  "startMs": 30177,
+  "endMs": 30323,
+  "timestampMs": 30250,
+  "confidence": null
+ },
+ {
+  "text": " they",
+  "startMs": 30323,
+  "endMs": 30573,
+  "timestampMs": 30448,
+  "confidence": null
+ },
+ {
+  "text": " *kept*",
+  "startMs": 30573,
+  "endMs": 30789,
+  "timestampMs": 30681,
+  "confidence": null
+ },
+ {
+  "text": " sailing",
+  "startMs": 30789,
+  "endMs": 31313,
+  "timestampMs": 31051,
+  "confidence": null
+ },
+ {
+  "text": " east?",
+  "startMs": 31313,
+  "endMs": 31523,
+  "timestampMs": 31418,
+  "confidence": null
+ },
+ {
+  "text": " A",
+  "startMs": 32323,
+  "endMs": 32413,
+  "timestampMs": 32368,
+  "confidence": null
+ },
+ {
+  "text": " Chinese",
+  "startMs": 32413,
+  "endMs": 32760,
+  "timestampMs": 32577,
+  "confidence": null
+ },
+ {
+  "text": " fleet",
+  "startMs": 32760,
+  "endMs": 33019,
+  "timestampMs": 32890,
+  "confidence": null
+ },
+ {
+  "text": " could",
+  "startMs": 33019,
+  "endMs": 33483,
+  "timestampMs": 33251,
+  "confidence": null
+ },
+ {
+  "text": " have",
+  "startMs": 33483,
+  "endMs": 33573,
+  "timestampMs": 33528,
+  "confidence": null
+ },
+ {
+  "text": " reached",
+  "startMs": 33573,
+  "endMs": 33920,
+  "timestampMs": 33737,
+  "confidence": null
+ },
+ {
+  "text": " the",
+  "startMs": 33920,
+  "endMs": 34108,
+  "timestampMs": 34014,
+  "confidence": null
+ },
+ {
+  "text": " Americas",
+  "startMs": 34108,
+  "endMs": 34643,
+  "timestampMs": 34376,
+  "confidence": null
+ },
+ {
+  "text": " decades",
+  "startMs": 34643,
+  "endMs": 35446,
+  "timestampMs": 35045,
+  "confidence": null
+ },
+ {
+  "text": " before",
+  "startMs": 35446,
+  "endMs": 35973,
+  "timestampMs": 35710,
+  "confidence": null
+ },
+ {
+  "text": " Columbus.",
+  "startMs": 35973,
+  "endMs": 36776,
+  "timestampMs": 36375,
+  "confidence": null
+ },
+ {
+  "text": " Zheng",
+  "startMs": 37576,
+  "endMs": 37878,
+  "timestampMs": 37727,
+  "confidence": null
+ },
+ {
+  "text": " He's",
+  "startMs": 37878,
+  "endMs": 38179,
+  "timestampMs": 38029,
+  "confidence": null
+ },
+ {
+  "text": " voyages",
+  "startMs": 38179,
+  "endMs": 38841,
+  "timestampMs": 38510,
+  "confidence": null
+ },
+ {
+  "text": " were",
+  "startMs": 38841,
+  "endMs": 39009,
+  "timestampMs": 38925,
+  "confidence": null
+ },
+ {
+  "text": " mostly",
+  "startMs": 39009,
+  "endMs": 39545,
+  "timestampMs": 39277,
+  "confidence": null
+ },
+ {
+  "text": " about",
+  "startMs": 39545,
+  "endMs": 39839,
+  "timestampMs": 39692,
+  "confidence": null
+ },
+ {
+  "text": " trade",
+  "startMs": 39839,
+  "endMs": 40216,
+  "timestampMs": 40028,
+  "confidence": null
+ },
+ {
+  "text": " and",
+  "startMs": 40216,
+  "endMs": 40442,
+  "timestampMs": 40329,
+  "confidence": null
+ },
+ {
+  "text": " showing",
+  "startMs": 40442,
+  "endMs": 40961,
+  "timestampMs": 40702,
+  "confidence": null
+ },
+ {
+  "text": " power.",
+  "startMs": 40961,
+  "endMs": 41632,
+  "timestampMs": 41297,
+  "confidence": null
+ },
+ {
+  "text": " First",
+  "startMs": 41992,
+  "endMs": 42343,
+  "timestampMs": 42168,
+  "confidence": null
+ },
+ {
+  "text": " contact",
+  "startMs": 42343,
+  "endMs": 43022,
+  "timestampMs": 42683,
+  "confidence": null
+ },
+ {
+  "text": " might",
+  "startMs": 43022,
+  "endMs": 43215,
+  "timestampMs": 43119,
+  "confidence": null
+ },
+ {
+  "text": " have",
+  "startMs": 43215,
+  "endMs": 43305,
+  "timestampMs": 43260,
+  "confidence": null
+ },
+ {
+  "text": " looked",
+  "startMs": 43305,
+  "endMs": 43577,
+  "timestampMs": 43441,
+  "confidence": null
+ },
+ {
+  "text": " very",
+  "startMs": 43600,
+  "endMs": 43860,
+  "timestampMs": 43730,
+  "confidence": null
+ },
+ {
+  "text": " different.",
+  "startMs": 43860,
+  "endMs": 44709,
+  "timestampMs": 44285,
+  "confidence": null
+ },
+ {
+  "text": " The",
+  "startMs": 45509,
+  "endMs": 45880,
+  "timestampMs": 45695,
+  "confidence": null
+ },
+ {
+  "text": " Americas",
+  "startMs": 45880,
+  "endMs": 46322,
+  "timestampMs": 46101,
+  "confidence": null
+ },
+ {
+  "text": " might",
+  "startMs": 46322,
+  "endMs": 46692,
+  "timestampMs": 46507,
+  "confidence": null
+ },
+ {
+  "text": " speak",
+  "startMs": 46692,
+  "endMs": 47063,
+  "timestampMs": 46878,
+  "confidence": null
+ },
+ {
+  "text": " Chinese",
+  "startMs": 47063,
+  "endMs": 47584,
+  "timestampMs": 47324,
+  "confidence": null
+ },
+ {
+  "text": " today,",
+  "startMs": 47584,
+  "endMs": 48194,
+  "timestampMs": 47889,
+  "confidence": null
+ },
+ {
+  "text": " and",
+  "startMs": 48194,
+  "endMs": 48284,
+  "timestampMs": 48239,
+  "confidence": null
+ },
+ {
+  "text": " world",
+  "startMs": 48284,
+  "endMs": 48556,
+  "timestampMs": 48410,
+  "confidence": null
+ },
+ {
+  "text": " trade",
+  "startMs": 48556,
+  "endMs": 48856,
+  "timestampMs": 48706,
+  "confidence": null
+ },
+ {
+  "text": " might",
+  "startMs": 48856,
+  "endMs": 49156,
+  "timestampMs": 49006,
+  "confidence": null
+ },
+ {
+  "text": " revolve",
+  "startMs": 49156,
+  "endMs": 49597,
+  "timestampMs": 49377,
+  "confidence": null
+ },
+ {
+  "text": " around",
+  "startMs": 49597,
+  "endMs": 49915,
+  "timestampMs": 49756,
+  "confidence": null
+ },
+ {
+  "text": " the",
+  "startMs": 49915,
+  "endMs": 50005,
+  "timestampMs": 49960,
+  "confidence": null
+ },
+ {
+  "text": " Pacific,",
+  "startMs": 50005,
+  "endMs": 50781,
+  "timestampMs": 50384,
+  "confidence": null
+ },
+ {
+  "text": " not",
+  "startMs": 50781,
+  "endMs": 51081,
+  "timestampMs": 50931,
+  "confidence": null
+ },
+ {
+  "text": " the",
+  "startMs": 51081,
+  "endMs": 51337,
+  "timestampMs": 51209,
+  "confidence": null
+ },
+ {
+  "text": " Atlantic.",
+  "startMs": 51337,
+  "endMs": 52132,
+  "timestampMs": 51735,
+  "confidence": null
+ },
+ {
+  "text": " One",
+  "startMs": 52932,
+  "endMs": 53149,
+  "timestampMs": 53041,
+  "confidence": null
+ },
+ {
+  "text": " decision",
+  "startMs": 53149,
+  "endMs": 53713,
+  "timestampMs": 53431,
+  "confidence": null
+ },
+ {
+  "text": " to",
+  "startMs": 53713,
+  "endMs": 53903,
+  "timestampMs": 53808,
+  "confidence": null
+ },
+ {
+  "text": " stop",
+  "startMs": 53903,
+  "endMs": 54157,
+  "timestampMs": 54030,
+  "confidence": null
+ },
+ {
+  "text": " sailing",
+  "startMs": 54157,
+  "endMs": 54657,
+  "timestampMs": 54407,
+  "confidence": null
+ },
+ {
+  "text": " changed",
+  "startMs": 54657,
+  "endMs": 55156,
+  "timestampMs": 54907,
+  "confidence": null
+ },
+ {
+  "text": " the",
+  "startMs": 55156,
+  "endMs": 55365,
+  "timestampMs": 55261,
+  "confidence": null
+ },
+ {
+  "text": " world.",
+  "startMs": 55365,
+  "endMs": 55983,
+  "timestampMs": 55674,
+  "confidence": null
+ },
+ {
+  "text": " Would",
+  "startMs": 56343,
+  "endMs": 56626,
+  "timestampMs": 56485,
+  "confidence": null
+ },
+ {
+  "text": " you",
+  "startMs": 56626,
+  "endMs": 56795,
+  "timestampMs": 56711,
+  "confidence": null
+ },
+ {
+  "text": " have",
+  "startMs": 56795,
+  "endMs": 57022,
+  "timestampMs": 56909,
+  "confidence": null
+ },
+ {
+  "text": " kept",
+  "startMs": 57022,
+  "endMs": 57248,
+  "timestampMs": 57135,
+  "confidence": null
+ },
+ {
+  "text": " going?",
+  "startMs": 57248,
+  "endMs": 57745,
+  "timestampMs": 57497,
+  "confidence": null
+ }
+]

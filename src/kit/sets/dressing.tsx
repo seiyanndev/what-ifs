@@ -749,6 +749,103 @@ export const Factory: React.FC<At & { w?: number; d?: number; h?: number; color?
   );
 };
 
+/** Tiered pagoda (generic East Asian): red walls, gold trim, sweeping green roofs, a spire. */
+export const Pagoda: React.FC<At & { tiers?: number; wall?: string; roof?: string }> = ({ tiers = 4, wall = "#b5463c", roof = "#2f6b5a", ...p }) => {
+  const { night } = useSet();
+  let y = 0;
+  const parts: React.ReactNode[] = [];
+  for (let i = 0; i < tiers; i++) {
+    const w = 1.5 * (1 - i * 0.16);
+    const h = i === 0 ? 0.75 : 0.5;
+    parts.push(
+      <group key={i} position={[0, y, 0]}>
+        <Part geometry={roundedBox(w, h, w, 0.05)} position={[0, h / 2, 0]} color={wall} ink="set" />
+        <Part geometry={roundedBox(w * 0.42, h * 0.5, 0.05, 0.02)} position={[0, h * 0.45, w / 2 + 0.02]} color={night ? "#ffd27a" : "#3b2a20"} emissive={night ? "#ffb84a" : undefined} emissiveIntensity={night ? 0.8 : 0} ink={false} rim={0} />
+        <Part geometry={roundedBox(w + 0.06, 0.06, w + 0.06, 0.02)} position={[0, h, 0]} color="#d8a531" ink={false} />
+        <Part
+          geometry={lathe("pagoda-roof", [[0.98, 0.1], [0.9, 0.0], [0.74, 0.05], [0.45, 0.2], [0.16, 0.36], [0, 0.4]], 4)}
+          position={[0, h + 0.03, 0]}
+          rotation={[0, Math.PI / 4, 0]}
+          scale={[w * 0.98, 0.9, w * 0.98]}
+          color={roof}
+          ink="set"
+        />
+      </group>,
+    );
+    y += h + 0.28;
+  }
+  return (
+    <G {...p}>
+      <Part geometry={roundedBox(1.8, 0.16, 1.8, 0.04)} position={[0, 0.08, 0]} color="#d9c9a8" ink="set" />
+      <group position={[0, 0.16, 0]}>{parts}</group>
+      <Part geometry={lathe("pagoda-spire", [[0.07, 0], [0.04, 0.2], [0.09, 0.26], [0.04, 0.32], [0.02, 0.6], [0, 0.62]], 12)} position={[0, 0.16 + y + 0.05, 0]} color="#d8a531" ink="prop" />
+    </G>
+  );
+};
+
+/** Stepped pyramid with a front stair and a small shrine on top (generic Mesoamerican-inspired). */
+export const StepPyramid: React.FC<At & { levels?: number; stone?: string; accent?: string }> = ({ levels = 4, stone = "#cdb68c", accent = "#2aa19a", ...p }) => {
+  const step = 0.42;
+  return (
+    <G {...p}>
+      {Array.from({ length: levels }, (_, i) => {
+        const w = 2.6 - i * 0.52;
+        return (
+          <group key={i}>
+            <Part geometry={roundedBox(w, step, w, 0.04)} position={[0, step * (i + 0.5), 0]} color={i % 2 ? "#c3aa7e" : stone} ink="set" />
+            <Part geometry={roundedBox(w + 0.02, 0.07, w + 0.02, 0.02)} position={[0, step * (i + 0.82), 0]} color={accent} ink={false} />
+          </group>
+        );
+      })}
+      {/* front stair */}
+      {Array.from({ length: levels * 3 }, (_, k) => (
+        <Part key={`s${k}`} geometry={roundedBox(0.55, step / 3, 0.2, 0.02)} position={[0, (k + 0.5) * (step / 3), 1.3 - k * (0.78 / 3) * 1.0 + 0.04]} color="#b89c6c" ink={false} />
+      ))}
+      <group position={[0, step * levels, 0]}>
+        <Part geometry={roundedBox(0.8, 0.5, 0.7, 0.04)} position={[0, 0.25, 0]} color="#e6d6b2" ink="set" />
+        <Part geometry={roundedBox(0.26, 0.32, 0.05, 0.02)} position={[0, 0.16, 0.36]} color="#3b2a20" ink={false} />
+        <Part geometry={roundedBox(0.95, 0.12, 0.85, 0.03)} position={[0, 0.56, 0]} color="#b5463c" ink="set" />
+        <Part geometry={roundedBox(0.95, 0.05, 0.86, 0.015)} position={[0, 0.45, 0]} color={accent} ink={false} />
+      </group>
+    </G>
+  );
+};
+
+/** A string of paper lanterns between two poles; they sway (frame-driven) and glow at night. */
+/** `w` is an alias for `length` (so scenes.json dressing can size it). */
+export const Lanterns: React.FC<At & { length?: number; w?: number; height?: number; count?: number; color?: string }> = ({ length: len, w, height = 2.2, count = 5, color = "#d8392b", ...p }) => {
+  const length = len ?? w ?? 3;
+  const frame = useCurrentFrame();
+  const { night } = useSet();
+  return (
+    <G {...p}>
+      {[-1, 1].map((s) => (
+        <Part key={s} geometry={roundedBox(0.07, height, 0.07, 0.02)} position={[(s * length) / 2, height / 2, 0]} color="#4a3326" ink="set" />
+      ))}
+      {Array.from({ length: count }, (_, i) => {
+        const u = (i + 1) / (count + 1);
+        const x = (u - 0.5) * length;
+        const sag = Math.sin(Math.PI * u) * 0.25;
+        const sway = Math.sin(frame / 22 + i * 1.3) * 0.08;
+        return (
+          <group key={i} position={[x, height - 0.05 - sag, 0]} rotation={[sway * 0.6, 0, sway]}>
+            <mesh position={[0, -0.12, 0]}>
+              <cylinderGeometry args={[0.005, 0.005, 0.12, 4]} />
+              <meshBasicMaterial color="#2b1b2b" />
+            </mesh>
+            <mesh position={[0, -0.3, 0]} scale={[1, 1.15, 1]}>
+              <sphereGeometry args={[0.14, 16, 12]} />
+              <ToonMaterial color={color} emissive={night ? "#ff7a3a" : undefined} emissiveIntensity={night ? 0.9 : 0} rim={0.3} />
+            </mesh>
+            <Part geometry={roundedBox(0.12, 0.04, 0.12, 0.01)} position={[0, -0.14, 0]} color="#d8a531" ink={false} />
+            <Part geometry={roundedBox(0.12, 0.04, 0.12, 0.01)} position={[0, -0.46, 0]} color="#d8a531" ink={false} />
+          </group>
+        );
+      })}
+    </G>
+  );
+};
+
 /** Name → component registry so episodes can place any dressing item by name ("dressing" in scenes.json). */
 export const DRESSING_ITEMS = {
   Column,
@@ -789,5 +886,8 @@ export const DRESSING_ITEMS = {
   Sign,
   Aeolipile,
   Factory,
+  Pagoda,
+  StepPyramid,
+  Lanterns,
 } as const;
 export type DressingItem = keyof typeof DRESSING_ITEMS;

@@ -213,11 +213,74 @@ if (scriptFile) {
 }
 
 const dur = Number(execFileSync("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", voice]).toString());
+// Narrator (Kokoro) voices come with segments.json: the exact time of every spoken phrase in raw.wav.
+// Pin each caption word inside its phrase; Whisper only decides the pacing *within* a phrase. This fixes
+// words that Whisper hears on the wrong side of a pause (e.g. a scene's first word in the previous scene).
+let pinned = false;
+{
+  const segFile = path.join(dir, "segments.json");
+  const rawFile = existsSync(dir) ? readdirSync(dir).find((f) => /^raw\.(wav|mp3|m4a|flac|ogg|aac)$/i.test(f)) : undefined;
+  if (scriptFile && rawFile && existsSync(segFile) && existsSync(path.join(dir, ".tts"))) {
+    const segs = JSON.parse(readFileSync(segFile, "utf8"));
+    const alnum = (w) => /[A-Za-z0-9]/.test(w);
+    const spoken = captions.filter((c) => alnum(c.text)).length;
+    const planned = segs.reduce((n, sg) => n + sg.words.length, 0);
+    if (spoken === planned) {
+      // raw.wav → voice.wav: the cleanup trims the lead-in silence; measure that shift
+      const firstSound = (f) => {
+        const out = execFileSync("sh", ["-c", `ffmpeg -hide_banner -i "${f}" -af silencedetect=noise=-50dB:d=0.02 -t 3 -f null - 2>&1 || true`], { encoding: "utf8" });
+        const st = out.match(/silence_start: ([\d.e-]+)/);
+        const en = out.match(/silence_end: ([\d.]+)/);
+        return st && Number(st[1]) < 0.01 && en ? Number(en[1]) : 0;
+      };
+      const shift = firstSound(path.join(dir, rawFile)) - firstSound(voice);
+      const owner = new Array(captions.length).fill(-1);
+      let si = 0;
+      let k = 0;
+      for (let i = 0; i < captions.length; i++) {
+        if (!alnum(captions[i].text)) continue;
+        while (si < segs.length && k >= segs[si].words.length) {
+          si++;
+          k = 0;
+        }
+        owner[i] = si;
+        k++;
+      }
+      segs.forEach((sg, s) => {
+        const idx = owner.map((o, i) => (o === s ? i : -1)).filter((i) => i >= 0);
+        if (!idx.length) return;
+        const a = (sg.start - shift) * 1000;
+        const b = (sg.end - shift) * 1000;
+        const dur = idx.map((i) => Math.min(900, Math.max(80, captions[i].endMs - captions[i].startMs)));
+        const gap = idx.slice(0, -1).map((i, n) => Math.min(250, Math.max(0, captions[idx[n + 1]].startMs - captions[i].endMs)));
+        const total = dur.reduce((x, y) => x + y, 0) + gap.reduce((x, y) => x + y, 0);
+        const f = (b - a) / Math.max(1, total);
+        let t = a;
+        idx.forEach((i, n) => {
+          captions[i].startMs = t;
+          t += dur[n] * f;
+          captions[i].endMs = t;
+          if (n < gap.length) t += gap[n] * f;
+        });
+      });
+      // punctuation-only tokens sit at the end of the word before them
+      for (let i = 0; i < captions.length; i++) if (owner[i] < 0 && i) captions[i].startMs = captions[i].endMs = captions[i - 1].endMs;
+      for (const w of captions) {
+        w.startMs = Math.round(w.startMs);
+        w.endMs = Math.round(w.endMs);
+        w.timestampMs = Math.round((w.startMs + w.endMs) / 2);
+      }
+      pinned = true;
+      console.log(`pinned words to ${segs.length} narrator phrases (shift ${shift.toFixed(3)} s)`);
+    } else console.log(`segments.json does not match the script (${planned} vs ${spoken} words); using pause snapping`);
+  }
+}
+
 // No word may run into a real pause. Whisper stretches the last words of a chunk (and sometimes of a
 // sentence) across the following silence, which makes the next caption and mouth start late. For every
 // detected pause, squeeze the words before it to end where the speech stops, and the words after it
 // to start where the speech resumes (rescaling the run of words since/until the neighbouring pause).
-{
+if (!pinned) {
   const P = silences.map(([a, b]) => [a * 1000, b * 1000]);
   const rescale = (from, to, a0, a1, b0, b1) => {
     const f = (x) => b0 + ((x - a0) / Math.max(1, a1 - a0)) * (b1 - b0);
